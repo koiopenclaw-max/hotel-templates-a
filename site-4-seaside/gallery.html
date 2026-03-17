@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Галерия – Марина Бей Ризорт</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ocean: #003B5C;
+    --turquoise: #00A8CC;
+    --sand: #F0E6D3;
+    --white: #fff;
+  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--sand); color: #222; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--ocean);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; }
+  .nav-logo span { color: var(--turquoise); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--sand); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; padding-bottom: 4px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--turquoise); }
+  .nav-links a.active { color: var(--turquoise); border-bottom: 2px solid var(--turquoise); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 25px; height: 2px; background: var(--sand); border-radius: 2px; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 55vh; min-height: 380px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920') center/cover no-repeat;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(0,59,92,0.72); }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 2rem; }
+  .hero-eyebrow { font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: 4px; color: var(--sand); }
+  .hero-sub { font-size: 1rem; opacity: 0.8; margin-top: 0.8rem; font-style: italic; }
+
+  /* WAVE */
+  .wave-divider { display: block; line-height: 0; }
+
+  /* SECTION */
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--ocean); letter-spacing: 2px; }
+  .section-line { width: 60px; height: 3px; background: var(--turquoise); margin: 1rem auto 0; border-radius: 2px; }
+
+  /* GALLERY */
+  .gallery-section { background: var(--sand); padding: 5rem 5%; }
+  .masonry {
+    columns: 3; column-gap: 1.5rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .masonry-item {
+    break-inside: avoid; margin-bottom: 1.5rem;
+    border-radius: 16px; overflow: hidden;
+    position: relative; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,59,92,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .masonry-item:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,59,92,0.2); }
+  .masonry-item img {
+    width: 100%; display: block;
+    transition: transform 0.4s;
+  }
+  .masonry-item:hover img { transform: scale(1.05); }
+  .masonry-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,59,92,0.85));
+    padding: 2rem 1.2rem 1.2rem;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .masonry-item:hover .masonry-caption { opacity: 1; }
+  .masonry-caption span {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--sand); letter-spacing: 1px;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,20,35,0.95); align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 85vh; border-radius: 12px;
+    box-shadow: 0 16px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 32px;
+    font-size: 2.5rem; color: var(--sand); cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif; font-weight: 300;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: var(--turquoise); }
+  .lightbox-caption {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.1rem; font-weight: 600;
+    color: var(--sand); letter-spacing: 2px; text-align: center;
+  }
+
+  /* FOOTER */
+  footer { background: #00253a; color: rgba(240,230,211,0.75); text-align: center; padding: 2.5rem 5%; font-size: 0.85rem; line-height: 2; }
+  footer .footer-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; margin-bottom: 0.5rem; }
+  footer a { color: var(--turquoise); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--ocean); padding: 1.5rem 5%; gap: 1rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .masonry { columns: 2; }
+  }
+  @media (max-width: 480px) {
+    .masonry { columns: 1; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Марина<span> Бей</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html" class="active">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Марина Бей Ризорт</p>
+    <h1 class="hero-title">Галерия</h1>
+    <p class="hero-sub">Моменти от морското приключение</p>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#F0E6D3" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="section-header">
+    <p class="section-label">Фотографии</p>
+    <h2 class="section-title">Разгледайте Ризорта</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="masonry">
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900" alt="Плаж при залез" loading="lazy">
+      <div class="masonry-caption"><span>Плаж при Залез</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=900" alt="Инфинити Басейн" loading="lazy">
+      <div class="masonry-caption"><span>Инфинити Басейн</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900" alt="Стая с Морска Гледка" loading="lazy">
+      <div class="masonry-caption"><span>Стая с Морска Гледка</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=900" alt="Плажен Бар" loading="lazy">
+      <div class="masonry-caption"><span>Плажен Бар</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900" alt="Морски Ресторант" loading="lazy">
+      <div class="masonry-caption"><span>Морски Ресторант</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900" alt="Спа Процедура" loading="lazy">
+      <div class="masonry-caption"><span>Спа & Уелнес</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900" alt="Фамилна Стая" loading="lazy">
+      <div class="masonry-caption"><span>Фамилна Стая</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=900" alt="Водни Спортове" loading="lazy">
+      <div class="masonry-caption"><span>Водни Спортове</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=900" alt="Луксозен Суит" loading="lazy">
+      <div class="masonry-caption"><span>Суит „Марина"</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=900" alt="Изглед от Пентхаус" loading="lazy">
+      <div class="masonry-caption"><span>Пентхаус Тераса</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900" alt="Стандартна Стая" loading="lazy">
+      <div class="masonry-caption"><span>Стандартна Стая</span></div>
+    </div>
+
+    <div class="masonry-item" onclick="openLightbox(this)">
+      <img src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=900" alt="Морска Панорама" loading="lazy">
+      <div class="masonry-caption"><span>Морска Панорама</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#00253a" d="M0,60 C360,0 720,100 1080,50 C1260,25 1380,70 1440,60 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<footer>
+  <div class="footer-logo">Марина Бей Ризорт</div>
+  <div>ул. „Морска" 42, Созопол &nbsp;·&nbsp; <a href="tel:+35955022888">+359 550 22 888</a> &nbsp;·&nbsp; <a href="mailto:info@marinabay.bg">info@marinabay.bg</a></div>
+  <div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.6;">© 2024 Марина Бей Ризорт. Всички права запазени.</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+
+  function openLightbox(el) {
+    var img = el.querySelector('img');
+    var caption = el.querySelector('.masonry-caption span');
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightboxCaption').textContent = caption ? caption.textContent : '';
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(e) {
+    if (e.target === document.getElementById('lightboxImg')) return;
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+</body>
+</html>

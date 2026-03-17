@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Марина Бей Ризорт – Созопол, Черно море</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ocean: #003B5C;
+    --turquoise: #00A8CC;
+    --sand: #F0E6D3;
+    --white: #fff;
+  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--sand); color: #222; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--ocean);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--sand); letter-spacing: 2px;
+  }
+  .nav-logo span { color: var(--turquoise); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--sand); font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.5px; padding-bottom: 4px;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--turquoise); }
+  .nav-links a.active {
+    color: var(--turquoise);
+    border-bottom: 2px solid var(--turquoise);
+  }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 25px; height: 2px; background: var(--sand); border-radius: 2px; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 100vh; min-height: 600px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920') center/cover no-repeat;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(0,59,92,0.85) 0%, rgba(0,59,92,0.3) 60%, transparent 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; color: var(--white); padding: 2rem;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: var(--turquoise); color: var(--white);
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+    padding: 6px 20px; border-radius: 50px; letter-spacing: 1px;
+    margin-bottom: 1.5rem; text-transform: uppercase;
+  }
+  .hero-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem); font-weight: 700;
+    letter-spacing: 4px; line-height: 1.05;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    margin-bottom: 1rem;
+  }
+  .hero-tagline {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300;
+    letter-spacing: 2px; opacity: 0.92; margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+  .hero-location {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(240,230,211,0.15); border: 1px solid rgba(240,230,211,0.4);
+    color: var(--sand); font-size: 0.9rem; padding: 10px 24px; border-radius: 50px;
+    backdrop-filter: blur(6px);
+  }
+  .hero-location::before { content: '📍'; }
+
+  /* WAVE */
+  .wave-divider { display: block; line-height: 0; }
+
+  /* LOCATION BADGE SECTION */
+  .location-strip {
+    background: var(--ocean); text-align: center; padding: 2.5rem 5%;
+  }
+  .location-pill {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--turquoise); color: var(--white);
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.1rem; font-weight: 600;
+    padding: 14px 36px; border-radius: 50px; letter-spacing: 1px;
+    box-shadow: 0 6px 24px rgba(0,168,204,0.4);
+  }
+  .location-pill svg { width: 20px; height: 20px; fill: var(--white); flex-shrink: 0; }
+
+  /* ACTIVITIES */
+  .activities { background: var(--sand); padding: 5rem 5%; }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label {
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+    color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.6rem;
+  }
+  .section-title {
+    font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700; color: var(--ocean); letter-spacing: 2px;
+  }
+  .section-line {
+    width: 60px; height: 3px; background: var(--turquoise); margin: 1rem auto 0; border-radius: 2px;
+  }
+  .activities-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+  }
+  .activity-card {
+    background: var(--white); border-radius: 20px;
+    padding: 2.5rem 1.5rem; text-align: center;
+    box-shadow: 0 4px 20px rgba(0,59,92,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-top: 4px solid var(--turquoise);
+  }
+  .activity-card:hover { transform: translateY(-8px); box-shadow: 0 12px 36px rgba(0,59,92,0.15); }
+  .activity-icon {
+    font-size: 3rem; margin-bottom: 1rem; display: block;
+  }
+  .activity-name {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--ocean); letter-spacing: 1px;
+  }
+  .activity-desc {
+    font-size: 0.85rem; color: #666; margin-top: 0.5rem; line-height: 1.6;
+  }
+
+  /* HIGHLIGHTS */
+  .highlights-section { background: var(--ocean); padding: 5rem 5%; }
+  .highlights-section .section-title { color: var(--sand); }
+  .highlights-section .section-label { color: var(--turquoise); }
+  .highlights-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .highlight-card {
+    border-radius: 20px; overflow: hidden;
+    position: relative; min-height: 320px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+  }
+  .highlight-card:hover { transform: scale(1.02); }
+  .highlight-img {
+    width: 100%; height: 320px; object-fit: cover; display: block;
+  }
+  .highlight-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,59,92,0.92));
+    padding: 2rem 1.5rem;
+  }
+  .highlight-name {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.2rem; font-weight: 700;
+    color: var(--sand); letter-spacing: 1px; margin-bottom: 0.4rem;
+  }
+  .highlight-desc { font-size: 0.85rem; color: rgba(240,230,211,0.8); line-height: 1.5; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, #005780, var(--turquoise));
+    padding: 5rem 5%; text-align: center; color: var(--white);
+  }
+  .cta-title {
+    font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 700; letter-spacing: 2px; margin-bottom: 1rem;
+  }
+  .cta-sub { font-size: 1rem; opacity: 0.88; margin-bottom: 2.5rem; }
+  .btn-primary {
+    display: inline-block;
+    background: var(--sand); color: var(--ocean);
+    font-family: 'Josefin Sans', sans-serif; font-size: 1rem; font-weight: 700;
+    padding: 16px 40px; border-radius: 50px; letter-spacing: 2px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.35); }
+
+  /* FOOTER */
+  footer {
+    background: #00253a; color: rgba(240,230,211,0.75);
+    text-align: center; padding: 2.5rem 5%; font-size: 0.85rem; line-height: 2;
+  }
+  footer .footer-logo {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.4rem; font-weight: 700;
+    color: var(--sand); letter-spacing: 2px; margin-bottom: 0.5rem;
+  }
+  footer a { color: var(--turquoise); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--ocean); padding: 1.5rem 5%; gap: 1rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .activities-grid { grid-template-columns: 1fr 1fr; }
+    .highlights-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .activities-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Марина<span> Бей</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html" class="active">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Добре дошли ✦</div>
+    <h1 class="hero-title">Марина Бей<br>Ризорт</h1>
+    <p class="hero-tagline">Където морето целува брега</p>
+    <div class="hero-location">Созопол, Черноморие · Сезон 2024</div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#003B5C" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- LOCATION STRIP -->
+<div class="location-strip">
+  <div class="location-pill">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+    5 минути от плажа · Созопол, България
+  </div>
+</div>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#F0E6D3" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- ACTIVITIES -->
+<section class="activities">
+  <div class="section-header">
+    <p class="section-label">Лятно настроение</p>
+    <h2 class="section-title">Летни Активности</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="activities-grid">
+    <div class="activity-card">
+      <span class="activity-icon">🌊</span>
+      <div class="activity-name">Водни Спортове</div>
+      <p class="activity-desc">Джет ски, уейкборд и сърф за адреналин сред морските вълни.</p>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">🤿</span>
+      <div class="activity-name">Гмуркане</div>
+      <p class="activity-desc">Изследвайте подводния свят на Черно море с нашите инструктори.</p>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">⛵</span>
+      <div class="activity-name">Яхтинг</div>
+      <p class="activity-desc">Наем на яхти и организирани круизи по черноморското крайбрежие.</p>
+    </div>
+    <div class="activity-card">
+      <span class="activity-icon">🏐</span>
+      <div class="activity-name">Плажен Волейбол</div>
+      <p class="activity-desc">Организирани турнири и свободни игри на нашия плажен терен.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#003B5C" d="M0,60 C360,0 720,100 1080,50 C1260,25 1380,70 1440,60 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights-section">
+  <div class="section-header">
+    <p class="section-label">Нашите предимства</p>
+    <h2 class="section-title">Открийте Ризорта</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="highlights-grid">
+    <div class="highlight-card">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=900" alt="Панорамен Басейн" class="highlight-img" loading="lazy">
+      <div class="highlight-overlay">
+        <div class="highlight-name">Панорамен Басейн</div>
+        <div class="highlight-desc">Инфинити басейн с гледка към морето, отопляем целия сезон.</div>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <img src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=900" alt="Плажен Бар" class="highlight-img" loading="lazy">
+      <div class="highlight-overlay">
+        <div class="highlight-name">Плажен Бар</div>
+        <div class="highlight-desc">Коктейли, DJ музика и залези край морето до 02:00.</div>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900" alt="Морски Ресторант" class="highlight-img" loading="lazy">
+      <div class="highlight-overlay">
+        <div class="highlight-name">Морски Ресторант</div>
+        <div class="highlight-desc">Прясна морска риба и черноморски деликатеси с панорамна гледка.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#00A8CC" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">Резервирайте Вашата Морска Почивка</h2>
+  <p class="cta-sub">Сезон 2024 · 1 Юни – 30 Септември · Созопол, Черноморие</p>
+  <a href="contact.html" class="btn-primary">НАПРАВЕТЕ РЕЗЕРВАЦИЯ</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Марина Бей Ризорт</div>
+  <div>ул. „Морска" 42, Созопол &nbsp;·&nbsp; <a href="tel:+35955022888">+359 550 22 888</a> &nbsp;·&nbsp; <a href="mailto:info@marinabay.bg">info@marinabay.bg</a></div>
+  <div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.6;">© 2024 Марина Бей Ризорт. Всички права запазени.</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

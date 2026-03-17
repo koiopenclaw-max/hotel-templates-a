@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Нашите Стаи — Планински Лодж Пирин</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest: #1A3C34;
+    --sand: #E6D5B8;
+    --wood: #8B4513;
+    --wood-light: #A0522D;
+    --forest-light: #245048;
+    --dark: #0D1F1A;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #F9F5EE; color: #2C2C2C; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--forest); padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px; box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--sand);
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--sand); text-decoration: none;
+    font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; transition: color 0.2s;
+    padding-bottom: 4px; border-bottom: 2px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom-color: var(--wood); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    height: 52vh; min-height: 360px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=900') center/cover no-repeat;
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(13,31,26,0.5), rgba(13,31,26,0.75));
+  }
+  .hero-content { position: relative; z-index: 2; padding: 2rem; }
+  .hero-label {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--sand); opacity: 0.8; margin-bottom: 0.8rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #fff; line-height: 1.15;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  }
+  .hero-sub { color: var(--sand); font-size: 1.1rem; margin-top: 0.8rem; font-style: italic; font-family: 'Playfair Display', serif; }
+
+  /* INTRO BAR */
+  .intro-bar {
+    background: var(--wood); color: #fff;
+    display: flex; align-items: center; justify-content: center; gap: 3rem;
+    padding: 1.2rem 2rem; flex-wrap: wrap;
+  }
+  .intro-stat { text-align: center; }
+  .intro-stat strong { display: block; font-size: 1.4rem; font-family: 'Playfair Display', serif; }
+  .intro-stat span { font-size: 0.8rem; opacity: 0.85; letter-spacing: 0.05em; }
+
+  /* ROOMS */
+  .rooms-section { padding: 5rem 2rem; }
+  .container { max-width: 1160px; margin: 0 auto; }
+  .room-card {
+    background: #fff; border-radius: 8px;
+    overflow: hidden; margin-bottom: 3rem;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-left: 6px solid var(--wood);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .room-card:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.14); transform: translateY(-3px); }
+  .room-card.reverse { grid-template-columns: 1fr 1fr; }
+  .room-card.reverse .room-img { order: 2; }
+  .room-card.reverse .room-body { order: 1; }
+  .room-img {
+    min-height: 320px;
+    background: center/cover no-repeat; position: relative;
+  }
+  .room-img::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(13,31,26,0.2), transparent);
+  }
+  .room-badge {
+    position: absolute; top: 1.2rem; left: 1.2rem; z-index: 2;
+    background: var(--wood); color: #fff;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 5px 14px; border-radius: 2px;
+  }
+  .room-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .room-type {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--wood); margin-bottom: 0.5rem;
+  }
+  .room-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--forest); margin-bottom: 0.8rem;
+  }
+  .room-desc { color: #555; font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .room-meta {
+    display: flex; gap: 1.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+  }
+  .room-meta-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.88rem; color: #666;
+  }
+  .room-meta-item strong { color: var(--forest); }
+  .room-amenities { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .amenity-tag {
+    background: #f0ebe0; color: #555; font-size: 0.8rem;
+    padding: 4px 12px; border-radius: 20px; font-weight: 500;
+  }
+  .room-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    padding-top: 1.5rem; border-top: 1px solid #f0ebe0;
+  }
+  .room-price {
+    font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--wood);
+  }
+  .room-price span { font-size: 0.85rem; color: #888; font-family: 'Source Sans 3', sans-serif; }
+  .btn-book {
+    background: var(--forest); color: #fff; padding: 12px 28px;
+    text-decoration: none; font-weight: 600; font-size: 0.9rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    border-radius: 3px; transition: background 0.2s;
+  }
+  .btn-book:hover { background: var(--forest-light); }
+
+  /* WOOD DIVIDER */
+  .wood-divider {
+    width: 100%; height: 8px;
+    background: linear-gradient(to right, var(--wood), #C47633, var(--wood));
+    margin: 1rem 0;
+  }
+
+  /* POLICY */
+  .policy { background: var(--forest); padding: 4rem 2rem; color: var(--sand); }
+  .policy-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem; margin-top: 2rem;
+  }
+  .policy-item { text-align: center; }
+  .policy-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+  .policy-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--wood-light); margin-bottom: 0.3rem; }
+  .policy-val { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #fff; }
+  .section-title-light { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem,3vw,2.2rem); color: var(--sand); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: var(--sand);
+    padding: 3rem 2rem; text-align: center;
+  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
+  .footer-info { font-size: 0.88rem; color: rgba(230,213,184,0.7); line-height: 1.9; }
+  .footer-info a { color: var(--sand); text-decoration: none; }
+  .footer-info a:hover { color: #fff; }
+  .footer-divider { width: 60px; height: 2px; background: var(--wood); margin: 1.2rem auto; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--forest); padding: 1rem 2rem 2rem; gap: 1rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    nav { position: relative; }
+    .room-card, .room-card.reverse { grid-template-columns: 1fr; }
+    .room-card.reverse .room-img, .room-card.reverse .room-body { order: unset; }
+    .room-img { min-height: 240px; }
+    .rooms-section { padding: 3rem 1.2rem; }
+    .intro-bar { gap: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="28" height="36" viewBox="0 0 28 36" fill="none">
+      <polygon points="14,2 2,18 8,18 4,28 24,28 20,18 26,18" fill="#E6D5B8" opacity="0.9"/>
+      <rect x="11" y="28" width="6" height="7" fill="#8B4513"/>
+    </svg>
+    Лодж Пирин
+  </a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Меню">
+    <svg width="24" height="24" fill="none" stroke="#E6D5B8" stroke-width="2.2">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <ul class="nav-links">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html" class="active">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label">Планински Лодж Пирин</div>
+    <h1 class="hero-title">Нашите Стаи</h1>
+    <p class="hero-sub">Уют и природа под един покрив</p>
+  </div>
+</section>
+
+<div class="intro-bar">
+  <div class="intro-stat"><strong>5</strong><span>Вида стаи</span></div>
+  <div class="intro-stat"><strong>22–80 м²</strong><span>Площ</span></div>
+  <div class="intro-stat"><strong>до 6</strong><span>Гости</span></div>
+  <div class="intro-stat"><strong>WiFi</strong><span>Навсякъде</span></div>
+</div>
+
+<section class="rooms-section">
+  <div class="container">
+
+    <!-- Room 1 -->
+    <div class="room-card">
+      <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900'); position:relative;">
+        <div class="room-badge">Стандарт</div>
+      </div>
+      <div class="room-body">
+        <div class="room-type">Стая · 22 м²</div>
+        <h2 class="room-name">Планинска Стая</h2>
+        <p class="room-desc">Нашата класическа планинска стая съчетава дървесна топлина с модерен комфорт. Голямо прозорче с гледка към Пиринските върхове превръща всяка сутрин в незабравима. Обзаведена с двойно легло или две единични, удобен работен кът и собствена баня с душ.</p>
+        <div class="room-meta">
+          <div class="room-meta-item">👤 <strong>1–2 гости</strong></div>
+          <div class="room-meta-item">🏔️ <strong>Планинска гледка</strong></div>
+          <div class="room-meta-item">📐 <strong>22 м²</strong></div>
+        </div>
+        <div class="room-amenities">
+          <span class="amenity-tag">WiFi</span>
+          <span class="amenity-tag">TV</span>
+          <span class="amenity-tag">Климатик</span>
+          <span class="amenity-tag">Закуска</span>
+          <span class="amenity-tag">Сейф</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">от 140 лв <span>/ нощ</span></div>
+          <a href="contact.html" class="btn-book">Резервирай</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wood-divider"></div>
+
+    <!-- Room 2 -->
+    <div class="room-card reverse">
+      <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900'); position:relative;">
+        <div class="room-badge">Комфорт</div>
+      </div>
+      <div class="room-body">
+        <div class="room-type">Стая · 28 м²</div>
+        <h2 class="room-name">Комфортна Стая</h2>
+        <p class="room-desc">Просторна стая с балкон и собствена камина за романтични планински вечери. Масивна дървена мебелировка, меки текстили в земни тонове и луксозна баня с вана — перфектна за двойки, търсещи бягство от ежедневието.</p>
+        <div class="room-meta">
+          <div class="room-meta-item">👤 <strong>1–2 гости</strong></div>
+          <div class="room-meta-item">🏔️ <strong>Балкон с гледка</strong></div>
+          <div class="room-meta-item">📐 <strong>28 м²</strong></div>
+        </div>
+        <div class="room-amenities">
+          <span class="amenity-tag">WiFi</span>
+          <span class="amenity-tag">Камина</span>
+          <span class="amenity-tag">Балкон</span>
+          <span class="amenity-tag">Вана</span>
+          <span class="amenity-tag">Мини бар</span>
+          <span class="amenity-tag">Закуска</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">от 190 лв <span>/ нощ</span></div>
+          <a href="contact.html" class="btn-book">Резервирай</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wood-divider"></div>
+
+    <!-- Room 3 -->
+    <div class="room-card">
+      <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=900'); position:relative;">
+        <div class="room-badge">Семейна</div>
+      </div>
+      <div class="room-body">
+        <div class="room-type">Апартамент · 40 м²</div>
+        <h2 class="room-name">Семейна Стая</h2>
+        <p class="room-desc">Просторен апартамент с две спални, идеален за семейства. Дневна зона с диван-легло, напълно оборудвана кухня и две бани гарантират комфорт за всички. Децата ще обожават планинските приключения, а родителите — уютната атмосфера.</p>
+        <div class="room-meta">
+          <div class="room-meta-item">👤 <strong>2–5 гости</strong></div>
+          <div class="room-meta-item">🛏️ <strong>2 спални</strong></div>
+          <div class="room-meta-item">📐 <strong>40 м²</strong></div>
+        </div>
+        <div class="room-amenities">
+          <span class="amenity-tag">WiFi</span>
+          <span class="amenity-tag">2 Спални</span>
+          <span class="amenity-tag">Кухня</span>
+          <span class="amenity-tag">2 Бани</span>
+          <span class="amenity-tag">TV</span>
+          <span class="amenity-tag">Детско легло</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">от 250 лв <span>/ нощ</span></div>
+          <a href="contact.html" class="btn-book">Резервирай</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wood-divider"></div>
+
+    <!-- Room 4 -->
+    <div class="room-card reverse">
+      <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=900'); position:relative;">
+        <div class="room-badge">Лукс</div>
+      </div>
+      <div class="room-body">
+        <div class="room-type">Суит · 55 м²</div>
+        <h2 class="room-name">Лодж Суит</h2>
+        <p class="room-desc">Нашият луксозен суит с камина и отделна хол зона е върхът на планинския комфорт. Огромна спалня с кинг-сайз легло, пространна баня с джакузи вана и частен балкон с необятна гледка към Пиринските върхове — изживяване, което не се забравя.</p>
+        <div class="room-meta">
+          <div class="room-meta-item">👤 <strong>1–3 гости</strong></div>
+          <div class="room-meta-item">🔥 <strong>Камина & Хол</strong></div>
+          <div class="room-meta-item">📐 <strong>55 м²</strong></div>
+        </div>
+        <div class="room-amenities">
+          <span class="amenity-tag">Камина</span>
+          <span class="amenity-tag">Хол зона</span>
+          <span class="amenity-tag">Джакузи вана</span>
+          <span class="amenity-tag">Балкон</span>
+          <span class="amenity-tag">Мини бар</span>
+          <span class="amenity-tag">Закуска</span>
+          <span class="amenity-tag">Батробе</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">от 340 лв <span>/ нощ</span></div>
+          <a href="contact.html" class="btn-book">Резервирай</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="wood-divider"></div>
+
+    <!-- Room 5 -->
+    <div class="room-card">
+      <div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900'); position:relative;">
+        <div class="room-badge">Премиум</div>
+      </div>
+      <div class="room-body">
+        <div class="room-type">Апартамент · 80 м²</div>
+        <h2 class="room-name">Шале Апартамент</h2>
+        <p class="room-desc">Нашият флагшип апартамент е цяло шале в едно. Частна тераса с личен джакузи с гледка към планината, пълнооборудвана кухня, две спални и просторна хол зона с камина. За онези, които отказват да се лишат от нищо дори в планината.</p>
+        <div class="room-meta">
+          <div class="room-meta-item">👤 <strong>2–6 гости</strong></div>
+          <div class="room-meta-item">🛁 <strong>Частен джакузи</strong></div>
+          <div class="room-meta-item">📐 <strong>80 м²</strong></div>
+        </div>
+        <div class="room-amenities">
+          <span class="amenity-tag">Частна тераса</span>
+          <span class="amenity-tag">Джакузи</span>
+          <span class="amenity-tag">Камина</span>
+          <span class="amenity-tag">Кухня</span>
+          <span class="amenity-tag">2 Спални</span>
+          <span class="amenity-tag">Хол</span>
+          <span class="amenity-tag">Закуска</span>
+          <span class="amenity-tag">Батробе</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">от 480 лв <span>/ нощ</span></div>
+          <a href="contact.html" class="btn-book">Резервирай</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- POLICY -->
+<section class="policy">
+  <div class="container">
+    <h2 class="section-title-light" style="margin-bottom:2rem;">Условия за настаняване</h2>
+    <div class="policy-grid">
+      <div class="policy-item">
+        <div class="policy-icon">🕐</div>
+        <div class="policy-label">Настаняване</div>
+        <div class="policy-val">от 14:00 ч.</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-icon">🕐</div>
+        <div class="policy-label">Напускане</div>
+        <div class="policy-val">до 12:00 ч.</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-icon">🐾</div>
+        <div class="policy-label">Домашни любимци</div>
+        <div class="policy-val">Позволени (срещу такса)</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-icon">🚗</div>
+        <div class="policy-label">Паркинг</div>
+        <div class="policy-val">Безплатен, охраняем</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-icon">🚭</div>
+        <div class="policy-label">Пушене</div>
+        <div class="policy-val">Забранено в стаите</div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-icon">❌</div>
+        <div class="policy-label">Анулация</div>
+        <div class="policy-val">Безплатна до 48 ч.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <svg width="22" height="28" viewBox="0 0 28 36" fill="none" style="vertical-align:middle;margin-right:8px">
+      <polygon points="14,2 2,18 8,18 4,28 24,28 20,18 26,18" fill="#E6D5B8" opacity="0.8"/>
+      <rect x="11" y="28" width="6" height="7" fill="#8B4513"/>
+    </svg>
+    Планински Лодж Пирин
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-info">
+    с. Баня, общ. Разлог, до Банско<br>
+    <a href="tel:+359749885555">+359 749 88 555</a> · <a href="mailto:info@lodgepirin.bg">info@lodgepirin.bg</a><br>
+    © 2024 Планински Лодж Пирин. Всички права запазени.
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Удобства — Гранд Палас Хотел</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Raleway',sans-serif;background:#0C0C0C;color:#F5F1EB}
+a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(12,12,12,.95);backdrop-filter:blur(10px);padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,169,110,.2)}
+.nav-logo{font-family:'Cinzel Decorative',serif;color:#C9A96E;font-size:1.3rem}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-size:.85rem;letter-spacing:2px;text-transform:uppercase;color:#F5F1EB;transition:color .3s}
+.nav-links a:hover,.nav-links a.active{color:#C9A96E}
+.hero{height:50vh;background:url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920') center/cover;display:flex;align-items:center;justify-content:center;position:relative}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,12,12,.7),rgba(12,12,12,.9))}
+.hero-content{position:relative;z-index:1;text-align:center}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:#C9A96E}
+.hero p{font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;opacity:.8;margin-top:10px}
+.gold-line{width:80px;height:2px;background:#C9A96E;margin:30px auto}
+.amenity-section{display:grid;grid-template-columns:1fr 1fr;min-height:500px}
+.amenity-section:nth-child(even) .amenity-img{order:2}
+.amenity-section:nth-child(even) .amenity-text{order:1}
+.amenity-img{background-size:cover;background-position:center;min-height:400px}
+.amenity-text{padding:60px 50px;display:flex;flex-direction:column;justify-content:center;background:#0C0C0C}
+.amenity-text h2{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#C9A96E;margin-bottom:8px}
+.amenity-text .subtitle{font-size:.8rem;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;opacity:.7;margin-bottom:20px}
+.amenity-text p{line-height:1.9;font-weight:300;color:rgba(245,241,235,.8);margin-bottom:15px;font-size:.95rem}
+.amenity-text .hours{font-size:.85rem;color:#C9A96E;margin-top:10px;border-top:1px solid rgba(201,169,110,.2);padding-top:15px}
+.parallax-break{height:300px;background-attachment:fixed;background-size:cover;background-position:center;position:relative}
+.parallax-break::after{content:'';position:absolute;inset:0;background:rgba(12,12,12,.6)}
+.parallax-break .quote{position:relative;z-index:1;height:100%;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 10%}
+.parallax-break .quote p{font-family:'Cormorant Garamond',serif;font-size:2rem;font-style:italic;color:#C9A96E}
+footer{background:#0C0C0C;border-top:1px solid rgba(201,169,110,.2);padding:50px 5%;text-align:center}
+.footer-name{font-family:'Cinzel Decorative',serif;color:#C9A96E;font-size:1.2rem;margin-bottom:15px}
+footer p{font-size:.8rem;color:rgba(245,241,235,.5);margin-bottom:8px;letter-spacing:1px}
+footer .socials{margin:20px 0}
+footer .socials a{color:#C9A96E;margin:0 12px;font-size:.85rem;letter-spacing:2px;text-transform:uppercase}
+@media(max-width:768px){
+.amenity-section{grid-template-columns:1fr}
+.amenity-section:nth-child(even) .amenity-img{order:0}
+.amenity-section:nth-child(even) .amenity-text{order:0}
+.amenity-img{min-height:250px}
+.amenity-text{padding:40px 25px}
+.amenity-text h2{font-size:1.8rem}
+.hero h1{font-size:2.2rem}
+.nav-links{gap:15px}
+.nav-links a{font-size:.7rem}
+}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="nav-logo">Grand Palace</a>
+<ul class="nav-links">
+<li><a href="index.html">Начало</a></li>
+<li><a href="rooms.html">Стаи</a></li>
+<li><a href="amenities.html" class="active">Удобства</a></li>
+<li><a href="gallery.html">Галерия</a></li>
+<li><a href="contact.html">Резервация</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Удобства & Услуги</h1>
+<div class="gold-line"></div>
+<p>Всичко, от което се нуждаете, на едно място</p>
+</div>
+</section>
+
+<div class="amenity-section">
+<div class="amenity-img" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900')"></div>
+<div class="amenity-text">
+<div class="subtitle">Fine Dining</div>
+<h2>Ресторант „Палас"</h2>
+<p>Нашият ресторант с една звезда Мишелин предлага кулинарно пътешествие, вдъхновено от българската традиция и международната haute cuisine. Шеф-готвач Димитър Георгиев създава сезонни менюта с местни продукти от фермери партньори.</p>
+<p>Виненият ни погреб съхранява над 800 етикета от най-добрите лозя в България и Европа.</p>
+<div class="hours">Работно време: Закуска 07:00–10:30 · Обяд 12:00–15:00 · Вечеря 18:30–23:00</div>
+</div>
+</div>
+
+<div class="amenity-section">
+<div class="amenity-img" style="background-image:url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900')"></div>
+<div class="amenity-text">
+<div class="subtitle">Релаксация</div>
+<h2>Спа & Уелнес Център</h2>
+<p>Потопете се в оазис на спокойствие. Нашият спа център на 1200 м² предлага термална зона, хамам, финландска сауна, ледена стая и басейн с минерална вода. Опитните терапевти предлагат масажи с розово масло, антистрес ритуали и авторски процедури.</p>
+<div class="hours">Работно време: 07:00–22:00 ежедневно · Резервации за процедури: +359 2 981 5556</div>
+</div>
+</div>
+
+<div class="parallax-break" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920')">
+<div class="quote"><p>„Лукс не е привилегия — той е изкуство на ежедневието."</p></div>
+</div>
+
+<div class="amenity-section">
+<div class="amenity-img" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900')"></div>
+<div class="amenity-text">
+<div class="subtitle">Активен живот</div>
+<h2>Фитнес Зала</h2>
+<p>Модерно оборудван фитнес център с уреди от Technogym, зона за свободни тежести и студио за йога. Персоналните ни треньори ще създадат индивидуална програма за вас.</p>
+<div class="hours">Работно време: 06:00–23:00 ежедневно</div>
+</div>
+</div>
+
+<div class="amenity-section">
+<div class="amenity-img" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=900')"></div>
+<div class="amenity-text">
+<div class="subtitle">Бизнес</div>
+<h2>Конферентен Център</h2>
+<p>Четири елегантни зали с капацитет от 20 до 200 души, оборудвани с най-съвременна аудио-визуална техника. Идеалното място за корпоративни събития, конференции и гала вечери.</p>
+<div class="hours">Резервации: events@grandpalace.bg · +359 2 981 5557</div>
+</div>
+</div>
+
+<div class="amenity-section">
+<div class="amenity-img" style="background-image:url('https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=900')"></div>
+<div class="amenity-text">
+<div class="subtitle">Вечерни моменти</div>
+<h2>Лоби Бар „Златен Век"</h2>
+<p>Изискана атмосфера с кадифени кресла, приглушена джаз музика и авторски коктейли. Нашият барман създава уникални напитки, вдъхновени от българските аромати — роза, лавандула, мента.</p>
+<div class="hours">Работно време: 10:00–01:00 ежедневно · Жива музика: Петък–Събота</div>
+</div>
+</div>
+
+<div class="amenity-section">
+<div class="amenity-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900')"></div>
+<div class="amenity-text">
+<div class="subtitle">Комфорт</div>
+<h2>Room Service 24/7</h2>
+<p>Вашите желания нямат часови ограничения. Поръчайте от пълното ни меню по всяко време — от свежо приготвена закуска на разсъмване до полунощна шоколадова фондю.</p>
+<div class="hours">Достъпно: 24 часа, 7 дни в седмицата · Вътр. тел.: 0</div>
+</div>
+</div>
+
+<footer>
+<div class="footer-name">Grand Palace Hotel</div>
+<p>бул. „Цар Освободител" 28, 1000 София, България</p>
+<p>+359 2 981 5555 · reservations@grandpalace.bg</p>
+<div class="socials">
+<a href="#">Facebook</a>
+<a href="#">Instagram</a>
+<a href="#">TripAdvisor</a>
+</div>
+<p>© 2024 Гранд Палас Хотел. Всички права запазени.</p>
+</footer>
+</body>
+</html>

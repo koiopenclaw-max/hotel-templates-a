@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Урбан Дизайн Хотел — София</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --carbon: #1C1C1E;
+      --coral: #FF385C;
+      --light: #F5F5F7;
+      --mid: #2C2C2E;
+      --muted: #8E8E93;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--carbon); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: var(--carbon);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
+      color: var(--light); letter-spacing: 0.08em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--coral); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--light); text-decoration: none; letter-spacing: 0.1em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--coral); }
+
+    /* HERO */
+    .hero {
+      height: 100vh; min-height: 640px;
+      background: url('https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=1920') center/cover no-repeat;
+      position: relative; display: flex; align-items: center; justify-content: flex-start;
+      padding: 0 80px;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(28,28,30,0.88) 0%, rgba(28,28,30,0.55) 60%, rgba(28,28,30,0.2) 100%);
+    }
+    .hero-geo {
+      position: absolute; top: 80px; right: 80px; width: 220px; height: 220px;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255,56,92,0.15) 10px,
+        rgba(255,56,92,0.15) 11px
+      );
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .hero-geo-2 {
+      position: absolute; bottom: 120px; right: 180px; width: 80px; height: 80px;
+      border: 2px solid rgba(255,56,92,0.4); transform: rotate(45deg);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-label {
+      display: inline-block; font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 24px;
+      text-shadow: 0 0 20px rgba(255,56,92,0.6);
+    }
+    .hero-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 800; color: var(--light); line-height: 0.95;
+      letter-spacing: -0.02em; margin-bottom: 24px;
+    }
+    .hero-title .accent {
+      color: var(--coral);
+      text-shadow: 0 0 40px rgba(255,56,92,0.5), 0 0 80px rgba(255,56,92,0.2);
+    }
+    .hero-tagline {
+      font-size: 1.15rem; color: rgba(245,245,247,0.7); font-weight: 300;
+      letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 48px;
+    }
+    .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-block; padding: 16px 40px;
+      background: var(--coral); color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { background: #e02d50; transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-block; padding: 15px 40px;
+      border: 1px solid rgba(245,245,247,0.4); color: var(--light);
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--coral); color: var(--coral); }
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(245,245,247,0.4); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 48px; background: linear-gradient(to bottom, rgba(255,56,92,0.6), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
+
+    /* ASYMMETRIC INTRO */
+    .intro-grid {
+      display: grid; grid-template-columns: 60fr 40fr;
+      min-height: 480px; background: var(--carbon);
+    }
+    .intro-text {
+      padding: 80px 64px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .intro-text .section-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 20px;
+      text-shadow: 0 0 16px rgba(255,56,92,0.4);
+    }
+    .intro-text h2 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; color: var(--light); line-height: 1.05; margin-bottom: 24px;
+    }
+    .intro-text p {
+      color: var(--muted); font-size: 0.97rem; line-height: 1.8; font-weight: 300;
+      max-width: 440px; margin-bottom: 36px;
+    }
+    .intro-visual {
+      position: relative; overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900') center/cover;
+    }
+    .intro-visual::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(28,28,30,0.3), transparent);
+    }
+    .stat-row {
+      display: flex; gap: 48px; flex-wrap: wrap;
+    }
+    .stat { }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800;
+      color: var(--coral); line-height: 1;
+      text-shadow: 0 0 24px rgba(255,56,92,0.4);
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; }
+
+    /* SECTION COMMON */
+    section { }
+    .section-pad { padding: 100px 80px; }
+
+    /* CITY GUIDE */
+    .city-guide { background: var(--light); }
+    .section-header { margin-bottom: 56px; }
+    .section-header .label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--carbon); line-height: 1;
+    }
+    .city-cards {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    }
+    .city-card {
+      background: var(--carbon); padding: 40px 32px; position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .city-card:hover { transform: translateY(-4px); }
+    .city-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--coral); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .city-card:hover::before { transform: scaleX(1); }
+    .city-dist {
+      font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+      color: var(--coral); margin-bottom: 12px;
+      text-shadow: 0 0 20px rgba(255,56,92,0.3);
+    }
+    .city-name {
+      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+      color: var(--light); margin-bottom: 12px;
+    }
+    .city-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .city-geo {
+      position: absolute; bottom: 20px; right: 20px; width: 32px; height: 32px;
+      border: 1px solid rgba(255,56,92,0.3); transform: rotate(45deg);
+    }
+
+    /* FEATURED ROOMS */
+    .featured-rooms { background: #EBEBED; }
+    .rooms-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .room-card {
+      background: var(--light); overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .room-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(28,28,30,0.15); }
+    .room-card-img {
+      width: 100%; height: 220px; object-fit: cover;
+      display: block; transition: transform 0.4s;
+    }
+    .room-card:hover .room-card-img { transform: scale(1.04); }
+    .room-card-img-wrap { overflow: hidden; }
+    .room-card-body { padding: 28px 28px 32px; }
+    .room-card-tag {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 10px; display: block;
+    }
+    .room-card-name {
+      font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700;
+      color: var(--carbon); margin-bottom: 10px;
+    }
+    .room-card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+    .room-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .room-price {
+      font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--carbon);
+    }
+    .room-price span { font-size: 0.75rem; font-weight: 400; color: var(--muted); font-family: 'Inter', sans-serif; }
+    .btn-sm {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--coral); text-decoration: none; border-bottom: 1px solid var(--coral);
+      padding-bottom: 2px; transition: opacity 0.2s;
+    }
+    .btn-sm:hover { opacity: 0.7; }
+
+    /* GEOMETRIC DIVIDER */
+    .geo-divider {
+      height: 80px; background: var(--carbon);
+      position: relative; overflow: hidden;
+    }
+    .geo-divider::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent, transparent 40px,
+        rgba(255,56,92,0.08) 40px, rgba(255,56,92,0.08) 41px
+      );
+    }
+    .geo-divider-shape {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border: 2px solid var(--coral);
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    /* INSTAGRAM STRIP */
+    .insta-strip { background: var(--carbon); padding: 60px 0 60px 80px; }
+    .insta-header { margin-bottom: 36px; padding-right: 80px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .insta-header h2 {
+      font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--light);
+    }
+    .insta-handle {
+      font-size: 0.82rem; font-weight: 500; color: var(--coral); text-decoration: none;
+      letter-spacing: 0.05em; transition: opacity 0.2s;
+    }
+    .insta-handle:hover { opacity: 0.7; }
+    .insta-scroll {
+      display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px;
+      scrollbar-width: thin; scrollbar-color: var(--coral) transparent;
+    }
+    .insta-scroll::-webkit-scrollbar { height: 3px; }
+    .insta-scroll::-webkit-scrollbar-thumb { background: var(--coral); }
+    .insta-img {
+      flex-shrink: 0; width: 200px; height: 200px; object-fit: cover;
+      transition: opacity 0.2s, transform 0.3s;
+    }
+    .insta-img:hover { opacity: 0.85; transform: scale(0.97); }
+
+    /* FOOTER */
+    footer {
+      background: var(--carbon); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 80px; text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;
+      color: var(--light); letter-spacing: 0.1em; margin-bottom: 20px; display: block;
+    }
+    .footer-logo span { color: var(--coral); }
+    .footer-info {
+      font-size: 0.82rem; color: var(--muted); line-height: 2;
+      letter-spacing: 0.02em;
+    }
+    .footer-info a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-info a:hover { color: var(--coral); }
+    .footer-divider {
+      width: 40px; height: 2px; background: var(--coral); margin: 20px auto;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 0 24px; }
+      .hero { padding: 0 40px; }
+      .section-pad { padding: 72px 40px; }
+      .intro-grid { grid-template-columns: 1fr; }
+      .intro-visual { height: 300px; }
+      .city-cards { grid-template-columns: repeat(2, 1fr); }
+      .rooms-grid { grid-template-columns: repeat(2, 1fr); }
+      .insta-strip { padding: 60px 0 60px 40px; }
+      footer { padding: 40px 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding: 0 24px; }
+      .section-pad { padding: 60px 24px; }
+      .city-cards { grid-template-columns: 1fr; }
+      .rooms-grid { grid-template-columns: 1fr; }
+      .stat-row { gap: 28px; }
+      .insta-strip { padding: 48px 0 48px 24px; }
+      footer { padding: 36px 24px; }
+      .hero-geo, .hero-geo-2 { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">URB<span>A</span>N</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Начало</a></li>
+      <li><a href="rooms.html">Стаи</a></li>
+      <li><a href="amenities.html">Удобства</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html">Резервация</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-geo"></div>
+    <div class="hero-geo-2"></div>
+    <div class="hero-content">
+      <span class="hero-label">▸ София, Център — Открито 2024</span>
+      <h1 class="hero-title">
+        УРБАН<br><span class="accent">ДИЗАЙН</span><br>ХОТЕЛ
+      </h1>
+      <p class="hero-tagline">Дизайн. Стил. София.</p>
+      <div class="hero-ctas">
+        <a href="contact.html" class="btn-primary">Резервирай</a>
+        <a href="rooms.html" class="btn-outline">Разгледай стаите</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- ASYMMETRIC INTRO -->
+  <div class="intro-grid">
+    <div class="intro-text">
+      <span class="section-label">▸ Нашата история</span>
+      <h2>Където Дизайнът<br>Среща Града</h2>
+      <p>Урбан Дизайн Хотел е повече от място за нощувка — това е манифест за съвременната градска естетика. Всеки ъгъл е замислен с прецизност, всеки детайл — с намерение.</p>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">42</div>
+          <div class="stat-label">Дизайн стаи</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">8°</div>
+          <div class="stat-label">Етаж — Руфтоп</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">500м</div>
+          <div class="stat-label">До Витошка</div>
+        </div>
+      </div>
+    </div>
+    <div class="intro-visual"></div>
+  </div>
+
+  <!-- CITY GUIDE -->
+  <section class="city-guide section-pad">
+    <div class="section-header">
+      <span class="label">▸ Изследвай</span>
+      <h2>София Около Нас</h2>
+    </div>
+    <div class="city-cards">
+      <div class="city-card">
+        <div class="city-dist">500м</div>
+        <div class="city-name">Витошка</div>
+        <p class="city-desc">Пешеходната улица на София — бутици, кафенета, пулсът на града.</p>
+        <div class="city-geo"></div>
+      </div>
+      <div class="city-card">
+        <div class="city-dist">1.2км</div>
+        <div class="city-name">НДК</div>
+        <p class="city-desc">Национален дворец на културата — икона на архитектурата и събитията.</p>
+        <div class="city-geo"></div>
+      </div>
+      <div class="city-card">
+        <div class="city-dist">800м</div>
+        <div class="city-name">Ал. Невски</div>
+        <p class="city-desc">Великолепната катедрала — символ на София и духовен център.</p>
+        <div class="city-geo"></div>
+      </div>
+      <div class="city-card">
+        <div class="city-dist">2км</div>
+        <div class="city-name">Южен Парк</div>
+        <p class="city-desc">Зелен оазис сред урбанизма — перфектно за сутрешна разходка.</p>
+        <div class="city-geo"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GEO DIVIDER -->
+  <div class="geo-divider"><div class="geo-divider-shape"></div></div>
+
+  <!-- FEATURED ROOMS -->
+  <section class="featured-rooms section-pad">
+    <div class="section-header">
+      <span class="label">▸ Нашите пространства</span>
+      <h2>Избрани Стаи</h2>
+    </div>
+    <div class="rooms-grid">
+      <div class="room-card">
+        <div class="room-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900" alt="Стандарт" class="room-card-img" />
+        </div>
+        <div class="room-card-body">
+          <span class="room-card-tag">▸ 22м²</span>
+          <div class="room-card-name">Стандарт</div>
+          <p class="room-card-desc">Минималистичен дизайн, премиум матрак, умно осветление.</p>
+          <div class="room-card-footer">
+            <div class="room-price">160 лв <span>/ нощ</span></div>
+            <a href="rooms.html" class="btn-sm">Детайли →</a>
+          </div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="room-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=900" alt="Дизайн Стая" class="room-card-img" />
+        </div>
+        <div class="room-card-body">
+          <span class="room-card-tag">▸ 30м²</span>
+          <div class="room-card-name">Дизайн Стая</div>
+          <p class="room-card-desc">Авторска мебел, оригинални произведения на изкуството.</p>
+          <div class="room-card-footer">
+            <div class="room-price">230 лв <span>/ нощ</span></div>
+            <a href="rooms.html" class="btn-sm">Детайли →</a>
+          </div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="room-card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900" alt="Лофт Суит" class="room-card-img" />
+        </div>
+        <div class="room-card-body">
+          <span class="room-card-tag">▸ 55м²</span>
+          <div class="room-card-name">Лофт Суит</div>
+          <p class="room-card-desc">Отворен план, панорамна гледка към центъра на София.</p>
+          <div class="room-card-footer">
+            <div class="room-price">350 лв <span>/ нощ</span></div>
+            <a href="rooms.html" class="btn-sm">Детайли →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="rooms.html" class="btn-primary">Всички стаи</a>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM STRIP -->
+  <section class="insta-strip">
+    <div class="insta-header">
+      <h2>@urbanhotelsofia</h2>
+      <a href="contact.html" class="insta-handle">Следвай ни →</a>
+    </div>
+    <div class="insta-scroll">
+      <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900" alt="Urban" class="insta-img" />
+      <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=900" alt="Urban" class="insta-img" />
+      <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=900" alt="Urban" class="insta-img" />
+      <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900" alt="Urban" class="insta-img" />
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900" alt="Urban" class="insta-img" />
+      <img src="https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=900" alt="Urban" class="insta-img" />
+      <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900" alt="Urban" class="insta-img" />
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">URB<span>A</span>N</span>
+    <div class="footer-divider"></div>
+    <div class="footer-info">
+      ул. „Граф Игнатиев" 5, София &nbsp;·&nbsp;
+      <a href="tel:+35924448800">+359 2 444 8800</a> &nbsp;·&nbsp;
+      <a href="mailto:hello@urbanhotel.bg">hello@urbanhotel.bg</a><br>
+      <a href="contact.html">@urbanhotelsofia</a> &nbsp;·&nbsp; © 2024 Урбан Дизайн Хотел
+    </div>
+  </footer>
+
+</body>
+</html>

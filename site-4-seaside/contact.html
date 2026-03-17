@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Резервация – Марина Бей Ризорт</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ocean: #003B5C;
+    --turquoise: #00A8CC;
+    --sand: #F0E6D3;
+    --white: #fff;
+  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--sand); color: #222; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--ocean);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; }
+  .nav-logo span { color: var(--turquoise); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--sand); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; padding-bottom: 4px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--turquoise); }
+  .nav-links a.active { color: var(--turquoise); border-bottom: 2px solid var(--turquoise); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 25px; height: 2px; background: var(--sand); border-radius: 2px; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 55vh; min-height: 380px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?w=1920') center/cover no-repeat;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(0,59,92,0.72); }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 2rem; }
+  .hero-eyebrow { font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: 4px; color: var(--sand); }
+  .hero-sub { font-size: 1rem; opacity: 0.8; margin-top: 0.8rem; font-style: italic; }
+
+  /* WAVE */
+  .wave-divider { display: block; line-height: 0; }
+
+  /* SECTION */
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--ocean); letter-spacing: 2px; }
+  .section-line { width: 60px; height: 3px; background: var(--turquoise); margin: 1rem auto 0; border-radius: 2px; }
+
+  /* CONTACT SECTION */
+  .contact-section { background: var(--sand); padding: 5rem 5%; }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; max-width: 1100px; margin: 0 auto;
+  }
+
+  /* FORM */
+  .form-card {
+    background: var(--white); border-radius: 24px;
+    padding: 3rem; box-shadow: 0 6px 32px rgba(0,59,92,0.1);
+  }
+  .form-card h3 {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.4rem; font-weight: 700;
+    color: var(--ocean); letter-spacing: 1px; margin-bottom: 2rem;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group label {
+    display: block; font-size: 0.82rem; font-weight: 600;
+    color: var(--ocean); letter-spacing: 0.5px; margin-bottom: 0.4rem;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%; padding: 12px 16px;
+    border: 2px solid rgba(0,59,92,0.12); border-radius: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem;
+    color: #333; background: var(--sand);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--turquoise);
+    box-shadow: 0 0 0 3px rgba(0,168,204,0.15);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-submit {
+    display: inline-block; width: 100%;
+    background: var(--ocean); color: var(--sand);
+    font-family: 'Josefin Sans', sans-serif; font-size: 1rem; font-weight: 700;
+    padding: 16px; border: none; border-radius: 50px;
+    letter-spacing: 2px; cursor: pointer; margin-top: 0.5rem;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 6px 24px rgba(0,59,92,0.25);
+  }
+  .btn-submit:hover { background: var(--turquoise); transform: translateY(-2px); }
+
+  /* INFO SIDE */
+  .info-side { display: flex; flex-direction: column; gap: 2rem; }
+  .info-card {
+    background: var(--white); border-radius: 20px;
+    padding: 2rem; box-shadow: 0 4px 20px rgba(0,59,92,0.08);
+    border-top: 4px solid var(--turquoise);
+  }
+  .info-card-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+  .info-card-title {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--ocean); letter-spacing: 1px; margin-bottom: 0.5rem;
+  }
+  .info-card-text { font-size: 0.88rem; color: #555; line-height: 1.7; }
+  .info-card-text a { color: var(--turquoise); font-weight: 600; }
+
+  /* MAP PLACEHOLDER */
+  .map-placeholder {
+    background: var(--ocean); border-radius: 20px;
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.8rem;
+    box-shadow: 0 4px 20px rgba(0,59,92,0.15);
+  }
+  .map-placeholder-icon { font-size: 3rem; }
+  .map-placeholder-text {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1rem; font-weight: 600;
+    color: var(--sand); letter-spacing: 1px;
+  }
+  .map-placeholder-sub { font-size: 0.82rem; color: rgba(240,230,211,0.6); }
+
+  /* FOOTER */
+  footer { background: #00253a; color: rgba(240,230,211,0.75); text-align: center; padding: 2.5rem 5%; font-size: 0.85rem; line-height: 2; }
+  footer .footer-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; margin-bottom: 0.5rem; }
+  footer a { color: var(--turquoise); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--ocean); padding: 1.5rem 5%; gap: 1rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Марина<span> Бей</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html" class="active">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Марина Бей Ризорт</p>
+    <h1 class="hero-title">Резервация</h1>
+    <p class="hero-sub">Запазете вашата морска почивка</p>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#F0E6D3" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="section-header">
+    <p class="section-label">Свържете се с нас</p>
+    <h2 class="section-title">Направете Резервация</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+
+    <div class="form-card">
+      <h3>Форма за Резервация</h3>
+      <form onsubmit="return false;">
+        <div class="form-group">
+          <label for="name">Име и Фамилия</label>
+          <input type="text" id="name" placeholder="Вашето пълно име" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Имейл</label>
+            <input type="email" id="email" placeholder="email@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Телефон</label>
+            <input type="tel" id="phone" placeholder="+359 888 123 456">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="checkin">Настаняване</label>
+            <input type="date" id="checkin" required>
+          </div>
+          <div class="form-group">
+            <label for="checkout">Напускане</label>
+            <input type="date" id="checkout" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="guests">Брой гости</label>
+            <select id="guests">
+              <option value="1">1 гост</option>
+              <option value="2" selected>2 гости</option>
+              <option value="3">3 гости</option>
+              <option value="4">4 гости</option>
+              <option value="5">5+ гости</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="room">Тип стая</label>
+            <select id="room">
+              <option value="standard">Стандартна Стая</option>
+              <option value="seaview">Морска Гледка</option>
+              <option value="family">Фамилна Стая</option>
+              <option value="suite">Суит „Марина"</option>
+              <option value="penthouse">Пентхаус</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="notes">Бележки</label>
+          <textarea id="notes" placeholder="Допълнителни пожелания, специални заявки..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit">ИЗПРАТЕТЕ ЗАПИТВАНЕ</button>
+      </form>
+    </div>
+
+    <div class="info-side">
+      <div class="info-card">
+        <span class="info-card-icon">📍</span>
+        <div class="info-card-title">Адрес</div>
+        <p class="info-card-text">ул. „Морска" 42, Созопол 8130<br>Бургаска област, България</p>
+      </div>
+      <div class="info-card">
+        <span class="info-card-icon">📞</span>
+        <div class="info-card-title">Контакти</div>
+        <p class="info-card-text">
+          Телефон: <a href="tel:+35955022888">+359 550 22 888</a><br>
+          Имейл: <a href="mailto:info@marinabay.bg">info@marinabay.bg</a><br>
+          Рецепция: 24/7
+        </p>
+      </div>
+      <div class="info-card">
+        <span class="info-card-icon">🕐</span>
+        <div class="info-card-title">Настаняване</div>
+        <p class="info-card-text">
+          Check-in: от 14:00<br>
+          Check-out: до 12:00<br>
+          Сезон: 1 Юни – 30 Септември
+        </p>
+      </div>
+      <div class="map-placeholder">
+        <span class="map-placeholder-icon">🗺️</span>
+        <div class="map-placeholder-text">Созопол, България</div>
+        <div class="map-placeholder-sub">ул. „Морска" 42 · 5 мин. от плажа</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#00253a" d="M0,60 C360,0 720,100 1080,50 C1260,25 1380,70 1440,60 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<footer>
+  <div class="footer-logo">Марина Бей Ризорт</div>
+  <div>ул. „Морска" 42, Созопол &nbsp;·&nbsp; <a href="tel:+35955022888">+359 550 22 888</a> &nbsp;·&nbsp; <a href="mailto:info@marinabay.bg">info@marinabay.bg</a></div>
+  <div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.6;">© 2024 Марина Бей Ризорт. Всички права запазени.</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

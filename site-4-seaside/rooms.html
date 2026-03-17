@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стаи – Марина Бей Ризорт</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ocean: #003B5C;
+    --turquoise: #00A8CC;
+    --sand: #F0E6D3;
+    --white: #fff;
+  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--sand); color: #222; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--ocean);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; }
+  .nav-logo span { color: var(--turquoise); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--sand); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; padding-bottom: 4px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--turquoise); }
+  .nav-links a.active { color: var(--turquoise); border-bottom: 2px solid var(--turquoise); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 25px; height: 2px; background: var(--sand); border-radius: 2px; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 55vh; min-height: 380px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900') center/cover no-repeat;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(0,59,92,0.72); }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 2rem; }
+  .hero-eyebrow { font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: 4px; color: var(--sand); }
+  .hero-sub { font-size: 1rem; opacity: 0.8; margin-top: 0.8rem; font-style: italic; }
+
+  /* WAVE */
+  .wave-divider { display: block; line-height: 0; }
+
+  /* SECTION HEADER */
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--ocean); letter-spacing: 2px; }
+  .section-line { width: 60px; height: 3px; background: var(--turquoise); margin: 1rem auto 0; border-radius: 2px; }
+
+  /* ROOMS INTRO */
+  .rooms-intro { background: var(--ocean); padding: 4rem 5%; }
+  .rooms-intro .section-title { color: var(--sand); }
+
+  /* ROOMS GRID */
+  .rooms-section { background: var(--sand); padding: 5rem 5%; }
+  .rooms-list { display: flex; flex-direction: column; gap: 3rem; max-width: 1100px; margin: 0 auto; }
+
+  .room-card {
+    background: var(--white); border-radius: 24px;
+    overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;
+    box-shadow: 0 6px 32px rgba(0,59,92,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .room-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,59,92,0.18); }
+  .room-card.reverse { direction: rtl; }
+  .room-card.reverse > * { direction: ltr; }
+
+  .room-img-wrap { position: relative; overflow: hidden; min-height: 300px; }
+  .room-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+  .room-card:hover .room-img { transform: scale(1.05); }
+  .room-badge {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--turquoise); color: var(--white);
+    font-family: 'Josefin Sans', sans-serif; font-size: 0.75rem; font-weight: 700;
+    padding: 6px 16px; border-radius: 50px; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .room-body { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .room-name {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.5rem; font-weight: 700;
+    color: var(--ocean); letter-spacing: 1px; margin-bottom: 0.5rem;
+  }
+  .room-price {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.8rem; font-weight: 700;
+    color: var(--turquoise); margin-bottom: 1rem;
+  }
+  .room-price span { font-size: 0.9rem; font-weight: 400; color: #888; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .room-desc { font-size: 0.9rem; color: #555; line-height: 1.7; margin-bottom: 1.5rem; }
+  .room-features { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.8rem; }
+  .room-features li {
+    background: rgba(0,168,204,0.1); color: var(--ocean);
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 5px 14px; border-radius: 50px; border: 1px solid rgba(0,168,204,0.3);
+  }
+  .room-cta {
+    display: inline-block;
+    background: var(--ocean); color: var(--sand);
+    font-family: 'Josefin Sans', sans-serif; font-size: 0.85rem; font-weight: 700;
+    padding: 12px 28px; border-radius: 50px; letter-spacing: 2px;
+    transition: background 0.2s, transform 0.2s; align-self: flex-start;
+  }
+  .room-cta:hover { background: var(--turquoise); transform: translateY(-2px); }
+
+  /* PRICING TABLE */
+  .pricing-section { background: var(--ocean); padding: 5rem 5%; }
+  .pricing-section .section-title { color: var(--sand); }
+  .pricing-section .section-label { color: var(--turquoise); }
+  .pricing-table {
+    max-width: 900px; margin: 0 auto;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+  }
+  .pricing-table table { width: 100%; border-collapse: collapse; }
+  .pricing-table th {
+    background: var(--turquoise); color: var(--white);
+    font-family: 'Josefin Sans', sans-serif; font-size: 0.85rem; font-weight: 700;
+    letter-spacing: 1px; padding: 1rem 1.5rem; text-align: left;
+  }
+  .pricing-table td { padding: 1rem 1.5rem; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .pricing-table tr:nth-child(odd) td { background: rgba(255,255,255,0.04); }
+  .pricing-table tr:nth-child(even) td { background: rgba(255,255,255,0.08); }
+  .pricing-table td:first-child { color: var(--sand); font-weight: 600; }
+  .pricing-table td:not(:first-child) { color: rgba(240,230,211,0.8); }
+  .pricing-table .price-cell { color: var(--turquoise) !important; font-weight: 700; font-family: 'Josefin Sans', sans-serif; font-size: 1rem; }
+
+  /* FOOTER */
+  footer { background: #00253a; color: rgba(240,230,211,0.75); text-align: center; padding: 2.5rem 5%; font-size: 0.85rem; line-height: 2; }
+  footer .footer-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; margin-bottom: 0.5rem; }
+  footer a { color: var(--turquoise); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--ocean); padding: 1.5rem 5%; gap: 1rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .room-card, .room-card.reverse { grid-template-columns: 1fr; direction: ltr; }
+    .room-img-wrap { min-height: 220px; }
+    .pricing-table { overflow-x: auto; display: block; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Марина<span> Бей</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html" class="active">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Марина Бей Ризорт</p>
+    <h1 class="hero-title">Нашите Стаи</h1>
+    <p class="hero-sub">Комфорт и лукс в сърцето на черноморието</p>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#003B5C" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- ROOMS INTRO -->
+<div class="rooms-intro">
+  <div class="section-header">
+    <p class="section-label">Изберете вашия комфорт</p>
+    <h2 class="section-title">5 категории настаняване</h2>
+    <div class="section-line"></div>
+    <p style="color:rgba(240,230,211,0.75);margin-top:1.5rem;max-width:620px;margin-left:auto;margin-right:auto;line-height:1.7;font-size:0.95rem;">Всяка стая е проектирана с внимание към детайла, за да ви осигури незабравим черноморски престой. Изберете от уютната стандартна стая до луксозния пентхаус с панорамна тераса.</p>
+  </div>
+</div>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#F0E6D3" d="M0,60 C360,0 720,100 1080,50 C1260,25 1380,70 1440,60 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- ROOMS -->
+<section class="rooms-section">
+  <div class="rooms-list">
+
+    <!-- STANDARD -->
+    <div class="room-card">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=900" alt="Стандартна Стая" class="room-img" loading="lazy">
+        <div class="room-badge">Стандарт</div>
+      </div>
+      <div class="room-body">
+        <div class="room-name">Стандартна Стая</div>
+        <div class="room-price">от 180 лв <span>/ нощ</span></div>
+        <p class="room-desc">Уютна стая с изглед към градината, оборудвана с всичко необходимо за комфортен престой. Идеална за двойки и пътуващи по работа, търсещи покой и уединение.</p>
+        <ul class="room-features">
+          <li>Изглед Градина</li>
+          <li>22 кв.м.</li>
+          <li>Климатик</li>
+          <li>Wi-Fi</li>
+          <li>Мини-бар</li>
+          <li>Балкон</li>
+        </ul>
+        <a href="contact.html" class="room-cta">РЕЗЕРВИРАЙ</a>
+      </div>
+    </div>
+
+    <!-- SEA VIEW -->
+    <div class="room-card reverse">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900" alt="Стая с Морска Гледка" class="room-img" loading="lazy">
+        <div class="room-badge">Популярна</div>
+      </div>
+      <div class="room-body">
+        <div class="room-name">Стая с Морска Гледка</div>
+        <div class="room-price">от 260 лв <span>/ нощ</span></div>
+        <p class="room-desc">Просторна стая с панорамен балкон и директна гледка към Черно море. Събудете се с шума на вълните и залязващото над водата слънце всяка вечер.</p>
+        <ul class="room-features">
+          <li>Морска Гледка</li>
+          <li>28 кв.м.</li>
+          <li>Панорамен Балкон</li>
+          <li>Климатик</li>
+          <li>Smart TV</li>
+          <li>Хидромасаж</li>
+        </ul>
+        <a href="contact.html" class="room-cta">РЕЗЕРВИРАЙ</a>
+      </div>
+    </div>
+
+    <!-- FAMILY -->
+    <div class="room-card">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=900" alt="Фамилна Стая" class="room-img" loading="lazy">
+        <div class="room-badge">Семейна</div>
+      </div>
+      <div class="room-body">
+        <div class="room-name">Фамилна Стая</div>
+        <div class="room-price">от 320 лв <span>/ нощ</span></div>
+        <p class="room-desc">Двустайна апартаментна резиденция, идеална за семейства с деца. Две отделни спални, просторна хол-трапезария и обширна тераса с морска гледка.</p>
+        <ul class="room-features">
+          <li>2 Спални</li>
+          <li>48 кв.м.</li>
+          <li>Трапезария</li>
+          <li>Детска Кошара</li>
+          <li>Морска Гледка</li>
+          <li>2 Бани</li>
+        </ul>
+        <a href="contact.html" class="room-cta">РЕЗЕРВИРАЙ</a>
+      </div>
+    </div>
+
+    <!-- SUITE -->
+    <div class="room-card reverse">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=900" alt="Суит Марина" class="room-img" loading="lazy">
+        <div class="room-badge">Луксозен</div>
+      </div>
+      <div class="room-body">
+        <div class="room-name">Суит „Марина"</div>
+        <div class="room-price">от 450 лв <span>/ нощ</span></div>
+        <p class="room-desc">Флагманският ни апартамент с отделна всекидневна, спалня king-size и панорамна гледка към морето от всяка стая. Персонализирано обслужване и ексклузивни удобства.</p>
+        <ul class="room-features">
+          <li>Панорама 180°</li>
+          <li>65 кв.м.</li>
+          <li>Всекидневна</li>
+          <li>King-size Легло</li>
+          <li>Джакузи</li>
+          <li>Butler Услуга</li>
+        </ul>
+        <a href="contact.html" class="room-cta">РЕЗЕРВИРАЙ</a>
+      </div>
+    </div>
+
+    <!-- PENTHOUSE -->
+    <div class="room-card">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=900" alt="Пентхаус с Тераса" class="room-img" loading="lazy">
+        <div class="room-badge">Пентхаус</div>
+      </div>
+      <div class="room-body">
+        <div class="room-name">Пентхаус с Тераса</div>
+        <div class="room-price">от 680 лв <span>/ нощ</span></div>
+        <p class="room-desc">Връхна точка на лукса — частна покривна тераса с хидромасажна вана, гледка 360° към морето и Созопол. Двустаен апартамент с изцяло оборудвана кухня и личен прислужник.</p>
+        <ul class="room-features">
+          <li>Покривна Тераса</li>
+          <li>90 кв.м.</li>
+          <li>Джакузи Вана</li>
+          <li>Гледка 360°</li>
+          <li>Частна Кухня</li>
+          <li>VIP Услуга</li>
+        </ul>
+        <a href="contact.html" class="room-cta">РЕЗЕРВИРАЙ</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#003B5C" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- PRICING TABLE -->
+<section class="pricing-section">
+  <div class="section-header">
+    <p class="section-label">Сезон 2024</p>
+    <h2 class="section-title">Ценова Листа</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="pricing-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Тип стая</th>
+          <th>Юни–Юли</th>
+          <th>Август</th>
+          <th>Септември</th>
+          <th>Включено</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Стандартна Стая</td>
+          <td class="price-cell">180 лв</td>
+          <td class="price-cell">220 лв</td>
+          <td class="price-cell">160 лв</td>
+          <td>Закуска, Wi-Fi</td>
+        </tr>
+        <tr>
+          <td>Морска Гледка</td>
+          <td class="price-cell">260 лв</td>
+          <td class="price-cell">310 лв</td>
+          <td class="price-cell">230 лв</td>
+          <td>Закуска, Wi-Fi, Мини-бар</td>
+        </tr>
+        <tr>
+          <td>Фамилна Стая</td>
+          <td class="price-cell">320 лв</td>
+          <td class="price-cell">390 лв</td>
+          <td class="price-cell">290 лв</td>
+          <td>Закуска, Wi-Fi, Детско меню</td>
+        </tr>
+        <tr>
+          <td>Суит „Марина"</td>
+          <td class="price-cell">450 лв</td>
+          <td class="price-cell">540 лв</td>
+          <td class="price-cell">400 лв</td>
+          <td>All Inclusive, Butler</td>
+        </tr>
+        <tr>
+          <td>Пентхаус</td>
+          <td class="price-cell">680 лв</td>
+          <td class="price-cell">820 лв</td>
+          <td class="price-cell">600 лв</td>
+          <td>All Inclusive, VIP услуга</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#00253a" d="M0,60 C360,0 720,100 1080,50 C1260,25 1380,70 1440,60 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<footer>
+  <div class="footer-logo">Марина Бей Ризорт</div>
+  <div>ул. „Морска" 42, Созопол &nbsp;·&nbsp; <a href="tel:+35955022888">+359 550 22 888</a> &nbsp;·&nbsp; <a href="mailto:info@marinabay.bg">info@marinabay.bg</a></div>
+  <div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.6;">© 2024 Марина Бей Ризорт. Всички права запазени.</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

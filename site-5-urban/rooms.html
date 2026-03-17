@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Стаи — Урбан Дизайн Хотел</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --carbon: #1C1C1E;
+      --coral: #FF385C;
+      --light: #F5F5F7;
+      --mid: #2C2C2E;
+      --muted: #8E8E93;
+      --border: rgba(28,28,30,0.1);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--carbon); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: var(--carbon);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
+      color: var(--light); letter-spacing: 0.08em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--coral); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--light); text-decoration: none; letter-spacing: 0.1em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--coral); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding-top: 64px; background: var(--carbon); min-height: 280px;
+      display: flex; align-items: flex-end; padding-bottom: 64px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero-geo-1 {
+      position: absolute; top: 80px; right: 120px;
+      width: 160px; height: 160px;
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 8px,
+        rgba(255,56,92,0.12) 8px, rgba(255,56,92,0.12) 9px
+      );
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .page-hero-geo-2 {
+      position: absolute; bottom: 40px; right: 280px;
+      width: 60px; height: 60px;
+      border: 1.5px solid rgba(255,56,92,0.3); transform: rotate(45deg);
+    }
+    .page-hero-geo-3 {
+      position: absolute; top: 100px; right: 60px;
+      width: 24px; height: 24px;
+      background: var(--coral); opacity: 0.6; transform: rotate(45deg);
+    }
+    .page-hero-inner { padding: 0 80px; position: relative; z-index: 2; }
+    .page-hero-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 16px;
+      text-shadow: 0 0 16px rgba(255,56,92,0.4);
+    }
+    .page-hero-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800; color: var(--light); line-height: 0.95; letter-spacing: -0.02em;
+    }
+
+    /* ROOMS */
+    .rooms-container { padding: 0 80px 120px; }
+
+    /* ROOM BLOCK — alternating layout */
+    .room-block {
+      display: grid; grid-template-columns: 55fr 45fr;
+      min-height: 520px; margin-top: 2px; overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .room-block:hover { box-shadow: 0 8px 60px rgba(28,28,30,0.1); }
+    .room-block.reverse { direction: rtl; }
+    .room-block.reverse > * { direction: ltr; }
+    .room-img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease;
+    }
+    .room-block:hover .room-img { transform: scale(1.04); }
+    .room-img-wrap { overflow: hidden; }
+    .room-info {
+      background: var(--carbon); padding: 64px 56px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .room-block.alt .room-info { background: var(--light); }
+    .room-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 20px;
+    }
+    .room-tag::before {
+      content: ''; display: inline-block; width: 24px; height: 1px; background: var(--coral);
+    }
+    .room-name {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1; margin-bottom: 20px;
+    }
+    .room-block:not(.alt) .room-name { color: var(--light); }
+    .room-block.alt .room-name { color: var(--carbon); }
+    .room-desc {
+      font-size: 0.92rem; line-height: 1.8; font-weight: 300; margin-bottom: 36px;
+    }
+    .room-block:not(.alt) .room-desc { color: var(--muted); }
+    .room-block.alt .room-desc { color: #6B6B70; }
+    .room-features {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px;
+    }
+    .feat-pill {
+      padding: 6px 14px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+      border: 1px solid; border-radius: 0;
+    }
+    .room-block:not(.alt) .feat-pill {
+      border-color: rgba(255,255,255,0.15); color: rgba(245,245,247,0.6);
+    }
+    .room-block.alt .feat-pill {
+      border-color: var(--border); color: var(--muted);
+    }
+    .room-pricing { display: flex; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+    .room-price-main {
+      font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800;
+      color: var(--coral); line-height: 1;
+      text-shadow: 0 0 20px rgba(255,56,92,0.3);
+    }
+    .room-price-label {
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 6px;
+    }
+    .room-size-badge {
+      padding: 8px 20px; font-size: 0.8rem; font-weight: 600;
+      background: rgba(255,56,92,0.12); color: var(--coral);
+      letter-spacing: 0.08em;
+    }
+    .btn-room {
+      display: inline-block; margin-top: 28px; padding: 16px 40px;
+      background: var(--coral); color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+      align-self: flex-start; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-room:hover { background: #e02d50; transform: translateY(-2px); }
+    .btn-room.dark {
+      background: transparent; color: var(--coral);
+      border: 1px solid var(--coral);
+    }
+    .btn-room.dark:hover { background: var(--coral); color: #fff; }
+
+    /* SEPARATOR LINE */
+    .rooms-sep {
+      height: 1px; background: linear-gradient(to right, transparent, var(--coral), transparent);
+      margin: 0; opacity: 0.3;
+    }
+
+    /* POLICY STRIP */
+    .policy-strip {
+      background: var(--carbon); padding: 48px 80px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    }
+    .policy-item { }
+    .policy-icon {
+      width: 32px; height: 32px; border: 1px solid rgba(255,56,92,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-bottom: 16px; transform: rotate(45deg);
+    }
+    .policy-icon-inner { transform: rotate(-45deg); }
+    .policy-title {
+      font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+      color: var(--light); margin-bottom: 8px; letter-spacing: 0.05em;
+    }
+    .policy-text { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+
+    /* FOOTER */
+    footer {
+      background: var(--carbon); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 80px; text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;
+      color: var(--light); letter-spacing: 0.1em; margin-bottom: 20px; display: block;
+    }
+    .footer-logo span { color: var(--coral); }
+    .footer-info { font-size: 0.82rem; color: var(--muted); line-height: 2; }
+    .footer-info a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-info a:hover { color: var(--coral); }
+    .footer-divider { width: 40px; height: 2px; background: var(--coral); margin: 20px auto; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 0 24px; }
+      .page-hero-inner { padding: 0 40px; }
+      .rooms-container { padding: 0 40px 80px; }
+      .room-block { grid-template-columns: 1fr; min-height: auto; }
+      .room-block.reverse { direction: ltr; }
+      .room-img-wrap { height: 320px; }
+      .room-info { padding: 48px 40px; }
+      .policy-strip { padding: 48px 40px; grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 40px 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .page-hero-inner { padding: 0 24px; }
+      .rooms-container { padding: 0 0 60px; }
+      .room-info { padding: 36px 24px; }
+      .policy-strip { padding: 40px 24px; grid-template-columns: 1fr; }
+      footer { padding: 36px 24px; }
+      .page-hero-geo-1, .page-hero-geo-2, .page-hero-geo-3 { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">URB<span>A</span>N</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="rooms.html" class="active">Стаи</a></li>
+      <li><a href="amenities.html">Удобства</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html">Резервация</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-geo-1"></div>
+    <div class="page-hero-geo-2"></div>
+    <div class="page-hero-geo-3"></div>
+    <div class="page-hero-inner">
+      <span class="page-hero-label">▸ 42 дизайн пространства</span>
+      <h1 class="page-hero-title">СТАИ</h1>
+    </div>
+  </div>
+
+  <!-- ROOMS -->
+  <div class="rooms-container">
+
+    <!-- СТАНДАРТ -->
+    <div class="room-block">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900" alt="Стандарт" class="room-img" />
+      </div>
+      <div class="room-info">
+        <span class="room-tag">Стандарт</span>
+        <h2 class="room-name">Стандарт</h2>
+        <p class="room-desc">Минималистичен дизайн в чисти линии и неутрални тонове. Премиум матрак, умно LED осветление, работно бюро и висококачествена звукоизолация за пълен градски покой.</p>
+        <div class="room-features">
+          <span class="feat-pill">Кралско легло</span>
+          <span class="feat-pill">Смарт TV 55"</span>
+          <span class="feat-pill">Безплатен WiFi</span>
+          <span class="feat-pill">Мини бар</span>
+          <span class="feat-pill">Сейф</span>
+          <span class="feat-pill">Климатик</span>
+        </div>
+        <div class="room-pricing">
+          <div>
+            <div class="room-price-label">от</div>
+            <div class="room-price-main">160 лв</div>
+            <div class="room-price-label">на нощ</div>
+          </div>
+          <div class="room-size-badge">22 м²</div>
+        </div>
+        <a href="contact.html" class="btn-room">Резервирай</a>
+      </div>
+    </div>
+
+    <div class="rooms-sep"></div>
+
+    <!-- ДИЗАЙН СТАЯ -->
+    <div class="room-block reverse alt">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=900" alt="Дизайн Стая" class="room-img" />
+      </div>
+      <div class="room-info">
+        <span class="room-tag">Дизайн Колекция</span>
+        <h2 class="room-name">Дизайн Стая</h2>
+        <p class="room-desc">Всяка стая от тази категория е уникална творба — авторска мебел от български дизайнери, оригинални произведения на изкуството и внимателно подбрана цветова палитра.</p>
+        <div class="room-features">
+          <span class="feat-pill">Авторска мебел</span>
+          <span class="feat-pill">Оригинално изкуство</span>
+          <span class="feat-pill">Дъждовен душ</span>
+          <span class="feat-pill">Nespresso</span>
+          <span class="feat-pill">Bathrobe & Slippers</span>
+          <span class="feat-pill">City View</span>
+        </div>
+        <div class="room-pricing">
+          <div>
+            <div class="room-price-label">от</div>
+            <div class="room-price-main">230 лв</div>
+            <div class="room-price-label">на нощ</div>
+          </div>
+          <div class="room-size-badge">30 м²</div>
+        </div>
+        <a href="contact.html" class="btn-room dark">Резервирай</a>
+      </div>
+    </div>
+
+    <div class="rooms-sep"></div>
+
+    <!-- ЛОФТ СУИТ -->
+    <div class="room-block">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900" alt="Лофт Суит" class="room-img" />
+      </div>
+      <div class="room-info">
+        <span class="room-tag">Суит</span>
+        <h2 class="room-name">Лофт Суит</h2>
+        <p class="room-desc">Открит план с отделена спалня и хол, 3-метрови тавани и панорамни прозорци с гледка към центъра на София. Пространство за живеене, а не само за нощуване.</p>
+        <div class="room-features">
+          <span class="feat-pill">Отворен план</span>
+          <span class="feat-pill">Панорамна гледка</span>
+          <span class="feat-pill">Вана + Душ</span>
+          <span class="feat-pill">Хол зона</span>
+          <span class="feat-pill">Работно бюро</span>
+          <span class="feat-pill">Wine bar</span>
+        </div>
+        <div class="room-pricing">
+          <div>
+            <div class="room-price-label">от</div>
+            <div class="room-price-main">350 лв</div>
+            <div class="room-price-label">на нощ</div>
+          </div>
+          <div class="room-size-badge">55 м²</div>
+        </div>
+        <a href="contact.html" class="btn-room">Резервирай</a>
+      </div>
+    </div>
+
+    <div class="rooms-sep"></div>
+
+    <!-- ПЕНТХАУС -->
+    <div class="room-block reverse alt">
+      <div class="room-img-wrap">
+        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900" alt="Пентхаус" class="room-img" />
+      </div>
+      <div class="room-info">
+        <span class="room-tag">Пентхаус — Върхово преживяване</span>
+        <h2 class="room-name">Пентхаус</h2>
+        <p class="room-desc">Целият осми етаж за вас. Частна покривна тераса с гледка 360° към София, Витоша и отвъд. Персонален butler service, частна джакузи и незаменима позиция над всичко.</p>
+        <div class="room-features">
+          <span class="feat-pill">Покривна тераса</span>
+          <span class="feat-pill">Панорама 360°</span>
+          <span class="feat-pill">Частна джакузи</span>
+          <span class="feat-pill">Butler service</span>
+          <span class="feat-pill">2 спални</span>
+          <span class="feat-pill">Трапезария</span>
+          <span class="feat-pill">Кухненски бокс</span>
+        </div>
+        <div class="room-pricing">
+          <div>
+            <div class="room-price-label">от</div>
+            <div class="room-price-main">520 лв</div>
+            <div class="room-price-label">на нощ</div>
+          </div>
+          <div class="room-size-badge">90 м²</div>
+        </div>
+        <a href="contact.html" class="btn-room dark">Резервирай</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POLICY STRIP -->
+  <div class="policy-strip">
+    <div class="policy-item">
+      <div class="policy-icon"><span class="policy-icon-inner">✓</span></div>
+      <div class="policy-title">Безплатна анулация</div>
+      <p class="policy-text">До 48 часа преди пристигане без такси или санкции.</p>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon"><span class="policy-icon-inner">◷</span></div>
+      <div class="policy-title">Check-in / Out</div>
+      <p class="policy-text">Check-in от 15:00 · Check-out до 12:00 · Late checkout при наличност.</p>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon"><span class="policy-icon-inner">♥</span></div>
+      <div class="policy-title">Домашни любимци</div>
+      <p class="policy-text">Приемаме малки домашни любимци (до 10кг). Допълнителна такса 20 лв/нощ.</p>
+    </div>
+    <div class="policy-item">
+      <div class="policy-icon"><span class="policy-icon-inner">★</span></div>
+      <div class="policy-title">Urban Club</div>
+      <p class="policy-text">Програма за лоялни гости — ексклузивни отстъпки и привилегии.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">URB<span>A</span>N</span>
+    <div class="footer-divider"></div>
+    <div class="footer-info">
+      ул. „Граф Игнатиев" 5, София &nbsp;·&nbsp;
+      <a href="tel:+35924448800">+359 2 444 8800</a> &nbsp;·&nbsp;
+      <a href="mailto:hello@urbanhotel.bg">hello@urbanhotel.bg</a><br>
+      <a href="contact.html">@urbanhotelsofia</a> &nbsp;·&nbsp; © 2024 Урбан Дизайн Хотел
+    </div>
+  </footer>
+
+</body>
+</html>

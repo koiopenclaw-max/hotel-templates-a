@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Галерия — Бутик Хотел Шарм</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --chocolate: #4A3728;
+    --cafe: #D4A373;
+    --cream: #FEFAE0;
+    --cream-dark: #F5EFC8;
+    --shadow: 0 8px 32px rgba(74,55,40,0.13);
+    --shadow-sm: 0 4px 16px rgba(74,55,40,0.09);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--chocolate);
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(212,163,115,0.25);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+    box-shadow: 0 2px 16px rgba(74,55,40,0.07);
+  }
+
+  .nav-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.45rem; font-weight: 700;
+    color: var(--chocolate);
+    text-decoration: none; letter-spacing: 0.02em;
+  }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.95rem; font-weight: 500;
+    color: var(--chocolate); text-decoration: none;
+    padding-bottom: 3px; transition: color 0.2s; letter-spacing: 0.03em;
+  }
+  .nav-links a:hover { color: var(--cafe); }
+  .nav-links a.active { border-bottom: 2.5px solid var(--cafe); }
+
+  .nav-toggle {
+    display: none; background: none; border: none;
+    cursor: pointer; flex-direction: column; gap: 5px; padding: 4px;
+  }
+  .nav-toggle span { display: block; width: 26px; height: 2px; background: var(--chocolate); border-radius: 2px; }
+
+  /* PAGE HERO */
+  .page-hero {
+    position: relative; height: 50vh; min-height: 340px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .page-hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=1920');
+    background-size: cover; background-position: center;
+  }
+  .page-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(74,55,40,0.78) 0%, rgba(74,55,40,0.38) 100%);
+  }
+  .page-hero-content {
+    position: relative; text-align: center; color: var(--cream); padding: 2rem;
+  }
+  .page-hero-label {
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--cafe); margin-bottom: 0.8rem; display: block;
+  }
+  .page-hero h1 {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(2.2rem, 5.5vw, 4rem);
+    font-weight: 700; line-height: 1.1;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3); margin-bottom: 0.8rem;
+  }
+  .page-hero-sub {
+    font-size: 1.05rem; font-style: italic;
+    color: rgba(254,250,224,0.82); font-weight: 300;
+  }
+
+  /* FILTERS */
+  .filters {
+    text-align: center; padding: 2.5rem 2rem 1rem;
+  }
+  .filters button {
+    background: white; border: 1.5px solid rgba(212,163,115,0.3);
+    color: var(--chocolate); padding: 0.5rem 1.5rem; margin: 0.3rem;
+    cursor: pointer; font-family: 'Jost', sans-serif;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em;
+    border-radius: 50px; transition: all 0.3s;
+  }
+  .filters button:hover, .filters button.active {
+    background: var(--cafe); color: white; border-color: var(--cafe);
+  }
+
+  /* MASONRY */
+  .masonry {
+    columns: 3; column-gap: 18px;
+    max-width: 1200px; margin: 0 auto;
+    padding: 1.5rem 2rem 5rem;
+  }
+  .masonry-item {
+    break-inside: avoid; margin-bottom: 18px;
+    position: relative; overflow: hidden;
+    border-radius: var(--radius-sm); cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(212,163,115,0.15);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .masonry-item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+  }
+  .masonry-item img {
+    width: 100%; display: block; transition: transform 0.5s;
+  }
+  .masonry-item:hover img { transform: scale(1.05); }
+  .masonry-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(74,55,40,0.55), transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .masonry-item:hover::after { opacity: 1; }
+  .masonry-item .caption {
+    position: absolute; bottom: 14px; left: 14px;
+    font-family: 'Bodoni Moda', serif; font-size: 1.1rem;
+    color: var(--cream); opacity: 0; transition: opacity 0.3s; z-index: 2;
+    font-weight: 600;
+  }
+  .masonry-item:hover .caption { opacity: 1; }
+
+  /* LIGHTBOX — CSS only */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(74,55,40,0.92); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 2000; padding: 5%;
+  }
+  .lightbox:target { display: flex; }
+  .lightbox img {
+    max-width: 90%; max-height: 85vh; object-fit: contain;
+    border-radius: var(--radius-sm); box-shadow: 0 16px 64px rgba(0,0,0,0.4);
+  }
+  .lightbox .close {
+    position: absolute; top: 24px; right: 32px;
+    font-size: 2.5rem; color: var(--cream); text-decoration: none;
+    font-family: 'Bodoni Moda', serif; line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox .close:hover { color: var(--cafe); }
+  .lightbox .lb-caption {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    font-family: 'Bodoni Moda', serif; font-size: 1.2rem; color: var(--cafe);
+    font-weight: 600;
+  }
+
+  /* SCROLL ANIMATION */
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* FOOTER */
+  footer {
+    background: var(--chocolate); color: rgba(254,250,224,0.8);
+    text-align: center; padding: 2.2rem 2rem;
+    font-size: 0.88rem; line-height: 1.9;
+  }
+  footer a { color: var(--cafe); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  .footer-logo {
+    font-family: 'Bodoni Moda', serif; font-size: 1.3rem;
+    color: var(--cream); font-weight: 700; display: block; margin-bottom: 0.8rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .masonry { columns: 2; }
+  }
+  @media (max-width: 640px) {
+    .nav-links {
+      display: none; flex-direction: column; position: absolute;
+      top: 68px; left: 0; right: 0; background: var(--cream);
+      padding: 1.5rem 2rem; border-bottom: 1px solid rgba(212,163,115,0.3);
+      box-shadow: var(--shadow);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .masonry { columns: 1; }
+    .page-hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Хотел Шарм</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html" class="active">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-label">Бутик Хотел Шарм</span>
+    <h1>Галерия</h1>
+    <p class="page-hero-sub">Моменти, запечатани в красотата на Стария Пловдив</p>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters fade-in">
+  <button class="active" onclick="filterGallery('all',this)">Всички</button>
+  <button onclick="filterGallery('rooms',this)">Стаи</button>
+  <button onclick="filterGallery('dining',this)">Храна & Вино</button>
+  <button onclick="filterGallery('spaces',this)">Пространства</button>
+</div>
+
+<!-- MASONRY GALLERY -->
+<div class="masonry">
+  <a href="#lb1" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600" alt="Романтична стая" loading="lazy">
+    <span class="caption">Романтична Стая</span>
+  </a>
+  <a href="#lb2" class="masonry-item fade-in" data-cat="dining">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600" alt="Ресторант Шарм" loading="lazy">
+    <span class="caption">Ресторант „Шарм"</span>
+  </a>
+  <a href="#lb3" class="masonry-item fade-in" data-cat="spaces">
+    <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600" alt="Библиотека" loading="lazy">
+    <span class="caption">Библиотека & Камина</span>
+  </a>
+  <a href="#lb4" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600" alt="Апартамент Шарм" loading="lazy">
+    <span class="caption">Апартамент „Шарм"</span>
+  </a>
+  <a href="#lb5" class="masonry-item fade-in" data-cat="spaces">
+    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600" alt="Градина" loading="lazy">
+    <span class="caption">Тайната Градина</span>
+  </a>
+  <a href="#lb6" class="masonry-item fade-in" data-cat="dining">
+    <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600" alt="Винен бар" loading="lazy">
+    <span class="caption">Винен Бар</span>
+  </a>
+  <a href="#lb7" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=600" alt="Стандартна стая" loading="lazy">
+    <span class="caption">Стандартна Стая</span>
+  </a>
+  <a href="#lb8" class="masonry-item fade-in" data-cat="spaces">
+    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600" alt="Лоби" loading="lazy">
+    <span class="caption">Рецепция & Лоби</span>
+  </a>
+  <a href="#lb9" class="masonry-item fade-in" data-cat="dining">
+    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600" alt="Закуска" loading="lazy">
+    <span class="caption">Домашна Закуска</span>
+  </a>
+  <a href="#lb10" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600" alt="Фамилна стая" loading="lazy">
+    <span class="caption">Фамилна Стая</span>
+  </a>
+  <a href="#lb11" class="masonry-item fade-in" data-cat="spaces">
+    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600" alt="Спа кът" loading="lazy">
+    <span class="caption">Спа Кът</span>
+  </a>
+  <a href="#lb12" class="masonry-item fade-in" data-cat="dining">
+    <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600" alt="Тераса" loading="lazy">
+    <span class="caption">Следобеден Чай на Терасата</span>
+  </a>
+</div>
+
+<!-- LIGHTBOXES -->
+<div id="lb1" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200" alt=""><span class="lb-caption">Романтична Стая</span></div>
+<div id="lb2" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200" alt=""><span class="lb-caption">Ресторант „Шарм"</span></div>
+<div id="lb3" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200" alt=""><span class="lb-caption">Библиотека & Камина</span></div>
+<div id="lb4" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200" alt=""><span class="lb-caption">Апартамент „Шарм"</span></div>
+<div id="lb5" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200" alt=""><span class="lb-caption">Тайната Градина</span></div>
+<div id="lb6" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1200" alt=""><span class="lb-caption">Винен Бар</span></div>
+<div id="lb7" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=1200" alt=""><span class="lb-caption">Стандартна Стая</span></div>
+<div id="lb8" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200" alt=""><span class="lb-caption">Рецепция & Лоби</span></div>
+<div id="lb9" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200" alt=""><span class="lb-caption">Домашна Закуска</span></div>
+<div id="lb10" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200" alt=""><span class="lb-caption">Фамилна Стая</span></div>
+<div id="lb11" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200" alt=""><span class="lb-caption">Спа Кът</span></div>
+<div id="lb12" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=1200" alt=""><span class="lb-caption">Следобеден Чай на Терасата</span></div>
+
+<footer>
+  <span class="footer-logo">Хотел Шарм</span>
+  ул. „Съборна" 15, Стар Град, Пловдив &nbsp;·&nbsp;
+  <a href="tel:+35932625888">+359 32 625 888</a> &nbsp;·&nbsp;
+  <a href="mailto:info@hotelcharm.bg">info@hotelcharm.bg</a>
+  <br>
+  © 2024 Бутик Хотел Шарм. Всички права запазени.
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('.masonry-item').forEach(i => {
+      i.style.display = cat === 'all' || i.dataset.cat === cat ? 'block' : 'none';
+    });
+    document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

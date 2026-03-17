@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Стаи — Гранд Палас Хотел</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Raleway',sans-serif;background:#0C0C0C;color:#F5F1EB}
+a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(12,12,12,.95);backdrop-filter:blur(10px);padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,169,110,.2)}
+.nav-logo{font-family:'Cinzel Decorative',serif;color:#C9A96E;font-size:1.3rem}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-size:.85rem;letter-spacing:2px;text-transform:uppercase;color:#F5F1EB;transition:color .3s;font-weight:400}
+.nav-links a:hover,.nav-links a.active{color:#C9A96E}
+.hero{height:50vh;background:url('https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1920') center/cover;display:flex;align-items:center;justify-content:center;position:relative}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,12,12,.7),rgba(12,12,12,.9))}
+.hero-content{position:relative;z-index:1;text-align:center}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:#C9A96E;margin-bottom:10px}
+.hero p{font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;color:#F5F1EB;opacity:.8}
+.gold-line{width:80px;height:2px;background:#C9A96E;margin:30px auto}
+.rooms-grid{max-width:1200px;margin:0 auto;padding:80px 5%}
+.room-card{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:60px;background:rgba(201,169,110,.05);border:1px solid rgba(201,169,110,.15);overflow:hidden;transition:transform .4s}
+.room-card:hover{transform:translateY(-4px)}
+.room-card:nth-child(even){direction:rtl}
+.room-card:nth-child(even) .room-info{direction:ltr}
+.room-card:nth-child(even) .room-img{direction:ltr}
+.room-img{height:380px;background-size:cover;background-position:center;position:relative}
+.room-price{position:absolute;bottom:20px;left:20px;background:rgba(12,12,12,.85);color:#C9A96E;padding:10px 22px;font-family:'Cormorant Garamond',serif;font-size:1.3rem;border:1px solid #C9A96E}
+.room-info{padding:40px;display:flex;flex-direction:column;justify-content:center}
+.room-info h2{font-family:'Cormorant Garamond',serif;font-size:2rem;color:#C9A96E;margin-bottom:15px}
+.room-info p{line-height:1.8;font-weight:300;color:rgba(245,241,235,.8);margin-bottom:20px;font-size:.95rem}
+.room-amenities{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:25px}
+.room-amenities span{font-size:.75rem;letter-spacing:1px;text-transform:uppercase;padding:6px 14px;border:1px solid rgba(201,169,110,.3);color:#C9A96E}
+.btn-reserve{display:inline-block;padding:14px 35px;background:transparent;border:1px solid #C9A96E;color:#C9A96E;text-transform:uppercase;letter-spacing:2px;font-size:.8rem;cursor:pointer;transition:all .3s;font-family:'Raleway',sans-serif;align-self:flex-start}
+.btn-reserve:hover{background:#C9A96E;color:#0C0C0C}
+footer{background:#0C0C0C;border-top:1px solid rgba(201,169,110,.2);padding:50px 5%;text-align:center}
+.footer-name{font-family:'Cinzel Decorative',serif;color:#C9A96E;font-size:1.2rem;margin-bottom:15px}
+footer p{font-size:.8rem;color:rgba(245,241,235,.5);margin-bottom:8px;letter-spacing:1px}
+footer .socials{margin:20px 0}
+footer .socials a{color:#C9A96E;margin:0 12px;font-size:.85rem;letter-spacing:2px;text-transform:uppercase}
+@media(max-width:768px){
+.nav-links{gap:15px}
+.nav-links a{font-size:.7rem}
+.room-card{grid-template-columns:1fr}
+.room-card:nth-child(even){direction:ltr}
+.room-img{height:250px}
+.hero h1{font-size:2.2rem}
+.nav-logo{font-size:1rem}
+}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="nav-logo">Grand Palace</a>
+<ul class="nav-links">
+<li><a href="index.html">Начало</a></li>
+<li><a href="rooms.html" class="active">Стаи</a></li>
+<li><a href="amenities.html">Удобства</a></li>
+<li><a href="gallery.html">Галерия</a></li>
+<li><a href="contact.html">Резервация</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Нашите Стаи</h1>
+<div class="gold-line"></div>
+<p>Изживейте лукса във всяко кътче</p>
+</div>
+</section>
+
+<section class="rooms-grid">
+<div class="room-card">
+<div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=800')">
+<div class="room-price">от 280 лв/нощ</div>
+</div>
+<div class="room-info">
+<h2>Класик Стая</h2>
+<p>Елегантно обзаведена стая с класически интериор, разкошно легло king-size и мраморна баня. Перфектният избор за кратък престой с пълен комфорт.</p>
+<div class="room-amenities"><span>30 м²</span><span>King легло</span><span>Мини бар</span><span>WiFi</span></div>
+<a href="contact.html" class="btn-reserve">Резервирай</a>
+</div>
+</div>
+
+<div class="room-card">
+<div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800')">
+<div class="room-price">от 380 лв/нощ</div>
+</div>
+<div class="room-info">
+<h2>Делукс Стая</h2>
+<p>Просторна стая с панорамна гледка към града, дълбока вана за накисване и ексклузивни тоалетни принадлежности. Всеки детайл е замислен за вашето удоволствие.</p>
+<div class="room-amenities"><span>40 м²</span><span>Гледка към града</span><span>Вана</span><span>Халати</span></div>
+<a href="contact.html" class="btn-reserve">Резервирай</a>
+</div>
+</div>
+
+<div class="room-card">
+<div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800')">
+<div class="room-price">от 480 лв/нощ</div>
+</div>
+<div class="room-info">
+<h2>Премиум Стая</h2>
+<p>Изтънчена атмосфера с дизайнерски мебели, отделна гардеробна зона и луксозна баня с душ тип „дъждовалеж". За тези, които ценят съвършенството.</p>
+<div class="room-amenities"><span>50 м²</span><span>Дъждовален душ</span><span>Nespresso</span><span>Сейф</span></div>
+<a href="contact.html" class="btn-reserve">Резервирай</a>
+</div>
+</div>
+
+<div class="room-card">
+<div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800')">
+<div class="room-price">от 620 лв/нощ</div>
+</div>
+<div class="room-info">
+<h2>Джуниър Суит</h2>
+<p>Отделна дневна зона с кадифени дивани, спалня с балдахин и мраморна баня с джакузи. Усетете какво означава истински лукс.</p>
+<div class="room-amenities"><span>65 м²</span><span>Дневна</span><span>Джакузи</span><span>Балкон</span></div>
+<a href="contact.html" class="btn-reserve">Резервирай</a>
+</div>
+</div>
+
+<div class="room-card">
+<div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800')">
+<div class="room-price">от 850 лв/нощ</div>
+</div>
+<div class="room-info">
+<h2>Екзекютив Суит</h2>
+<p>Два просторни помещения с панорамни прозорци от пода до тавана. Персонализирано обслужване, частен бътлър и достъп до Executive Lounge.</p>
+<div class="room-amenities"><span>85 м²</span><span>Бътлър</span><span>Lounge достъп</span><span>Панорама</span></div>
+<a href="contact.html" class="btn-reserve">Резервирай</a>
+</div>
+</div>
+
+<div class="room-card">
+<div class="room-img" style="background-image:url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800')">
+<div class="room-price">от 1400 лв/нощ</div>
+</div>
+<div class="room-info">
+<h2>Президентски Апартамент</h2>
+<p>Кралски размери, частна тераса с джакузи, трапезария за осем гости, роял и 24-часово персонално обслужване. Върхът на разкоша.</p>
+<div class="room-amenities"><span>140 м²</span><span>Тераса</span><span>Роял</span><span>24/7 бътлър</span></div>
+<a href="contact.html" class="btn-reserve">Резервирай</a>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="footer-name">Grand Palace Hotel</div>
+<p>бул. „Цар Освободител" 28, 1000 София, България</p>
+<p>+359 2 981 5555 · reservations@grandpalace.bg</p>
+<div class="socials">
+<a href="#">Facebook</a>
+<a href="#">Instagram</a>
+<a href="#">TripAdvisor</a>
+</div>
+<p>© 2024 Гранд Палас Хотел. Всички права запазени.</p>
+</footer>
+</body>
+</html>

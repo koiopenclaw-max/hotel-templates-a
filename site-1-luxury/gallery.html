@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Галерия — Гранд Палас Хотел</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Raleway',sans-serif;background:#0C0C0C;color:#F5F1EB}
+a{text-decoration:none;color:inherit}
+nav{position:fixed;top:0;left:0;width:100%;z-index:1000;background:rgba(12,12,12,.95);backdrop-filter:blur(10px);padding:18px 5%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(201,169,110,.2)}
+.nav-logo{font-family:'Cinzel Decorative',serif;color:#C9A96E;font-size:1.3rem}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{font-size:.85rem;letter-spacing:2px;text-transform:uppercase;color:#F5F1EB;transition:color .3s}
+.nav-links a:hover,.nav-links a.active{color:#C9A96E}
+.hero{height:50vh;background:url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1920') center/cover;display:flex;align-items:center;justify-content:center;position:relative}
+.hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,12,12,.7),rgba(12,12,12,.9))}
+.hero-content{position:relative;z-index:1;text-align:center}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:#C9A96E}
+.gold-line{width:80px;height:2px;background:#C9A96E;margin:30px auto}
+.hero p{font-size:1.1rem;letter-spacing:3px;text-transform:uppercase;opacity:.8;margin-top:5px}
+.filters{text-align:center;padding:40px 5% 20px}
+.filters button{background:transparent;border:1px solid rgba(201,169,110,.3);color:#C9A96E;padding:10px 25px;margin:5px;cursor:pointer;font-family:'Raleway',sans-serif;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;transition:all .3s}
+.filters button:hover,.filters button.active{background:#C9A96E;color:#0C0C0C}
+.masonry{columns:3;column-gap:15px;max-width:1300px;margin:0 auto;padding:20px 5% 80px}
+.masonry-item{break-inside:avoid;margin-bottom:15px;position:relative;overflow:hidden;cursor:pointer}
+.masonry-item img{width:100%;display:block;transition:transform .5s}
+.masonry-item:hover img{transform:scale(1.05)}
+.masonry-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(12,12,12,.5),transparent);opacity:0;transition:opacity .3s}
+.masonry-item:hover::after{opacity:1}
+.masonry-item .caption{position:absolute;bottom:15px;left:15px;font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#C9A96E;opacity:0;transition:opacity .3s;z-index:2}
+.masonry-item:hover .caption{opacity:1}
+.masonry-item{border:1px solid rgba(201,169,110,.1);transition:border-color .3s}
+.masonry-item:hover{border-color:#C9A96E}
+.lightbox{position:fixed;inset:0;background:rgba(12,12,12,.95);display:none;align-items:center;justify-content:center;z-index:2000;padding:5%}
+.lightbox:target{display:flex}
+.lightbox img{max-width:90%;max-height:85vh;object-fit:contain}
+.lightbox .close{position:absolute;top:30px;right:40px;font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:#C9A96E;cursor:pointer;text-decoration:none;line-height:1}
+.lightbox .lb-caption{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#C9A96E}
+footer{background:#0C0C0C;border-top:1px solid rgba(201,169,110,.2);padding:50px 5%;text-align:center}
+.footer-name{font-family:'Cinzel Decorative',serif;color:#C9A96E;font-size:1.2rem;margin-bottom:15px}
+footer p{font-size:.8rem;color:rgba(245,241,235,.5);margin-bottom:8px;letter-spacing:1px}
+footer .socials{margin:20px 0}
+footer .socials a{color:#C9A96E;margin:0 12px;font-size:.85rem;letter-spacing:2px;text-transform:uppercase}
+@media(max-width:1024px){.masonry{columns:2}}
+@media(max-width:600px){.masonry{columns:1}.hero h1{font-size:2.2rem}.nav-links{gap:15px}.nav-links a{font-size:.7rem}}
+</style>
+</head>
+<body>
+<nav>
+<a href="index.html" class="nav-logo">Grand Palace</a>
+<ul class="nav-links">
+<li><a href="index.html">Начало</a></li>
+<li><a href="rooms.html">Стаи</a></li>
+<li><a href="amenities.html">Удобства</a></li>
+<li><a href="gallery.html" class="active">Галерия</a></li>
+<li><a href="contact.html">Резервация</a></li>
+</ul>
+</nav>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Галерия</h1>
+<div class="gold-line"></div>
+<p>Моменти от Гранд Палас</p>
+</div>
+</section>
+
+<div class="filters">
+<button class="active" onclick="filterGallery('all')">Всички</button>
+<button onclick="filterGallery('rooms')">Стаи</button>
+<button onclick="filterGallery('dining')">Ресторант</button>
+<button onclick="filterGallery('spa')">Спа</button>
+</div>
+
+<div class="masonry">
+<a href="#lb1" class="masonry-item" data-cat="rooms"><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600" alt="Делукс стая"><span class="caption">Делукс Стая</span></a>
+<a href="#lb2" class="masonry-item" data-cat="dining"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600" alt="Ресторант"><span class="caption">Ресторант „Палас"</span></a>
+<a href="#lb3" class="masonry-item" data-cat="spa"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600" alt="Спа"><span class="caption">Спа Център</span></a>
+<a href="#lb4" class="masonry-item" data-cat="rooms"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600" alt="Президентски апартамент"><span class="caption">Президентски Апартамент</span></a>
+<a href="#lb5" class="masonry-item" data-cat="rooms"><img src="https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=600" alt="Класик стая"><span class="caption">Класик Стая</span></a>
+<a href="#lb6" class="masonry-item" data-cat="dining"><img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=600" alt="Лоби бар"><span class="caption">Лоби Бар „Златен Век"</span></a>
+<a href="#lb7" class="masonry-item" data-cat="spa"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=600" alt="Басейн"><span class="caption">Вътрешен Басейн</span></a>
+<a href="#lb8" class="masonry-item" data-cat="rooms"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600" alt="Екзекютив суит"><span class="caption">Екзекютив Суит</span></a>
+<a href="#lb9" class="masonry-item" data-cat="dining"><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600" alt="Вечеря"><span class="caption">Гала Вечеря</span></a>
+<a href="#lb10" class="masonry-item" data-cat="spa"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600" alt="Премиум стая"><span class="caption">Релакс Зона</span></a>
+<a href="#lb11" class="masonry-item" data-cat="rooms"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" alt="Екстериор"><span class="caption">Фасада</span></a>
+<a href="#lb12" class="masonry-item" data-cat="dining"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600" alt="Лоби"><span class="caption">Гранд Лоби</span></a>
+</div>
+
+<div id="lb1" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200" alt=""><span class="lb-caption">Делукс Стая</span></div>
+<div id="lb2" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200" alt=""><span class="lb-caption">Ресторант „Палас"</span></div>
+<div id="lb3" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200" alt=""><span class="lb-caption">Спа Център</span></div>
+<div id="lb4" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200" alt=""><span class="lb-caption">Президентски Апартамент</span></div>
+<div id="lb5" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=1200" alt=""><span class="lb-caption">Класик Стая</span></div>
+<div id="lb6" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1200" alt=""><span class="lb-caption">Лоби Бар „Златен Век"</span></div>
+<div id="lb7" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=1200" alt=""><span class="lb-caption">Вътрешен Басейн</span></div>
+<div id="lb8" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200" alt=""><span class="lb-caption">Екзекютив Суит</span></div>
+<div id="lb9" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=1200" alt=""><span class="lb-caption">Гала Вечеря</span></div>
+<div id="lb10" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200" alt=""><span class="lb-caption">Релакс Зона</span></div>
+<div id="lb11" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200" alt=""><span class="lb-caption">Фасада</span></div>
+<div id="lb12" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200" alt=""><span class="lb-caption">Гранд Лоби</span></div>
+
+<footer>
+<div class="footer-name">Grand Palace Hotel</div>
+<p>бул. „Цар Освободител" 28, 1000 София, България</p>
+<p>+359 2 981 5555 · reservations@grandpalace.bg</p>
+<div class="socials"><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">TripAdvisor</a></div>
+<p>© 2024 Гранд Палас Хотел. Всички права запазени.</p>
+</footer>
+
+<script>
+function filterGallery(cat){document.querySelectorAll('.masonry-item').forEach(i=>{i.style.display=cat==='all'||i.dataset.cat===cat?'block':'none'});document.querySelectorAll('.filters button').forEach(b=>{b.classList.remove('active')});event.target.classList.add('active')}
+</script>
+</body>
+</html>

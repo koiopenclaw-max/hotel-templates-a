@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Нашите Стаи — Бутик Хотел Шарм</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --chocolate: #4A3728;
+    --cafe: #D4A373;
+    --cream: #FEFAE0;
+    --cream-dark: #F5EFC8;
+    --shadow: 0 8px 32px rgba(74,55,40,0.13);
+    --shadow-sm: 0 4px 16px rgba(74,55,40,0.09);
+    --radius: 20px;
+    --radius-sm: 12px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--chocolate);
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--cream);
+    border-bottom: 1px solid rgba(212,163,115,0.25);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    box-shadow: 0 2px 16px rgba(74,55,40,0.07);
+  }
+
+  .nav-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--chocolate);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--chocolate);
+    text-decoration: none;
+    padding-bottom: 3px;
+    transition: color 0.2s;
+    letter-spacing: 0.03em;
+  }
+
+  .nav-links a:hover { color: var(--cafe); }
+  .nav-links a.active { border-bottom: 2.5px solid var(--cafe); }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    padding: 4px;
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: var(--chocolate);
+    border-radius: 2px;
+  }
+
+  /* PAGE HERO */
+  .page-hero {
+    position: relative;
+    height: 50vh;
+    min-height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1920');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .page-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(74,55,40,0.75) 0%, rgba(74,55,40,0.4) 100%);
+  }
+
+  .page-hero-content {
+    position: relative;
+    text-align: center;
+    color: var(--cream);
+    padding: 2rem;
+  }
+
+  .page-hero-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cafe);
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .page-hero h1 {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    margin-bottom: 0.8rem;
+  }
+
+  .page-hero-sub {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: rgba(254,250,224,0.85);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  /* ROOMS INTRO */
+  .rooms-intro {
+    background: linear-gradient(160deg, var(--cream) 0%, rgba(212,163,115,0.08) 100%);
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .rooms-intro p {
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: 1.05rem;
+    color: rgba(74,55,40,0.72);
+  }
+
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cafe);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .section-line {
+    width: 56px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cafe), transparent);
+    border-radius: 2px;
+    margin: 1rem auto 1.5rem;
+  }
+
+  /* ROOM CARDS */
+  .rooms-section {
+    padding: 3rem 2rem 5rem;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+
+  .room-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(212,163,115,0.18);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .room-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow);
+  }
+
+  .room-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+  }
+
+  .room-image-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 280px;
+  }
+
+  .room-card.featured .room-image-wrap {
+    height: 100%;
+    min-height: 380px;
+  }
+
+  .room-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .room-card:hover .room-image-wrap img {
+    transform: scale(1.06);
+  }
+
+  .room-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(74,55,40,0.45) 0%, transparent 55%);
+  }
+
+  .room-type-badge {
+    position: absolute;
+    top: 1.2rem;
+    left: 1.2rem;
+    background: rgba(254,250,224,0.92);
+    backdrop-filter: blur(6px);
+    color: var(--chocolate);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+  }
+
+  .room-price-badge {
+    position: absolute;
+    bottom: 1.2rem;
+    right: 1.2rem;
+    background: var(--cafe);
+    color: var(--chocolate);
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(212,163,115,0.4);
+  }
+
+  .room-body {
+    padding: 2rem;
+  }
+
+  .room-card.featured .room-body {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .room-name {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--chocolate);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .room-card.featured .room-name { font-size: 2rem; }
+
+  .room-meta {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .room-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.83rem;
+    color: rgba(74,55,40,0.6);
+    font-weight: 500;
+  }
+
+  .room-meta-item span:first-child {
+    font-size: 1rem;
+  }
+
+  .room-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--cafe);
+    border-radius: 1px;
+    margin: 1rem 0;
+  }
+
+  .room-desc {
+    font-size: 0.95rem;
+    color: rgba(74,55,40,0.72);
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .room-features {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .room-features li {
+    background: rgba(212,163,115,0.15);
+    border: 1px solid rgba(212,163,115,0.3);
+    color: var(--chocolate);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.3rem 0.9rem;
+    border-radius: 50px;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 2.2rem;
+    border-radius: 50px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary {
+    background: var(--cafe);
+    color: var(--chocolate);
+    box-shadow: 0 4px 16px rgba(212,163,115,0.3);
+  }
+
+  .btn-primary:hover {
+    background: #e0b584;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(212,163,115,0.4);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--chocolate);
+    border: 2px solid var(--cafe);
+  }
+
+  .btn-outline:hover {
+    background: var(--cafe);
+    transform: translateY(-2px);
+  }
+
+  /* AVAILABILITY CALLOUT */
+  .availability-callout {
+    background: linear-gradient(135deg, var(--chocolate) 0%, #3a2518 100%);
+    color: var(--cream);
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .availability-callout h2 {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .availability-callout p {
+    color: rgba(254,250,224,0.72);
+    max-width: 500px;
+    margin: 0 auto 2rem;
+    font-size: 0.97rem;
+  }
+
+  .availability-badges {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  .avail-badge {
+    background: rgba(212,163,115,0.18);
+    border: 1px solid rgba(212,163,115,0.35);
+    color: var(--cafe);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--chocolate);
+    color: rgba(254,250,224,0.8);
+    text-align: center;
+    padding: 2.2rem 2rem;
+    font-size: 0.88rem;
+    line-height: 1.9;
+  }
+
+  footer a { color: var(--cafe); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .footer-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .rooms-grid { grid-template-columns: 1fr; }
+    .room-card.featured { grid-column: span 1; display: block; }
+    .room-card.featured .room-image-wrap { height: 280px; }
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--cream); padding: 1.5rem 2rem; border-bottom: 1px solid rgba(212,163,115,0.3); box-shadow: var(--shadow); }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .rooms-section { padding: 2rem 1.2rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Хотел Шарм</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html" class="active">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-bg"></div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <span class="page-hero-label">Бутик Хотел Шарм · Пловдив</span>
+    <h1>Нашите Стаи</h1>
+    <p class="page-hero-sub">Всяка стая е уникална — разказ в себе си</p>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div class="rooms-intro">
+  <span class="section-label">12 уникални пространства</span>
+  <p>
+    Нито една от нашите дванадесет стаи не прилича на другите. Всяка е обзаведена с ръчно избрани антики, местни тъкани и детайли, намерени с любов. Изберете пространството, което разказва вашата история.
+  </p>
+  <div class="section-line"></div>
+</div>
+
+<!-- ROOMS -->
+<section class="rooms-section">
+  <div class="container">
+    <div class="rooms-grid">
+
+      <!-- ROOM 1 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1590490360182-c33d955bc0ed?w=900" alt="Уютна Стая" loading="lazy">
+          <div class="room-overlay"></div>
+          <span class="room-type-badge">Стандартна</span>
+          <span class="room-price-badge">от 160 лв/нощ</span>
+        </div>
+        <div class="room-body">
+          <h2 class="room-name">Уютна Стая</h2>
+          <div class="room-meta">
+            <span class="room-meta-item"><span>📐</span> 20 м²</span>
+            <span class="room-meta-item"><span>🛏</span> Queen bed</span>
+            <span class="room-meta-item"><span>👥</span> 1–2 гости</span>
+          </div>
+          <div class="room-divider"></div>
+          <p class="room-desc">
+            Събудете се под мека светлина, филтрирана през ленени завеси. Уютна Стая е прегръдка — тясна, но богата. Антикварна дървена рамка на леглото, мека черга от Чипровци и ароматни свещи ви чакат след дълга разходка из Стария Град.
+          </p>
+          <ul class="room-features">
+            <li>Wi-Fi</li>
+            <li>Климатик</li>
+            <li>Смарт телевизор</li>
+            <li>Домашна закуска</li>
+            <li>Дъждовен душ</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">Резервирай</a>
+        </div>
+      </div>
+
+      <!-- ROOM 2 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=900" alt="Романтична Стая" loading="lazy">
+          <div class="room-overlay"></div>
+          <span class="room-type-badge">Романтична</span>
+          <span class="room-price-badge">от 220 лв/нощ</span>
+        </div>
+        <div class="room-body">
+          <h2 class="room-name">Романтична Стая</h2>
+          <div class="room-meta">
+            <span class="room-meta-item"><span>📐</span> 28 м²</span>
+            <span class="room-meta-item"><span>🛏</span> Балдахин</span>
+            <span class="room-meta-item"><span>🌿</span> Балкон</span>
+          </div>
+          <div class="room-divider"></div>
+          <p class="room-desc">
+            Балдахиновото легло и малкият балкон с изглед към калдъръмената улица правят тази стая мечтан избор за двойки. Сутринта — кафе на балкона и птичи песни. Вечерта — вино при свещи и тихи разговори.
+          </p>
+          <ul class="room-features">
+            <li>Балкон</li>
+            <li>Балдахин</li>
+            <li>Вана с хидромасаж</li>
+            <li>Добре дошли вино</li>
+            <li>Романтичен пакет</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">Резервирай</a>
+        </div>
+      </div>
+
+      <!-- ROOM 3 -->
+      <div class="room-card">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900" alt="Фамилна Стая" loading="lazy">
+          <div class="room-overlay"></div>
+          <span class="room-type-badge">Фамилна</span>
+          <span class="room-price-badge">от 280 лв/нощ</span>
+        </div>
+        <div class="room-body">
+          <h2 class="room-name">Фамилна Стая</h2>
+          <div class="room-meta">
+            <span class="room-meta-item"><span>📐</span> 35 м²</span>
+            <span class="room-meta-item"><span>🛏</span> Свързани стаи</span>
+            <span class="room-meta-item"><span>👨‍👩‍👧</span> До 4 гости</span>
+          </div>
+          <div class="room-divider"></div>
+          <p class="room-desc">
+            Две свързани стаи, които дават на децата тяхното пространство, а на родителите — тяхното. Всяка стая е обзаведена с внимание към детайла, а общата тераса събира семейството за лека закуска на открито.
+          </p>
+          <ul class="room-features">
+            <li>Свързани стаи</li>
+            <li>Детски кът</li>
+            <li>Тераса</li>
+            <li>Детска закуска</li>
+            <li>Настолни игри</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary">Резервирай</a>
+        </div>
+      </div>
+
+      <!-- APARTMENT FEATURED -->
+      <div class="room-card featured">
+        <div class="room-image-wrap">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900" alt="Апартамент Шарм" loading="lazy">
+          <div class="room-overlay"></div>
+          <span class="room-type-badge">⭐ Апартамент</span>
+          <span class="room-price-badge">от 380 лв/нощ</span>
+        </div>
+        <div class="room-body">
+          <h2 class="room-name">Апартамент „Шарм"</h2>
+          <div class="room-meta">
+            <span class="room-meta-item"><span>📐</span> 50 м²</span>
+            <span class="room-meta-item"><span>🛏</span> King bed</span>
+            <span class="room-meta-item"><span>🛋</span> Хол</span>
+            <span class="room-meta-item"><span>🏺</span> Антики</span>
+          </div>
+          <div class="room-divider"></div>
+          <p class="room-desc">
+            Флагманът на хотел Шарм. Просторен хол с автентични пловдивски антики, библиотека с избрани заглавия, камина за студените нощи и спалня, в която времето спира. Апартаментът е нашето най-честно послание — вярваме, че красотата е за споделяне. Тук всяка вечер е събитие.
+          </p>
+          <ul class="room-features">
+            <li>Хол с камина</li>
+            <li>Библиотека</li>
+            <li>Антикварна обстановка</li>
+            <li>Бутилка вино при пристигане</li>
+            <li>Late checkout</li>
+            <li>Персонален консиерж</li>
+            <li>Уелнес пакет</li>
+          </ul>
+          <a href="contact.html" class="btn btn-primary" style="margin-right:1rem;">Резервирай</a>
+          <a href="gallery.html" class="btn btn-outline">Вижте галерия</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- AVAILABILITY CTA -->
+<div class="availability-callout">
+  <div class="container">
+    <h2>Проверете наличност</h2>
+    <p>Разполагаме само с 12 стаи. Препоръчваме резервация поне 2 седмици предварително, особено за уикендите.</p>
+    <div class="availability-badges">
+      <span class="avail-badge">✓ Безплатно анулиране (до 48ч)</span>
+      <span class="avail-badge">✓ Директна цена без такси</span>
+      <span class="avail-badge">✓ Личен отговор в 2 часа</span>
+    </div>
+    <a href="contact.html" class="btn btn-primary" style="font-size:1rem; padding:1rem 3rem;">Изпратете запитване</a>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-logo">Хотел Шарм</span>
+  ул. „Съборна" 15, Стар Град, Пловдив &nbsp;·&nbsp;
+  <a href="tel:+35932625888">+359 32 625 888</a> &nbsp;·&nbsp;
+  <a href="mailto:info@hotelcharm.bg">info@hotelcharm.bg</a>
+  <br>
+  © 2024 Бутик Хотел Шарм. Всички права запазени.
+</footer>
+
+<script>
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+</script>
+</body>
+</html>

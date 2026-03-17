@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Удобства – Марина Бей Ризорт</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ocean: #003B5C;
+    --turquoise: #00A8CC;
+    --sand: #F0E6D3;
+    --white: #fff;
+  }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--sand); color: #222; overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--ocean);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .nav-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; }
+  .nav-logo span { color: var(--turquoise); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--sand); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px; padding-bottom: 4px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--turquoise); }
+  .nav-links a.active { color: var(--turquoise); border-bottom: 2px solid var(--turquoise); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-toggle span { display: block; width: 25px; height: 2px; background: var(--sand); border-radius: 2px; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 55vh; min-height: 380px;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1920') center/cover no-repeat;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: rgba(0,59,92,0.72); }
+  .hero-content { position: relative; z-index: 2; text-align: center; color: var(--white); padding: 2rem; }
+  .hero-eyebrow { font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem; }
+  .hero-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: 4px; color: var(--sand); }
+  .hero-sub { font-size: 1rem; opacity: 0.8; margin-top: 0.8rem; font-style: italic; }
+
+  /* WAVE */
+  .wave-divider { display: block; line-height: 0; }
+
+  /* SECTION */
+  .section-header { text-align: center; margin-bottom: 3rem; }
+  .section-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--turquoise); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.6rem; }
+  .section-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; color: var(--ocean); letter-spacing: 2px; }
+  .section-line { width: 60px; height: 3px; background: var(--turquoise); margin: 1rem auto 0; border-radius: 2px; }
+
+  /* AMENITIES GRID */
+  .amenities-section { background: var(--sand); padding: 5rem 5%; }
+  .amenities-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem; max-width: 1100px; margin: 0 auto;
+  }
+  .amenity-card {
+    background: var(--white); border-radius: 24px; overflow: hidden;
+    box-shadow: 0 6px 28px rgba(0,59,92,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .amenity-card:hover { transform: translateY(-8px); box-shadow: 0 16px 48px rgba(0,59,92,0.18); }
+  .amenity-img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .amenity-body { padding: 2rem; }
+  .amenity-icon { font-size: 2.5rem; margin-bottom: 0.8rem; display: block; }
+  .amenity-name {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1.3rem; font-weight: 700;
+    color: var(--ocean); letter-spacing: 1px; margin-bottom: 0.6rem;
+  }
+  .amenity-desc { font-size: 0.9rem; color: #555; line-height: 1.7; }
+  .amenity-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem; }
+  .amenity-tag {
+    background: rgba(0,168,204,0.1); color: var(--ocean);
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 4px 12px; border-radius: 50px; border: 1px solid rgba(0,168,204,0.3);
+  }
+
+  /* HIGHLIGHTS SECTION */
+  .highlights-section { background: var(--ocean); padding: 5rem 5%; }
+  .highlights-section .section-title { color: var(--sand); }
+  .highlights-section .section-label { color: var(--turquoise); }
+  .highlights-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+  }
+  .highlight-item {
+    background: rgba(255,255,255,0.06); border-radius: 20px;
+    padding: 2.5rem 1.5rem; text-align: center;
+    border: 1px solid rgba(0,168,204,0.2);
+    transition: transform 0.3s, background 0.3s;
+  }
+  .highlight-item:hover { transform: translateY(-6px); background: rgba(0,168,204,0.12); }
+  .highlight-icon { font-size: 2.8rem; margin-bottom: 1rem; display: block; }
+  .highlight-name {
+    font-family: 'Josefin Sans', sans-serif; font-size: 1rem; font-weight: 700;
+    color: var(--sand); letter-spacing: 1px; margin-bottom: 0.4rem;
+  }
+  .highlight-desc { font-size: 0.82rem; color: rgba(240,230,211,0.7); line-height: 1.5; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, #005780, var(--turquoise));
+    padding: 5rem 5%; text-align: center; color: var(--white);
+  }
+  .cta-title { font-family: 'Josefin Sans', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 700; letter-spacing: 2px; margin-bottom: 1rem; }
+  .cta-sub { font-size: 1rem; opacity: 0.88; margin-bottom: 2.5rem; }
+  .btn-primary {
+    display: inline-block; background: var(--sand); color: var(--ocean);
+    font-family: 'Josefin Sans', sans-serif; font-size: 1rem; font-weight: 700;
+    padding: 16px 40px; border-radius: 50px; letter-spacing: 2px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.35); }
+
+  /* FOOTER */
+  footer { background: #00253a; color: rgba(240,230,211,0.75); text-align: center; padding: 2.5rem 5%; font-size: 0.85rem; line-height: 2; }
+  footer .footer-logo { font-family: 'Josefin Sans', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--sand); letter-spacing: 2px; margin-bottom: 0.5rem; }
+  footer a { color: var(--turquoise); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: var(--ocean); padding: 1.5rem 5%; gap: 1rem; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: flex; }
+    .amenities-grid { grid-template-columns: 1fr; }
+    .highlights-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .highlights-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Марина<span> Бей</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html" class="active">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Марина Бей Ризорт</p>
+    <h1 class="hero-title">Удобства</h1>
+    <p class="hero-sub">Всичко за перфектната морска почивка</p>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#F0E6D3" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- AMENITIES -->
+<section class="amenities-section">
+  <div class="section-header">
+    <p class="section-label">Какво предлагаме</p>
+    <h2 class="section-title">Нашите Удобства</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="amenities-grid">
+
+    <div class="amenity-card">
+      <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900" alt="Ресторант" class="amenity-img" loading="lazy">
+      <div class="amenity-body">
+        <span class="amenity-icon">🍽️</span>
+        <div class="amenity-name">Морски Ресторант</div>
+        <p class="amenity-desc">Авторска средиземноморска кухня с акцент върху черноморска риба и морски дарове. Панорамна тераса с гледка към залеза, интериор в морски стил и специално детско меню.</p>
+        <div class="amenity-tags">
+          <span class="amenity-tag">Закуска 07:00–10:30</span>
+          <span class="amenity-tag">Вечеря 18:00–23:00</span>
+          <span class="amenity-tag">Морска кухня</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="amenity-card">
+      <img src="https://images.unsplash.com/photo-1504681869696-d977211a5f4c?w=900" alt="Плажен Бар" class="amenity-img" loading="lazy">
+      <div class="amenity-body">
+        <span class="amenity-icon">🍹</span>
+        <div class="amenity-name">Бар на Плажа</div>
+        <p class="amenity-desc">Коктейли с морски бриз и DJ сетове до 02:00 часа. Шезлонги и бамбукови сенници на пясъка, сигничър напитки и плодови шейкове за свежо лятно настроение.</p>
+        <div class="amenity-tags">
+          <span class="amenity-tag">10:00–02:00</span>
+          <span class="amenity-tag">DJ Петък–Неделя</span>
+          <span class="amenity-tag">Коктейли</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="amenity-card">
+      <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=900" alt="Басейн" class="amenity-img" loading="lazy">
+      <div class="amenity-body">
+        <span class="amenity-icon">🏊</span>
+        <div class="amenity-name">Инфинити Басейн</div>
+        <p class="amenity-desc">Панорамен басейн с гледка към морето, отопляем целия сезон. Зона за възрастни и отделен детски басейн. Шезлонги, кърпи и бар обслужване включени.</p>
+        <div class="amenity-tags">
+          <span class="amenity-tag">08:00–20:00</span>
+          <span class="amenity-tag">Отопляем</span>
+          <span class="amenity-tag">Детска зона</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="amenity-card">
+      <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900" alt="Спа" class="amenity-img" loading="lazy">
+      <div class="amenity-body">
+        <span class="amenity-icon">💆</span>
+        <div class="amenity-name">Спа & Уелнес</div>
+        <p class="amenity-desc">Морски терапии, масажи с водорасли и аромамасла, сауна и парна баня. Релакс зона с билков чай и панорамна гледка. Козметични процедури по заявка.</p>
+        <div class="amenity-tags">
+          <span class="amenity-tag">09:00–21:00</span>
+          <span class="amenity-tag">Масажи</span>
+          <span class="amenity-tag">Сауна</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="amenity-card">
+      <img src="https://images.unsplash.com/photo-1530053969600-caed2596d242?w=900" alt="Водни Спортове" class="amenity-img" loading="lazy">
+      <div class="amenity-body">
+        <span class="amenity-icon">🏄</span>
+        <div class="amenity-name">Водни Спортове</div>
+        <p class="amenity-desc">Джет ски, уейкборд, сърф, каяк и SUP дъски. Професионални инструктори и модерно оборудване. Организирани гмуркания и яхтени разходки по крайбрежието.</p>
+        <div class="amenity-tags">
+          <span class="amenity-tag">09:00–18:00</span>
+          <span class="amenity-tag">Инструктори</span>
+          <span class="amenity-tag">Наем на екипировка</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#003B5C" d="M0,60 C360,0 720,100 1080,50 C1260,25 1380,70 1440,60 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights-section">
+  <div class="section-header">
+    <p class="section-label">Допълнителни услуги</p>
+    <h2 class="section-title">Всичко На Едно Място</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="highlights-grid">
+    <div class="highlight-item">
+      <span class="highlight-icon">🌅</span>
+      <div class="highlight-name">Частен Плаж</div>
+      <div class="highlight-desc">Запазени шезлонги и чадъри на 5 минути от хотела.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">🅿️</span>
+      <div class="highlight-name">Безплатен Паркинг</div>
+      <div class="highlight-desc">Охраняем паркинг с видеонаблюдение за всички гости.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">👶</span>
+      <div class="highlight-name">Детски Клуб</div>
+      <div class="highlight-desc">Аниматори, игрална зала и забавления за деца 3–12 г.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">📶</span>
+      <div class="highlight-name">Безплатен Wi-Fi</div>
+      <div class="highlight-desc">Високоскоростен интернет в цялата територия на ризорта.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">🚐</span>
+      <div class="highlight-name">Трансфер</div>
+      <div class="highlight-desc">Организиран трансфер от летище Бургас по заявка.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">🛎️</span>
+      <div class="highlight-name">Рецепция 24/7</div>
+      <div class="highlight-desc">Рецепция на разположение денонощно за всякакви нужди.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">🚴</span>
+      <div class="highlight-name">Наем на Велосипеди</div>
+      <div class="highlight-desc">Разходка по крайбрежната велоалея с наши велосипеди.</div>
+    </div>
+    <div class="highlight-item">
+      <span class="highlight-icon">🧺</span>
+      <div class="highlight-name">Пералня</div>
+      <div class="highlight-desc">Услуга пране и гладене, express за 4 часа.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave-divider">
+  <svg viewBox="0 0 1440 100" preserveAspectRatio="none" style="width:100%;height:60px;display:block"><path fill="#00A8CC" d="M0,40 C360,100 720,0 1080,50 C1260,75 1380,30 1440,40 L1440,100 L0,100 Z"/></svg>
+</div>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="cta-title">Готови ли Сте За Морска Ваканция?</h2>
+  <p class="cta-sub">Възползвайте се от всички удобства на Марина Бей Ризорт</p>
+  <a href="contact.html" class="btn-primary">РЕЗЕРВИРАЙТЕ СЕГА</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Марина Бей Ризорт</div>
+  <div>ул. „Морска" 42, Созопол &nbsp;·&nbsp; <a href="tel:+35955022888">+359 550 22 888</a> &nbsp;·&nbsp; <a href="mailto:info@marinabay.bg">info@marinabay.bg</a></div>
+  <div style="margin-top:0.5rem;font-size:0.8rem;opacity:0.6;">© 2024 Марина Бей Ризорт. Всички права запазени.</div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

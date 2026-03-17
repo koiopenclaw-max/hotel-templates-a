@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Премиум Хотели България</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0C0C0C;
+      --gold: #C9A96E;
+      --cream: #F5F1EB;
+      --text-muted: rgba(245, 241, 235, 0.55);
+      --transition: 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--cream);
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    header {
+      position: relative;
+      text-align: center;
+      padding: 100px 24px 80px;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(201, 169, 110, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-eyebrow {
+      display: inline-block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-weight: 300;
+      line-height: 1.12;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      margin-bottom: 28px;
+    }
+
+    header h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .header-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .header-divider span {
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .header-divider span:last-child {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .header-divider i {
+      font-style: normal;
+      color: var(--gold);
+      font-size: 14px;
+    }
+
+    .header-sub {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* ── Grid ── */
+    .gallery {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px 120px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+    }
+
+    /* Card layout: first two are wide, next three fill row, last two wide */
+    .card:nth-child(1) { grid-column: span 7; }
+    .card:nth-child(2) { grid-column: span 5; }
+    .card:nth-child(3) { grid-column: span 4; }
+    .card:nth-child(4) { grid-column: span 4; }
+    .card:nth-child(5) { grid-column: span 4; }
+
+    /* ── Card ── */
+    .card {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      min-height: 520px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      isolation: isolate;
+    }
+
+    .card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform var(--transition);
+      will-change: transform;
+    }
+
+    .card:hover .card-bg {
+      transform: scale(1.06);
+    }
+
+    /* Dark gradient overlay */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.88) 0%,
+        rgba(0, 0, 0, 0.45) 45%,
+        rgba(0, 0, 0, 0.15) 75%,
+        transparent 100%
+      );
+      transition: background var(--transition);
+    }
+
+    .card:hover .card-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.92) 0%,
+        rgba(0, 0, 0, 0.55) 50%,
+        rgba(0, 0, 0, 0.25) 80%,
+        transparent 100%
+      );
+    }
+
+    /* Accent tint unique per card */
+    .card-tint {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .card:hover .card-tint {
+      opacity: 1;
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 40px 36px;
+      transform: translateY(8px);
+      transition: transform var(--transition);
+    }
+
+    .card:hover .card-content {
+      transform: translateY(0);
+    }
+
+    .card-stars {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 14px;
+    }
+
+    .card-stars span {
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.8;
+    }
+
+    .card-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+
+    .card:hover .card-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      max-width: 320px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.45s ease 0.05s, transform 0.45s ease 0.05s;
+    }
+
+    .card:hover .card-desc {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.45s ease 0.1s, transform 0.45s ease 0.1s;
+    }
+
+    .card:hover .card-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-cta::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .card:hover .card-cta::after {
+      width: 40px;
+    }
+
+    /* Card accent corners */
+    .card-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .card-corner--tl {
+      top: 20px;
+      left: 20px;
+      border-top: 1px solid var(--gold);
+      border-left: 1px solid var(--gold);
+    }
+
+    .card-corner--br {
+      bottom: 20px;
+      right: 20px;
+      border-bottom: 1px solid var(--gold);
+      border-right: 1px solid var(--gold);
+    }
+
+    .card:hover .card-corner {
+      opacity: 0.6;
+    }
+
+    /* ── Per-card accent colors ── */
+    .card--luxury   .card-tint { background: rgba(201, 169, 110, 0.06); }
+    .card--boutique .card-tint { background: rgba(212, 163, 115, 0.07); }
+    .card--mountain .card-tint { background: rgba(26,  60,  52, 0.15); }
+    .card--seaside  .card-tint { background: rgba(0,  168, 204, 0.08); }
+    .card--urban    .card-tint { background: rgba(255, 56,  92, 0.07); }
+
+    .card--boutique .card-stars span,
+    .card--boutique .card-label,
+    .card--boutique .card-cta      { color: #D4A373; }
+    .card--boutique .card-cta::after { background: #D4A373; }
+
+    .card--mountain .card-stars span,
+    .card--mountain .card-label,
+    .card--mountain .card-cta      { color: #E6D5B8; }
+    .card--mountain .card-cta::after { background: #E6D5B8; }
+
+    .card--seaside  .card-stars span,
+    .card--seaside  .card-label,
+    .card--seaside  .card-cta      { color: #00A8CC; }
+    .card--seaside  .card-cta::after { background: #00A8CC; }
+
+    .card--urban    .card-stars span,
+    .card--urban    .card-label,
+    .card--urban    .card-cta      { color: #FF385C; }
+    .card--urban    .card-cta::after { background: #FF385C; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid rgba(201, 169, 110, 0.15);
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    footer p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .card:nth-child(1),
+      .card:nth-child(2) { grid-column: span 6; }
+      .card:nth-child(3),
+      .card:nth-child(4),
+      .card:nth-child(5) { grid-column: span 4; }
+      .card { min-height: 440px; }
+    }
+
+    @media (max-width: 768px) {
+      .gallery {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .card:nth-child(n) { grid-column: span 1; }
+      .card { min-height: 380px; }
+      .card-content { padding: 28px 24px; }
+
+      /* Always show content on mobile */
+      .card-label,
+      .card-desc,
+      .card-cta {
+        opacity: 1;
+        transform: none;
+      }
+
+      header { padding: 64px 24px 56px; }
+    }
+
+    @media (max-width: 480px) {
+      .card { min-height: 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="header-eyebrow">Колекция</span>
+    <h1>Премиум Хотели<br /><em>България</em></h1>
+    <div class="header-divider">
+      <span></span>
+      <i>✦</i>
+      <span></span>
+    </div>
+    <p class="header-sub">Пет изключителни дестинации, внимателно подбрани за взискателни пътешественици</p>
+  </header>
+
+  <main class="gallery">
+
+    <!-- 1. Гранд Палас -->
+    <a class="card card--luxury" href="site-1-luxury/" aria-label="Гранд Палас Хотел">
+      <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1400&auto=format&fit=crop&q=80');"></div>
+      <div class="card-overlay"></div>
+      <div class="card-tint"></div>
+      <div class="card-corner card-corner--tl"></div>
+      <div class="card-corner card-corner--br"></div>
+      <div class="card-content">
+        <div class="card-stars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="card-label">Луксозен Хотел &nbsp;·&nbsp; София</div>
+        <h2 class="card-name">Гранд Палас Хотел</h2>
+        <p class="card-desc">Олицетворение на класическия лукс в сърцето на столицата. Извисяващи се зали, прецизна кухня и безупречно обслужване за ненадминато изживяване.</p>
+        <span class="card-cta">Разгледайте</span>
+      </div>
+    </a>
+
+    <!-- 2. Бутик Хотел Шарм -->
+    <a class="card card--boutique" href="site-2-boutique/" aria-label="Бутик Хотел Шарм">
+      <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1551882547-ff40c63fe2fa?w=1000&auto=format&fit=crop&q=80');"></div>
+      <div class="card-overlay"></div>
+      <div class="card-tint"></div>
+      <div class="card-corner card-corner--tl"></div>
+      <div class="card-corner card-corner--br"></div>
+      <div class="card-content">
+        <div class="card-stars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="card-label">Бутик Хотел &nbsp;·&nbsp; Пловдив</div>
+        <h2 class="card-name">Бутик Хотел Шарм</h2>
+        <p class="card-desc">Интимна атмосфера, ръчно изработени детайли и топла естетика — бягство от ежедневието в неповторима среда.</p>
+        <span class="card-cta">Разгледайте</span>
+      </div>
+    </a>
+
+    <!-- 3. Планински Лодж Пирин -->
+    <a class="card card--mountain" href="site-3-mountain/" aria-label="Планински Лодж Пирин">
+      <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=900&auto=format&fit=crop&q=80');"></div>
+      <div class="card-overlay"></div>
+      <div class="card-tint"></div>
+      <div class="card-corner card-corner--tl"></div>
+      <div class="card-corner card-corner--br"></div>
+      <div class="card-content">
+        <div class="card-stars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="card-label">Планински Лодж &nbsp;·&nbsp; Пирин</div>
+        <h2 class="card-name">Планински Лодж Пирин</h2>
+        <p class="card-desc">Вдъхновяваща природа, чист планински въздух и уютни стаи с гледка към върховете — истинско светилище за душата.</p>
+        <span class="card-cta">Разгледайте</span>
+      </div>
+    </a>
+
+    <!-- 4. Марина Бей Ризорт -->
+    <a class="card card--seaside" href="site-4-seaside/" aria-label="Марина Бей Ризорт">
+      <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&auto=format&fit=crop&q=80');"></div>
+      <div class="card-overlay"></div>
+      <div class="card-tint"></div>
+      <div class="card-corner card-corner--tl"></div>
+      <div class="card-corner card-corner--br"></div>
+      <div class="card-content">
+        <div class="card-stars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="card-label">Морски Ризорт &nbsp;·&nbsp; Черно море</div>
+        <h2 class="card-name">Марина Бей Ризорт</h2>
+        <p class="card-desc">Лазурни хоризонти и безкрайни плажни простори — ризортът съчетава морска свежест с петзвезден комфорт.</p>
+        <span class="card-cta">Разгледайте</span>
+      </div>
+    </a>
+
+    <!-- 5. Урбан Дизайн Хотел -->
+    <a class="card card--urban" href="site-5-urban/" aria-label="Урбан Дизайн Хотел">
+      <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=900&auto=format&fit=crop&q=80');"></div>
+      <div class="card-overlay"></div>
+      <div class="card-tint"></div>
+      <div class="card-corner card-corner--tl"></div>
+      <div class="card-corner card-corner--br"></div>
+      <div class="card-content">
+        <div class="card-stars">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="card-label">Дизайн Хотел &nbsp;·&nbsp; София</div>
+        <h2 class="card-name">Урбан Дизайн Хотел</h2>
+        <p class="card-desc">Смел архитектурен език, авангардно изкуство и пулсиращата енергия на града — за модерния пътешественик.</p>
+        <span class="card-cta">Разгледайте</span>
+      </div>
+    </a>
+
+  </main>
+
+  <footer>
+    <div class="footer-logo">Премиум Хотели България</div>
+    <p>Изключително гостоприемство &nbsp;·&nbsp; Незабравими изживявания</p>
+  </footer>
+
+</body>
+</html>

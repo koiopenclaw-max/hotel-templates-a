@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Удобства — Урбан Дизайн Хотел</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --carbon: #1C1C1E;
+      --coral: #FF385C;
+      --light: #F5F5F7;
+      --mid: #2C2C2E;
+      --muted: #8E8E93;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--carbon); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: var(--carbon);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
+      color: var(--light); letter-spacing: 0.08em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--coral); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--light); text-decoration: none; letter-spacing: 0.1em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--coral); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding-top: 64px; background: var(--carbon); min-height: 280px;
+      display: flex; align-items: flex-end; padding-bottom: 64px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero-geo-1 {
+      position: absolute; top: 80px; right: 120px;
+      width: 160px; height: 160px;
+      background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,56,92,0.12) 8px, rgba(255,56,92,0.12) 9px);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .page-hero-geo-2 {
+      position: absolute; bottom: 40px; right: 280px;
+      width: 60px; height: 60px;
+      border: 1.5px solid rgba(255,56,92,0.3); transform: rotate(45deg);
+    }
+    .page-hero-geo-3 {
+      position: absolute; top: 100px; right: 60px;
+      width: 24px; height: 24px;
+      background: var(--coral); opacity: 0.6; transform: rotate(45deg);
+    }
+    .page-hero-inner { padding: 0 80px; position: relative; z-index: 2; }
+    .page-hero-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 16px;
+      text-shadow: 0 0 16px rgba(255,56,92,0.4);
+    }
+    .page-hero-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800; color: var(--light); line-height: 0.95; letter-spacing: -0.02em;
+    }
+
+    /* SECTION COMMON */
+    .section-pad { padding: 100px 80px; }
+    .section-header { margin-bottom: 56px; }
+    .section-header .label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; color: var(--carbon); line-height: 1;
+    }
+
+    /* AMENITIES GRID */
+    .amenities-section { background: var(--light); }
+    .amenities-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+    }
+    .amenity-block {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 400px; overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .amenity-block:hover { box-shadow: 0 8px 60px rgba(28,28,30,0.1); }
+    .amenity-block.full { grid-column: 1 / -1; }
+    .amenity-block.reverse { direction: rtl; }
+    .amenity-block.reverse > * { direction: ltr; }
+    .amenity-img-wrap { overflow: hidden; }
+    .amenity-img {
+      width: 100%; height: 100%; min-height: 300px; object-fit: cover; display: block;
+      transition: transform 0.6s;
+    }
+    .amenity-block:hover .amenity-img { transform: scale(1.04); }
+    .amenity-info {
+      padding: 56px 48px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .amenity-info.dark { background: var(--carbon); }
+    .amenity-info.light { background: var(--light); }
+    .amenity-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); margin-bottom: 20px;
+    }
+    .amenity-tag::before {
+      content: ''; display: inline-block; width: 24px; height: 1px; background: var(--coral);
+    }
+    .amenity-name {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800; line-height: 1.05; margin-bottom: 16px;
+    }
+    .amenity-info.dark .amenity-name { color: var(--light); }
+    .amenity-info.light .amenity-name { color: var(--carbon); }
+    .amenity-desc {
+      font-size: 0.9rem; line-height: 1.8; font-weight: 300; margin-bottom: 28px;
+    }
+    .amenity-info.dark .amenity-desc { color: var(--muted); }
+    .amenity-info.light .amenity-desc { color: #6B6B70; }
+    .amenity-features { display: flex; flex-wrap: wrap; gap: 8px; }
+    .feat-pill {
+      padding: 6px 14px; font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.08em; border: 1px solid;
+    }
+    .amenity-info.dark .feat-pill { border-color: rgba(255,255,255,0.15); color: rgba(245,245,247,0.6); }
+    .amenity-info.light .feat-pill { border-color: rgba(28,28,30,0.1); color: var(--muted); }
+
+    /* GEOMETRIC DIVIDER */
+    .geo-divider {
+      height: 80px; background: var(--carbon);
+      position: relative; overflow: hidden;
+    }
+    .geo-divider::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,56,92,0.08) 40px, rgba(255,56,92,0.08) 41px);
+    }
+    .geo-divider-shape {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);
+      width: 48px; height: 48px; border: 2px solid var(--coral);
+    }
+
+    /* EXTRAS GRID */
+    .extras-section { background: var(--carbon); }
+    .extras-section .section-header h2 { color: var(--light); }
+    .extras-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    }
+    .extra-card {
+      background: var(--mid); padding: 40px 28px; position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .extra-card:hover { transform: translateY(-4px); }
+    .extra-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--coral); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .extra-card:hover::before { transform: scaleX(1); }
+    .extra-icon {
+      width: 40px; height: 40px; border: 1px solid rgba(255,56,92,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; margin-bottom: 20px; transform: rotate(45deg);
+    }
+    .extra-icon-inner { transform: rotate(-45deg); }
+    .extra-title {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--light); margin-bottom: 10px; letter-spacing: 0.05em;
+    }
+    .extra-text { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
+    .extra-geo {
+      position: absolute; bottom: 16px; right: 16px; width: 28px; height: 28px;
+      border: 1px solid rgba(255,56,92,0.2); transform: rotate(45deg);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--carbon); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 80px; text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;
+      color: var(--light); letter-spacing: 0.1em; margin-bottom: 20px; display: block;
+    }
+    .footer-logo span { color: var(--coral); }
+    .footer-info { font-size: 0.82rem; color: var(--muted); line-height: 2; }
+    .footer-info a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-info a:hover { color: var(--coral); }
+    .footer-divider { width: 40px; height: 2px; background: var(--coral); margin: 20px auto; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 0 24px; }
+      .page-hero-inner { padding: 0 40px; }
+      .section-pad { padding: 72px 40px; }
+      .amenities-grid { grid-template-columns: 1fr; }
+      .amenity-block { grid-template-columns: 1fr; }
+      .amenity-block.reverse { direction: ltr; }
+      .amenity-img-wrap { height: 280px; }
+      .extras-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 40px 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .page-hero-inner { padding: 0 24px; }
+      .section-pad { padding: 60px 24px; }
+      .extras-grid { grid-template-columns: 1fr; }
+      footer { padding: 36px 24px; }
+      .page-hero-geo-1, .page-hero-geo-2, .page-hero-geo-3 { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">URB<span>A</span>N</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="rooms.html">Стаи</a></li>
+      <li><a href="amenities.html" class="active">Удобства</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html">Резервация</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-geo-1"></div>
+    <div class="page-hero-geo-2"></div>
+    <div class="page-hero-geo-3"></div>
+    <div class="page-hero-inner">
+      <span class="page-hero-label">▸ Всичко под един покрив</span>
+      <h1 class="page-hero-title">УДОБСТВА</h1>
+    </div>
+  </div>
+
+  <!-- AMENITIES -->
+  <div class="amenities-grid">
+
+    <!-- РЕСТОРАНТ -->
+    <div class="amenity-block full">
+      <div class="amenity-img-wrap">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900" alt="Ресторант" class="amenity-img" />
+      </div>
+      <div class="amenity-info dark">
+        <span class="amenity-tag">Кулинарен опит</span>
+        <h2 class="amenity-name">Ресторант „Графит"</h2>
+        <p class="amenity-desc">Авторска кухня с фокус върху сезонни български продукти, преосмислени в съвременен контекст. Отворен план, кухня на показ и минималистичен интериор с индустриален акцент.</p>
+        <div class="amenity-features">
+          <span class="feat-pill">Закуска 07:00–10:30</span>
+          <span class="feat-pill">Вечеря 18:00–23:00</span>
+          <span class="feat-pill">Авторска кухня</span>
+          <span class="feat-pill">Открита кухня</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- РУФТОП БАР -->
+    <div class="amenity-block">
+      <div class="amenity-img-wrap">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=900" alt="Руфтоп Бар" class="amenity-img" />
+      </div>
+      <div class="amenity-info light">
+        <span class="amenity-tag">8-ми етаж</span>
+        <h2 class="amenity-name">Руфтоп Бар</h2>
+        <p class="amenity-desc">Коктейли с гледка към София и Витоша. Сигничър напитки, DJ сетове и артистична атмосфера на покрива на града.</p>
+        <div class="amenity-features">
+          <span class="feat-pill">17:00–02:00</span>
+          <span class="feat-pill">DJ Петък–Събота</span>
+          <span class="feat-pill">Панорама</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ФИТНЕС -->
+    <div class="amenity-block reverse">
+      <div class="amenity-img-wrap">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900" alt="Фитнес" class="amenity-img" />
+      </div>
+      <div class="amenity-info dark">
+        <span class="amenity-tag">24/7 достъп</span>
+        <h2 class="amenity-name">Фитнес Зала</h2>
+        <p class="amenity-desc">Модерно оборудване Technogym, свободни тежести, кардио зона с индивидуални екрани и панорамна гледка към града.</p>
+        <div class="amenity-features">
+          <span class="feat-pill">Technogym</span>
+          <span class="feat-pill">24/7</span>
+          <span class="feat-pill">Свободни тежести</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- КОУЪРКИНГ -->
+    <div class="amenity-block full reverse">
+      <div class="amenity-img-wrap">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900" alt="Коуъркинг" class="amenity-img" />
+      </div>
+      <div class="amenity-info light">
+        <span class="amenity-tag">Работно пространство</span>
+        <h2 class="amenity-name">Коуъркинг Хъб</h2>
+        <p class="amenity-desc">Споделено работно пространство с ергономични бюра, частни кабини за обаждания, високоскоростен интернет и безплатно кафе. Идеален за дигитални номади и бизнес пътуващи.</p>
+        <div class="amenity-features">
+          <span class="feat-pill">08:00–22:00</span>
+          <span class="feat-pill">Безплатен WiFi</span>
+          <span class="feat-pill">Кафе бар</span>
+          <span class="feat-pill">Тихи кабини</span>
+          <span class="feat-pill">Принтер/Скенер</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ПАРКИНГ -->
+    <div class="amenity-block full">
+      <div class="amenity-img-wrap">
+        <img src="https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=900" alt="Паркинг" class="amenity-img" />
+      </div>
+      <div class="amenity-info dark">
+        <span class="amenity-tag">Подземен</span>
+        <h2 class="amenity-name">Частен Паркинг</h2>
+        <p class="amenity-desc">Охраняем подземен паркинг с видеонаблюдение и контролиран достъп. Зарядни станции за електромобили и места за мотоциклети.</p>
+        <div class="amenity-features">
+          <span class="feat-pill">24/7 достъп</span>
+          <span class="feat-pill">EV зарядни</span>
+          <span class="feat-pill">Видеонаблюдение</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GEO DIVIDER -->
+  <div class="geo-divider"><div class="geo-divider-shape"></div></div>
+
+  <!-- EXTRAS -->
+  <section class="extras-section section-pad">
+    <div class="section-header">
+      <span class="label">▸ Допълнителни услуги</span>
+      <h2>Всичко За Вашия Комфорт</h2>
+    </div>
+    <div class="extras-grid">
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">📶</span></div>
+        <div class="extra-title">WiFi 1Gbps</div>
+        <p class="extra-text">Високоскоростен интернет в целия хотел, безплатен за всички гости.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🧹</span></div>
+        <div class="extra-title">Ежедневно Почистване</div>
+        <p class="extra-text">Професионално хотелско почистване и подмяна на спално бельо.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🛎️</span></div>
+        <div class="extra-title">Рецепция 24/7</div>
+        <p class="extra-text">Екипът ни е на разположение денонощно за всякакви нужди.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🧺</span></div>
+        <div class="extra-title">Пералня Express</div>
+        <p class="extra-text">Пране и гладене с express услуга — готово за 4 часа.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🚕</span></div>
+        <div class="extra-title">Трансфер</div>
+        <p class="extra-text">Организиран трансфер от/до летище София по заявка.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🐾</span></div>
+        <div class="extra-title">Pet Friendly</div>
+        <p class="extra-text">Приемаме малки домашни любимци до 10 кг. Такса 20 лв/нощ.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🔐</span></div>
+        <div class="extra-title">Дигитален Ключ</div>
+        <p class="extra-text">Безконтактно настаняване чрез мобилно приложение.</p>
+        <div class="extra-geo"></div>
+      </div>
+      <div class="extra-card">
+        <div class="extra-icon"><span class="extra-icon-inner">🚲</span></div>
+        <div class="extra-title">Велосипеди</div>
+        <p class="extra-text">Безплатни градски велосипеди за разходка из центъра на София.</p>
+        <div class="extra-geo"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">URB<span>A</span>N</span>
+    <div class="footer-divider"></div>
+    <div class="footer-info">
+      ул. „Граф Игнатиев" 5, София &nbsp;·&nbsp;
+      <a href="tel:+35924448800">+359 2 444 8800</a> &nbsp;·&nbsp;
+      <a href="mailto:hello@urbanhotel.bg">hello@urbanhotel.bg</a><br>
+      <a href="contact.html">@urbanhotelsofia</a> &nbsp;·&nbsp; © 2024 Урбан Дизайн Хотел
+    </div>
+  </footer>
+
+</body>
+</html>

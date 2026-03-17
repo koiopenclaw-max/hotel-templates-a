@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Галерия — Планински Лодж Пирин</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest: #1A3C34;
+    --sand: #E6D5B8;
+    --wood: #8B4513;
+    --wood-light: #A0522D;
+    --forest-light: #245048;
+    --dark: #0D1F1A;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #F9F5EE; color: #2C2C2C; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--forest); padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px; box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--sand);
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  }
+  .nav-logo svg { flex-shrink: 0; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--sand); text-decoration: none;
+    font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; transition: color 0.2s;
+    padding-bottom: 4px; border-bottom: 2px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom-color: var(--wood); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    height: 52vh; min-height: 360px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920') center/cover no-repeat;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,31,26,0.7), rgba(13,31,26,0.85)); }
+  .hero-content { position: relative; z-index: 2; color: var(--sand); padding: 2rem; }
+  .hero-badge {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--wood-light); margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; margin-bottom: 0.8rem;
+  }
+  .hero-sub { font-size: 1.05rem; opacity: 0.8; font-style: italic; }
+
+  /* FILTERS */
+  .filters {
+    text-align: center; padding: 2.5rem 2rem 1rem; background: #F9F5EE;
+  }
+  .filters button {
+    background: white; border: 1.5px solid rgba(139,69,19,0.25);
+    color: var(--forest); padding: 0.5rem 1.5rem; margin: 0.3rem;
+    cursor: pointer; font-family: 'Source Sans 3', sans-serif;
+    font-size: 0.88rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; border-radius: 8px; transition: all 0.3s;
+  }
+  .filters button:hover, .filters button.active {
+    background: var(--forest); color: var(--sand); border-color: var(--forest);
+  }
+
+  /* MASONRY */
+  .masonry {
+    columns: 3; column-gap: 16px;
+    max-width: 1200px; margin: 0 auto; padding: 1.5rem 2rem 5rem;
+  }
+  .masonry-item {
+    break-inside: avoid; margin-bottom: 16px;
+    position: relative; overflow: hidden;
+    border-radius: 12px; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .masonry-item:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.18); }
+  .masonry-item img { width: 100%; display: block; transition: transform 0.5s; }
+  .masonry-item:hover img { transform: scale(1.05); }
+  .masonry-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,31,26,0.6), transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .masonry-item:hover::after { opacity: 1; }
+  .masonry-item .caption {
+    position: absolute; bottom: 14px; left: 14px;
+    font-family: 'Playfair Display', serif; font-size: 1.05rem;
+    color: var(--sand); opacity: 0; transition: opacity 0.3s; z-index: 2; font-weight: 600;
+  }
+  .masonry-item:hover .caption { opacity: 1; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed; inset: 0;
+    background: rgba(13,31,26,0.93); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 2000; padding: 5%;
+  }
+  .lightbox:target { display: flex; }
+  .lightbox img {
+    max-width: 90%; max-height: 85vh; object-fit: contain;
+    border-radius: 12px; box-shadow: 0 16px 64px rgba(0,0,0,0.5);
+  }
+  .lightbox .close {
+    position: absolute; top: 24px; right: 32px;
+    font-size: 2.5rem; color: var(--sand); text-decoration: none;
+    font-family: 'Playfair Display', serif; line-height: 1;
+  }
+  .lightbox .close:hover { color: #fff; }
+  .lightbox .lb-caption {
+    position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+    font-family: 'Playfair Display', serif; font-size: 1.2rem;
+    color: var(--sand); font-weight: 600;
+  }
+
+  /* SCROLL ANIMATION */
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(230,213,184,0.7);
+    text-align: center; padding: 2.5rem 2rem; font-size: 0.88rem; line-height: 2;
+  }
+  footer a { color: var(--sand); text-decoration: none; }
+  footer a:hover { color: #fff; }
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.2rem;
+    color: var(--sand); font-weight: 700; display: block; margin-bottom: 0.8rem;
+  }
+  .footer-divider { width: 40px; height: 2px; background: var(--wood); margin: 0.8rem auto; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) { .masonry { columns: 2; } }
+  @media (max-width: 640px) {
+    .nav-links {
+      display: none; flex-direction: column; position: absolute;
+      top: 68px; left: 0; right: 0; background: var(--forest);
+      padding: 1.5rem 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .masonry { columns: 1; }
+    .hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="22" height="28" viewBox="0 0 28 36" fill="none">
+      <polygon points="14,2 2,18 8,18 4,28 24,28 20,18 26,18" fill="#E6D5B8" opacity="0.8"/>
+      <rect x="11" y="28" width="6" height="7" fill="#8B4513"/>
+    </svg>
+    Лодж Пирин
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html" class="active">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+      <rect width="28" height="2" rx="1" fill="#E6D5B8"/>
+      <rect y="9" width="28" height="2" rx="1" fill="#E6D5B8"/>
+      <rect y="18" width="28" height="2" rx="1" fill="#E6D5B8"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Планински Лодж · Пирин · Банско</div>
+    <h1>Галерия</h1>
+    <p class="hero-sub">Моменти от живота сред върховете на Пирин</p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<div class="filters fade-in">
+  <button class="active" onclick="filterGallery('all',this)">Всички</button>
+  <button onclick="filterGallery('rooms',this)">Стаи</button>
+  <button onclick="filterGallery('nature',this)">Природа</button>
+  <button onclick="filterGallery('amenities',this)">Удобства</button>
+</div>
+
+<!-- MASONRY -->
+<div class="masonry">
+  <a href="#lb1" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600" alt="Планинска стая" loading="lazy">
+    <span class="caption">Планинска Стая</span>
+  </a>
+  <a href="#lb2" class="masonry-item fade-in" data-cat="nature">
+    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600" alt="Пирински пейзаж" loading="lazy">
+    <span class="caption">Пирински Пейзаж</span>
+  </a>
+  <a href="#lb3" class="masonry-item fade-in" data-cat="amenities">
+    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600" alt="Спа център" loading="lazy">
+    <span class="caption">Спа & Уелнес</span>
+  </a>
+  <a href="#lb4" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600" alt="Лодж суит" loading="lazy">
+    <span class="caption">Лодж Суит</span>
+  </a>
+  <a href="#lb5" class="masonry-item fade-in" data-cat="amenities">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600" alt="Ресторант" loading="lazy">
+    <span class="caption">Панорамен Ресторант</span>
+  </a>
+  <a href="#lb6" class="masonry-item fade-in" data-cat="nature">
+    <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=600" alt="Зимен пейзаж" loading="lazy">
+    <span class="caption">Зимна Магия</span>
+  </a>
+  <a href="#lb7" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600" alt="Комфортна стая" loading="lazy">
+    <span class="caption">Комфортна Стая</span>
+  </a>
+  <a href="#lb8" class="masonry-item fade-in" data-cat="amenities">
+    <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600" alt="Басейн" loading="lazy">
+    <span class="caption">Вътрешен Басейн</span>
+  </a>
+  <a href="#lb9" class="masonry-item fade-in" data-cat="nature">
+    <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600" alt="Планински връх" loading="lazy">
+    <span class="caption">Връх Вихрен</span>
+  </a>
+  <a href="#lb10" class="masonry-item fade-in" data-cat="rooms">
+    <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600" alt="Шале апартамент" loading="lazy">
+    <span class="caption">Шале Апартамент</span>
+  </a>
+  <a href="#lb11" class="masonry-item fade-in" data-cat="amenities">
+    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600" alt="Фитнес" loading="lazy">
+    <span class="caption">Фитнес Зала</span>
+  </a>
+  <a href="#lb12" class="masonry-item fade-in" data-cat="nature">
+    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600" alt="Екстериор" loading="lazy">
+    <span class="caption">Лоджът Отвън</span>
+  </a>
+</div>
+
+<!-- LIGHTBOXES -->
+<div id="lb1" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200" alt=""><span class="lb-caption">Планинска Стая</span></div>
+<div id="lb2" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200" alt=""><span class="lb-caption">Пирински Пейзаж</span></div>
+<div id="lb3" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200" alt=""><span class="lb-caption">Спа & Уелнес</span></div>
+<div id="lb4" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200" alt=""><span class="lb-caption">Лодж Суит</span></div>
+<div id="lb5" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200" alt=""><span class="lb-caption">Панорамен Ресторант</span></div>
+<div id="lb6" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=1200" alt=""><span class="lb-caption">Зимна Магия</span></div>
+<div id="lb7" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200" alt=""><span class="lb-caption">Комфортна Стая</span></div>
+<div id="lb8" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200" alt=""><span class="lb-caption">Вътрешен Басейн</span></div>
+<div id="lb9" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200" alt=""><span class="lb-caption">Връх Вихрен</span></div>
+<div id="lb10" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200" alt=""><span class="lb-caption">Шале Апартамент</span></div>
+<div id="lb11" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200" alt=""><span class="lb-caption">Фитнес Зала</span></div>
+<div id="lb12" class="lightbox"><a href="#" class="close">&times;</a><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200" alt=""><span class="lb-caption">Лоджът Отвън</span></div>
+
+<footer>
+  <div class="footer-logo">
+    <svg width="22" height="28" viewBox="0 0 28 36" fill="none" style="vertical-align:middle;margin-right:8px">
+      <polygon points="14,2 2,18 8,18 4,28 24,28 20,18 26,18" fill="#E6D5B8" opacity="0.8"/>
+      <rect x="11" y="28" width="6" height="7" fill="#8B4513"/>
+    </svg>
+    Планински Лодж Пирин
+  </div>
+  <div class="footer-divider"></div>
+  <div>
+    с. Баня, общ. Разлог, до Банско<br>
+    <a href="tel:+359749885555">+359 749 88 555</a> · <a href="mailto:info@lodgepirin.bg">info@lodgepirin.bg</a><br>
+    © 2024 Планински Лодж Пирин. Всички права запазени.
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('.masonry-item').forEach(i => {
+      i.style.display = cat === 'all' || i.dataset.cat === cat ? 'block' : 'none';
+    });
+    document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

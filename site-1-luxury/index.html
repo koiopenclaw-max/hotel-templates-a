@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гранд Палас Хотел — Луксозен 5-звезден Хотел в София</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #0C0C0C;
+    --gold: #C9A96E;
+    --gold-light: #dfc08a;
+    --warm-white: #F5F1EB;
+    --gray: #1a1a1a;
+    --gray-mid: #2e2e2e;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--black); color: var(--warm-white); font-family: 'Raleway', sans-serif; font-weight: 300; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(12,12,12,0.97); border-bottom: 1px solid rgba(201,169,110,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 4vw; height: 80px; backdrop-filter: blur(8px);
+  }
+  .nav-logo { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; color: var(--gold); letter-spacing: 0.05em; text-decoration: none; line-height: 1.2; }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-family: 'Raleway', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-white); text-decoration: none; transition: color 0.3s; padding-bottom: 4px; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--gold); border-bottom: 1px solid var(--gold); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .nav-hamburger span { width: 26px; height: 1px; background: var(--gold); display: block; }
+
+  /* HERO */
+  .hero {
+    position: relative; height: 100vh; min-height: 700px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: heroZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom { from { transform: scale(1.05); } to { transform: scale(1.12); } }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(12,12,12,0.6) 0%, rgba(12,12,12,0.5) 50%, rgba(12,12,12,0.85) 100%); }
+  .hero-content { position: relative; z-index: 2; text-align: center; padding: 0 2rem; max-width: 900px; animation: fadeUp 1.2s ease both; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-eyebrow { font-family: 'Raleway', sans-serif; font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .hero-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(2.2rem, 5vw, 4.5rem); font-weight: 700; color: var(--warm-white); line-height: 1.15; margin-bottom: 1rem; text-shadow: 0 4px 30px rgba(0,0,0,0.7); }
+  .hero-tagline { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-style: italic; color: var(--gold-light); margin-bottom: 2.5rem; letter-spacing: 0.05em; }
+  .gold-divider { width: 120px; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); margin: 1.5rem auto; }
+
+  /* BOOKING WIDGET */
+  .booking-widget {
+    position: relative; z-index: 2;
+    background: rgba(12,12,12,0.88); border: 1px solid rgba(201,169,110,0.35);
+    border-radius: 2px; padding: 1.8rem 2.5rem;
+    display: flex; gap: 1.2rem; align-items: flex-end; flex-wrap: wrap; justify-content: center;
+    backdrop-filter: blur(12px); margin-top: 2rem;
+    animation: fadeUp 1.4s ease 0.3s both;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  }
+  .widget-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .widget-field label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+  .widget-field input, .widget-field select {
+    background: transparent; border: none; border-bottom: 1px solid rgba(201,169,110,0.5);
+    color: var(--warm-white); font-family: 'Raleway', sans-serif; font-size: 0.9rem;
+    padding: 0.5rem 0; min-width: 140px; outline: none; cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  .widget-field input:focus, .widget-field select:focus { border-bottom-color: var(--gold); }
+  .widget-field select option { background: var(--black); color: var(--warm-white); }
+  .widget-field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) sepia(1) saturate(2) hue-rotate(0deg); opacity: 0.6; }
+  .btn-book {
+    background: var(--gold); color: var(--black);
+    font-family: 'Raleway', sans-serif; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.25em; text-transform: uppercase; text-decoration: none;
+    padding: 1rem 2.2rem; border: none; cursor: pointer;
+    transition: background 0.3s, transform 0.2s; border-radius: 1px;
+    white-space: nowrap;
+  }
+  .btn-book:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  /* SCROLL ARROW */
+  .scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  .scroll-hint svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; opacity: 0.7; }
+
+  /* HIGHLIGHTS */
+  .highlights { padding: 100px 4vw; background: var(--black); }
+  .section-eyebrow { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); text-align: center; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; text-align: center; color: var(--warm-white); margin-bottom: 1rem; }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin-top: 4rem; }
+  .card-highlight {
+    background: var(--gray); padding: 3.5rem 2.5rem; text-align: center;
+    border: 1px solid rgba(201,169,110,0.1); transition: border-color 0.4s, transform 0.4s;
+    cursor: default;
+  }
+  .card-highlight:hover { border-color: rgba(201,169,110,0.5); transform: translateY(-6px); }
+  .card-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 400; color: var(--warm-white); margin-bottom: 1rem; }
+  .card-text { font-size: 0.88rem; line-height: 1.9; color: rgba(245,241,235,0.65); }
+  .card-link { display: inline-block; margin-top: 1.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+  .card-link:hover { border-color: var(--gold); }
+
+  /* PARALLAX QUOTE */
+  .parallax-quote {
+    position: relative; min-height: 500px; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .parallax-quote-bg {
+    position: absolute; inset: -80px 0;
+    background: url('https://images.unsplash.com/photo-1551882547-ff40c4fe1de5?w=1920') center/cover no-repeat;
+    filter: brightness(0.25);
+  }
+  .parallax-quote-content { position: relative; z-index: 1; text-align: center; padding: 5rem 4vw; max-width: 800px; }
+  .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 8rem; color: var(--gold); opacity: 0.3; line-height: 0.5; display: block; margin-bottom: 1rem; }
+  .quote-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2.2rem); font-style: italic; font-weight: 300; color: var(--warm-white); line-height: 1.6; margin-bottom: 2rem; }
+  .quote-author { font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+
+  /* WHY US */
+  .why-us { padding: 100px 4vw; background: var(--gray); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 3rem; margin-top: 4rem; }
+  .why-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .why-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: rgba(201,169,110,0.3); line-height: 1; min-width: 50px; }
+  .why-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--warm-white); margin-bottom: 0.6rem; }
+  .why-body p { font-size: 0.85rem; line-height: 1.9; color: rgba(245,241,235,0.6); }
+
+  /* FOOTER */
+  footer {
+    background: #080808; border-top: 1px solid rgba(201,169,110,0.2);
+    padding: 4rem 4vw 2rem;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand .logo { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: var(--gold); display: block; margin-bottom: 1rem; }
+  .footer-brand p { font-size: 0.82rem; color: rgba(245,241,235,0.5); line-height: 1.9; }
+  .footer-col h4 { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+  .footer-col p, .footer-col a { display: block; font-size: 0.84rem; color: rgba(245,241,235,0.6); text-decoration: none; margin-bottom: 0.6rem; transition: color 0.3s; line-height: 1.7; }
+  .footer-col a:hover { color: var(--gold); }
+  .social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
+  .social-icons a { width: 38px; height: 38px; border: 1px solid rgba(201,169,110,0.3); display: flex; align-items: center; justify-content: center; color: var(--gold); text-decoration: none; font-size: 0.85rem; transition: background 0.3s, border-color 0.3s; }
+  .social-icons a:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+  .footer-bottom { border-top: 1px solid rgba(201,169,110,0.1); padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-bottom p { font-size: 0.75rem; color: rgba(245,241,235,0.35); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .booking-widget { padding: 1.5rem; gap: 1rem; }
+    .widget-field input, .widget-field select { min-width: 120px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .booking-widget { flex-direction: column; align-items: stretch; }
+    .widget-field { width: 100%; }
+    .widget-field input, .widget-field select { min-width: unset; width: 100%; }
+    .btn-book { width: 100%; text-align: center; }
+  }
+
+  /* FADE-IN ANIMATION on scroll */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Гранд Палас<br>Хотел</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <div class="nav-hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">София, България · 5 Звезди</p>
+    <h1 class="hero-title">Гранд Палас<br>Хотел</h1>
+    <div class="gold-divider"></div>
+    <p class="hero-tagline">Където лукса среща традицията</p>
+  </div>
+  <div class="booking-widget">
+    <div class="widget-field">
+      <label for="checkin">Настаняване</label>
+      <input type="date" id="checkin" name="checkin">
+    </div>
+    <div class="widget-field">
+      <label for="checkout">Напускане</label>
+      <input type="date" id="checkout" name="checkout">
+    </div>
+    <div class="widget-field">
+      <label for="guests">Гости</label>
+      <select id="guests" name="guests">
+        <option>1 Гост</option>
+        <option>2 Гости</option>
+        <option>3 Гости</option>
+        <option>4 Гости</option>
+        <option>5+ Гости</option>
+      </select>
+    </div>
+    <button class="btn-book" onclick="window.location='contact.html'">Резервирайте</button>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+</section>
+
+<section class="highlights">
+  <p class="section-eyebrow fade-in">Изключително преживяване</p>
+  <h2 class="section-title fade-in">Отдайте се на величието</h2>
+  <div class="gold-divider" style="margin-top:0.5rem;"></div>
+  <div class="cards-grid" style="margin-top:4rem;">
+    <div class="card-highlight fade-in">
+      <span class="card-icon">♛</span>
+      <h3 class="card-title">Президентски Апартаменти</h3>
+      <p class="card-text">Седем апартамента на върха на сградата, всеки с панорамна гледка към София. Персонален батлер, частна тераса и интериор от ръчно изработени материали.</p>
+      <a href="rooms.html" class="card-link">Разгледайте →</a>
+    </div>
+    <div class="card-highlight fade-in">
+      <span class="card-icon">✦</span>
+      <h3 class="card-title">Ресторант с Мишелин Звезда</h3>
+      <p class="card-text">Главният готвач Иван Петров преосмисля българската кухня с техники от световна класа. Всяко ястие е произведение на изкуството — за очите и за душата.</p>
+      <a href="amenities.html" class="card-link">Разгледайте →</a>
+    </div>
+    <div class="card-highlight fade-in">
+      <span class="card-icon">◈</span>
+      <h3 class="card-title">Спа & Уелнес</h3>
+      <p class="card-text">Четириетажен спа комплекс с термален басейн, хамам, солна стая и 18 кабини за терапии. Рецептурите на нашите майстори носят тайните на вековете.</p>
+      <a href="amenities.html" class="card-link">Разгледайте →</a>
+    </div>
+  </div>
+</section>
+
+<section class="parallax-quote">
+  <div class="parallax-quote-bg"></div>
+  <div class="parallax-quote-content">
+    <span class="quote-mark">"</span>
+    <p class="quote-text">Гранд Палас не е просто хотел — това е преживяване, което остава в сърцето завинаги. Тук времето спира, а душата си почива.</p>
+    <p class="quote-author">— Condé Nast Traveller, Хотел на Годината 2023</p>
+  </div>
+</section>
+
+<section class="why-us">
+  <p class="section-eyebrow fade-in">Нашите ценности</p>
+  <h2 class="section-title fade-in">Защо да изберете нас</h2>
+  <div class="gold-divider" style="margin-top:0.5rem;"></div>
+  <div class="why-grid" style="margin-top:4rem;">
+    <div class="why-item fade-in">
+      <span class="why-num">01</span>
+      <div class="why-body">
+        <h3>Безупречна Традиция</h3>
+        <p>Открит през 1923 г., Гранд Палас носи наследство от над век на хотелско майсторство. Всяка зала разказва история.</p>
+      </div>
+    </div>
+    <div class="why-item fade-in">
+      <span class="why-num">02</span>
+      <div class="why-body">
+        <h3>Персонализирано Обслужване</h3>
+        <p>Съотношение персонал/гост 3:1 означава, че всяко желание се предугажда, преди да е изречено. Вашият батлер е винаги наблизо.</p>
+      </div>
+    </div>
+    <div class="why-item fade-in">
+      <span class="why-num">03</span>
+      <div class="why-body">
+        <h3>Несравним Комфорт</h3>
+        <p>Матраци Savoir Beds, спално бельо с 1000-нишков брой, мраморни бани — всеки детайл е избран с маниакална прецизност.</p>
+      </div>
+    </div>
+    <div class="why-item fade-in">
+      <span class="why-num">04</span>
+      <div class="why-body">
+        <h3>Сърцето на София</h3>
+        <p>На крачка от Националния театър, Александър Невски и Витоша Блвд. Идеалното начало за всяко столично приключение.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="logo">Гранд Палас Хотел</span>
+      <p>Пет звезди на сърцето на София от 1923 година. Там, където луксът е начин на живот, а не просто услуга.</p>
+      <div class="social-icons">
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="Instagram">in</a>
+        <a href="#" title="Twitter">tw</a>
+        <a href="#" title="TripAdvisor">ta</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Контакти</h4>
+      <p>бул. "Цар Освободител" 1<br>1000 София, България</p>
+      <a href="tel:+35929876543">+359 2 987 65 43</a>
+      <a href="mailto:reservations@grandpalace.bg">reservations@grandpalace.bg</a>
+      <a href="mailto:info@grandpalace.bg">info@grandpalace.bg</a>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="index.html">Начало</a>
+      <a href="rooms.html">Стаи & Апартаменти</a>
+      <a href="amenities.html">Удобства</a>
+      <a href="gallery.html">Галерия</a>
+      <a href="contact.html">Резервация</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 Гранд Палас Хотел. Всички права запазени.</p>
+    <p>Политика за поверителност · Условия за ползване</p>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

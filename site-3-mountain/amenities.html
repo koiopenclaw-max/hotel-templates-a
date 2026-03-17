@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Удобства & Услуги — Планински Лодж Пирин</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --forest: #1A3C34;
+    --sand: #E6D5B8;
+    --wood: #8B4513;
+    --wood-light: #A0522D;
+    --forest-light: #245048;
+    --dark: #0D1F1A;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Source Sans 3', sans-serif; background: #F9F5EE; color: #2C2C2C; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: var(--forest); padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px; box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--sand);
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700;
+  }
+  .nav-logo svg { flex-shrink: 0; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--sand); text-decoration: none;
+    font-size: 0.95rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; transition: color 0.2s;
+    padding-bottom: 4px; border-bottom: 2px solid transparent;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #fff; border-bottom-color: var(--wood); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    height: 52vh; min-height: 360px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920') center/cover no-repeat;
+  }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,31,26,0.7), rgba(13,31,26,0.85)); }
+  .hero-content { position: relative; z-index: 2; color: var(--sand); padding: 2rem; }
+  .hero-badge {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--wood-light); margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; margin-bottom: 0.8rem;
+  }
+  .hero-sub { font-size: 1.05rem; opacity: 0.8; font-style: italic; }
+
+  /* SECTIONS */
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--wood); margin-bottom: 0.5rem; display: block;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: var(--forest);
+    margin-bottom: 0.6rem; line-height: 1.2;
+  }
+  .section-line {
+    width: 56px; height: 3px; background: var(--wood);
+    border-radius: 2px; margin: 1rem 0 1.5rem;
+  }
+
+  /* AMENITY SECTIONS */
+  .amenity-section { padding: 4.5rem 2rem; }
+  .amenity-section:nth-child(even) { background: rgba(230,213,184,0.15); }
+  .amenity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+  .amenity-grid.reverse { direction: rtl; }
+  .amenity-grid.reverse > * { direction: ltr; }
+
+  .amenity-image-wrap {
+    position: relative; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  }
+  .amenity-image-wrap img {
+    width: 100%; height: 360px; object-fit: cover; display: block;
+    transition: transform 0.5s;
+  }
+  .amenity-image-wrap:hover img { transform: scale(1.04); }
+  .amenity-image-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,31,26,0.3) 0%, transparent 50%);
+  }
+  .amenity-tag {
+    position: absolute; bottom: 1.2rem; left: 1.2rem;
+    background: rgba(249,245,238,0.92); backdrop-filter: blur(6px);
+    color: var(--forest); font-size: 0.8rem; font-weight: 600;
+    padding: 0.4rem 1rem; border-radius: 50px;
+  }
+
+  .amenity-icon {
+    width: 54px; height: 54px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(139,69,19,0.2), rgba(139,69,19,0.05));
+    border: 1.5px solid rgba(139,69,19,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin-bottom: 1rem;
+  }
+  .amenity-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 700;
+    color: var(--forest); margin-bottom: 0.5rem;
+  }
+  .amenity-hours {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(139,69,19,0.12); color: var(--wood);
+    font-size: 0.82rem; font-weight: 600;
+    padding: 0.3rem 0.9rem; border-radius: 50px;
+    border: 1px solid rgba(139,69,19,0.25); margin-bottom: 1rem;
+  }
+  .amenity-content p {
+    color: rgba(44,44,44,0.75); font-size: 0.97rem; line-height: 1.78; margin-bottom: 1rem;
+  }
+  .amenity-list {
+    list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;
+  }
+  .amenity-list li {
+    background: white; border: 1px solid rgba(139,69,19,0.2);
+    color: var(--forest); font-size: 0.82rem; font-weight: 600;
+    padding: 0.3rem 0.9rem; border-radius: 50px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+
+  /* PARALLAX QUOTE */
+  .parallax-quote {
+    height: 280px; position: relative;
+    background: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920') center/cover fixed;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .parallax-quote::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(13,31,26,0.7);
+  }
+  .parallax-quote blockquote {
+    position: relative; z-index: 1; text-align: center; padding: 0 10%;
+    font-family: 'Playfair Display', serif; font-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    font-style: italic; color: var(--sand); line-height: 1.6;
+  }
+
+  /* QUICK AMENITIES */
+  .quick-section { padding: 4rem 2rem 5rem; background: var(--forest); }
+  .quick-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 2.5rem;
+  }
+  .quick-card {
+    background: rgba(230,213,184,0.08); border: 1px solid rgba(230,213,184,0.15);
+    border-radius: 16px; padding: 1.8rem; text-align: center;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .quick-card:hover { transform: translateY(-5px); background: rgba(230,213,184,0.12); }
+  .quick-card-icon { font-size: 2rem; margin-bottom: 0.8rem; display: block; }
+  .quick-card h3 {
+    font-family: 'Playfair Display', serif; font-size: 1rem;
+    font-weight: 600; color: var(--sand); margin-bottom: 0.4rem;
+  }
+  .quick-card p { font-size: 0.85rem; color: rgba(230,213,184,0.6); line-height: 1.6; }
+
+  /* SCROLL ANIMATION */
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(230,213,184,0.7);
+    text-align: center; padding: 2.5rem 2rem; font-size: 0.88rem; line-height: 2;
+  }
+  footer a { color: var(--sand); text-decoration: none; }
+  footer a:hover { color: #fff; }
+  .footer-logo {
+    font-family: 'Playfair Display', serif; font-size: 1.2rem;
+    color: var(--sand); font-weight: 700; display: block; margin-bottom: 0.8rem;
+  }
+  .footer-divider { width: 40px; height: 2px; background: var(--wood); margin: 0.8rem auto; }
+
+  /* RESPONSIVE */
+  @media (max-width: 820px) {
+    .amenity-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .amenity-grid.reverse { direction: ltr; }
+    .amenity-image-wrap img { height: 260px; }
+    .quick-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .nav-links {
+      display: none; flex-direction: column; position: absolute;
+      top: 68px; left: 0; right: 0; background: var(--forest);
+      padding: 1.5rem 2rem; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .quick-grid { grid-template-columns: 1fr; }
+    .amenity-section { padding: 3rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <svg width="22" height="28" viewBox="0 0 28 36" fill="none">
+      <polygon points="14,2 2,18 8,18 4,28 24,28 20,18 26,18" fill="#E6D5B8" opacity="0.8"/>
+      <rect x="11" y="28" width="6" height="7" fill="#8B4513"/>
+    </svg>
+    Лодж Пирин
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Начало</a></li>
+    <li><a href="rooms.html">Стаи</a></li>
+    <li><a href="amenities.html" class="active">Удобства</a></li>
+    <li><a href="gallery.html">Галерия</a></li>
+    <li><a href="contact.html">Резервация</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Меню">
+    <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+      <rect width="28" height="2" rx="1" fill="#E6D5B8"/>
+      <rect y="9" width="28" height="2" rx="1" fill="#E6D5B8"/>
+      <rect y="18" width="28" height="2" rx="1" fill="#E6D5B8"/>
+    </svg>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Планински Лодж · Пирин · Банско</div>
+    <h1>Удобства & Услуги</h1>
+    <p class="hero-sub">Планинско гостоприемство с внимание към всеки детайл</p>
+  </div>
+</section>
+
+<!-- РЕСТОРАНТ -->
+<div class="amenity-section fade-in">
+  <div class="container">
+    <div class="amenity-grid">
+      <div class="amenity-image-wrap">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900" alt="Панорамен ресторант" loading="lazy">
+        <div class="amenity-image-overlay"></div>
+        <span class="amenity-tag">🍽️ Ресторант</span>
+      </div>
+      <div class="amenity-content">
+        <div class="amenity-icon">🍖</div>
+        <span class="section-label">Храна & Напитки</span>
+        <h2>Панорамен Ресторант</h2>
+        <span class="amenity-hours">🕐 07:00 – 22:00</span>
+        <p>Нашият ресторант предлага автентична планинска кухня с местни продукти от региона на Банско и Разлог. Сезонно меню, вдъхновено от традициите на Пирин — каварма, чеверме, планински гъби и домашен хляб.</p>
+        <p>Панорамните прозорци осигуряват зашеметяваща гледка към Пиринските върхове — идеалният фон за вашата вечеря на свещи.</p>
+        <ul class="amenity-list">
+          <li>Планинска кухня</li>
+          <li>Панорамна гледка</li>
+          <li>Местни продукти</li>
+          <li>Детско меню</li>
+          <li>Вино от региона</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- СПА -->
+<div class="amenity-section fade-in">
+  <div class="container">
+    <div class="amenity-grid reverse">
+      <div class="amenity-image-wrap">
+        <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=900" alt="Спа и уелнес" loading="lazy">
+        <div class="amenity-image-overlay"></div>
+        <span class="amenity-tag">♨️ Спа</span>
+      </div>
+      <div class="amenity-content">
+        <div class="amenity-icon">💆</div>
+        <span class="section-label">Релаксация</span>
+        <h2>Спа & Уелнес Център</h2>
+        <span class="amenity-hours">🕐 08:00 – 21:00</span>
+        <p>След ден на ски пистите или планинските пътеки, нашият спа център е вашият оазис. Финландска сауна, парна баня, открит джакузи с планинска гледка и зона за релакс.</p>
+        <p>Професионалните ни терапевти предлагат масажи с билкови масла от местни билки — мурсалски чай, лавандула и мента.</p>
+        <ul class="amenity-list">
+          <li>Финландска сауна</li>
+          <li>Парна баня</li>
+          <li>Открит джакузи</li>
+          <li>Масажи</li>
+          <li>Релакс зона</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARALLAX QUOTE -->
+<div class="parallax-quote">
+  <blockquote>„В планината времето забавя ход, а душата намира покой."</blockquote>
+</div>
+
+<!-- БАСЕЙН -->
+<div class="amenity-section fade-in">
+  <div class="container">
+    <div class="amenity-grid">
+      <div class="amenity-image-wrap">
+        <img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=900" alt="Вътрешен басейн" loading="lazy">
+        <div class="amenity-image-overlay"></div>
+        <span class="amenity-tag">🏊 Басейн</span>
+      </div>
+      <div class="amenity-content">
+        <div class="amenity-icon">🏊</div>
+        <span class="section-label">Водни удоволствия</span>
+        <h2>Вътрешен Басейн</h2>
+        <span class="amenity-hours">🕐 07:00 – 21:00</span>
+        <p>Нашият отопляем вътрешен басейн с минерална вода е достъпен целогодишно. С дължина 15 метра, той е идеален за утринно плуване или вечерна релаксация.</p>
+        <p>Зоната включва шезлонги, детски басейн и бар за напитки — всичко, от което се нуждаете, за перфектен ден на закрито.</p>
+        <ul class="amenity-list">
+          <li>Минерална вода</li>
+          <li>Отопляем</li>
+          <li>Детски басейн</li>
+          <li>Шезлонги</li>
+          <li>Бар</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ФИТНЕС -->
+<div class="amenity-section fade-in">
+  <div class="container">
+    <div class="amenity-grid reverse">
+      <div class="amenity-image-wrap">
+        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900" alt="Фитнес зала" loading="lazy">
+        <div class="amenity-image-overlay"></div>
+        <span class="amenity-tag">💪 Фитнес</span>
+      </div>
+      <div class="amenity-content">
+        <div class="amenity-icon">🏋️</div>
+        <span class="section-label">Активен живот</span>
+        <h2>Фитнес Зала</h2>
+        <span class="amenity-hours">🕐 06:00 – 22:00</span>
+        <p>Модерно оборудвана фитнес зала с кардио уреди, свободни тежести и зона за йога. Панорамните прозорци осигуряват мотивираща гледка към планината.</p>
+        <p>Предлагаме и групови занимания — сутрешна йога и стречинг след ски, водени от сертифицирани инструктори.</p>
+        <ul class="amenity-list">
+          <li>Кардио зона</li>
+          <li>Свободни тежести</li>
+          <li>Йога студио</li>
+          <li>Планинска гледка</li>
+          <li>Инструктор</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- КОНФЕРЕНЦИЯ -->
+<div class="amenity-section fade-in">
+  <div class="container">
+    <div class="amenity-grid">
+      <div class="amenity-image-wrap">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900" alt="Конферентна зала" loading="lazy">
+        <div class="amenity-image-overlay"></div>
+        <span class="amenity-tag">📊 Бизнес</span>
+      </div>
+      <div class="amenity-content">
+        <div class="amenity-icon">🎤</div>
+        <span class="section-label">Корпоративни събития</span>
+        <h2>Конферентна Зала</h2>
+        <span class="amenity-hours">📧 По заявка</span>
+        <p>Две конферентни зали с капацитет 20 и 60 души, оборудвани с проектор, екран и аудио система. Идеалното място за тиймбилдинг семинари и корпоративни ретрити в планината.</p>
+        <p>Кетъринг от нашия ресторант и организация на активности на открито — рафтинг, хайкинг, вечер на огъня.</p>
+        <ul class="amenity-list">
+          <li>2 зали</li>
+          <li>До 60 души</li>
+          <li>Проектор & аудио</li>
+          <li>Кетъринг</li>
+          <li>Тиймбилдинг</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK AMENITIES -->
+<section class="quick-section">
+  <div class="container">
+    <div class="section-label" style="text-align:center; color:var(--wood-light);">Включено в престоя</div>
+    <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; text-align:center; color:var(--sand); margin-bottom:0.5rem;">Стандартни Удобства</h2>
+    <div style="width:40px; height:2px; background:var(--wood); margin:0.8rem auto 0; border-radius:2px;"></div>
+    <div class="quick-grid">
+      <div class="quick-card fade-in">
+        <span class="quick-card-icon">📶</span>
+        <h3>Безплатен Wi-Fi</h3>
+        <p>Бърз интернет във всички зони на лоджа.</p>
+      </div>
+      <div class="quick-card fade-in">
+        <span class="quick-card-icon">🚗</span>
+        <h3>Безплатен Паркинг</h3>
+        <p>Охраняем паркинг за всички гости.</p>
+      </div>
+      <div class="quick-card fade-in">
+        <span class="quick-card-icon">🎿</span>
+        <h3>Ски Гардероб</h3>
+        <p>Сушилня и съхранение на ски екипировка.</p>
+      </div>
+      <div class="quick-card fade-in">
+        <span class="quick-card-icon">🔥</span>
+        <h3>Камина в Лобито</h3>
+        <p>Уютно лоби с жива камина и кафе.</p>
+      </div>
+      <div class="quick-card fade-in">
+        <span class="quick-card-icon">🚐</span>
+        <h3>Трансфер</h3>
+        <p>Трансфер до ски лифта и до Банско.</p>
+      </div>
+      <div class="quick-card fade-in">
+        <span class="quick-card-icon">🗺️</span>
+        <h3>Планински Водач</h3>
+        <p>Организирани хайкинг турове с водач.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <svg width="22" height="28" viewBox="0 0 28 36" fill="none" style="vertical-align:middle;margin-right:8px">
+      <polygon points="14,2 2,18 8,18 4,28 24,28 20,18 26,18" fill="#E6D5B8" opacity="0.8"/>
+      <rect x="11" y="28" width="6" height="7" fill="#8B4513"/>
+    </svg>
+    Планински Лодж Пирин
+  </div>
+  <div class="footer-divider"></div>
+  <div>
+    с. Баня, общ. Разлог, до Банско<br>
+    <a href="tel:+359749885555">+359 749 88 555</a> · <a href="mailto:info@lodgepirin.bg">info@lodgepirin.bg</a><br>
+    © 2024 Планински Лодж Пирин. Всички права запазени.
+  </div>
+</footer>
+
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

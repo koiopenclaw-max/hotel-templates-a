@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Резервация — Урбан Дизайн Хотел</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --carbon: #1C1C1E;
+      --coral: #FF385C;
+      --light: #F5F5F7;
+      --mid: #2C2C2E;
+      --muted: #8E8E93;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--carbon); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      background: var(--carbon);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem;
+      color: var(--light); letter-spacing: 0.08em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--coral); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Inter', sans-serif; font-size: 0.8rem; font-weight: 500;
+      color: var(--light); text-decoration: none; letter-spacing: 0.1em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--coral); }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding-top: 64px; background: var(--carbon); min-height: 280px;
+      display: flex; align-items: flex-end; padding-bottom: 64px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero-geo-1 {
+      position: absolute; top: 80px; right: 120px;
+      width: 160px; height: 160px;
+      background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,56,92,0.12) 8px, rgba(255,56,92,0.12) 9px);
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    }
+    .page-hero-geo-2 {
+      position: absolute; bottom: 40px; right: 280px;
+      width: 60px; height: 60px;
+      border: 1.5px solid rgba(255,56,92,0.3); transform: rotate(45deg);
+    }
+    .page-hero-geo-3 {
+      position: absolute; top: 100px; right: 60px;
+      width: 24px; height: 24px;
+      background: var(--coral); opacity: 0.6; transform: rotate(45deg);
+    }
+    .page-hero-inner { padding: 0 80px; position: relative; z-index: 2; }
+    .page-hero-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 16px;
+      text-shadow: 0 0 16px rgba(255,56,92,0.4);
+    }
+    .page-hero-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 800; color: var(--light); line-height: 0.95; letter-spacing: -0.02em;
+    }
+
+    /* SECTION */
+    .section-pad { padding: 100px 80px; }
+
+    /* CONTACT LAYOUT */
+    .contact-section { background: var(--light); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; max-width: 1200px; margin: 0 auto;
+    }
+
+    /* FORM */
+    .form-side {
+      background: var(--light); padding: 0 48px 0 0;
+    }
+    .form-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--coral); display: block; margin-bottom: 16px;
+    }
+    .form-title {
+      font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; color: var(--carbon); line-height: 1; margin-bottom: 40px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--carbon); margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 14px 16px;
+      border: 1px solid rgba(28,28,30,0.12); border-radius: 0;
+      font-family: 'Inter', sans-serif; font-size: 0.88rem;
+      color: var(--carbon); background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 2px rgba(255,56,92,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .btn-submit {
+      display: inline-block; width: 100%;
+      background: var(--coral); color: #fff;
+      font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 18px; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      margin-top: 8px;
+    }
+    .btn-submit:hover { background: #e02d50; transform: translateY(-2px); }
+
+    /* INFO SIDE */
+    .info-side { display: flex; flex-direction: column; gap: 2px; }
+    .info-block {
+      background: var(--carbon); padding: 36px 40px;
+      position: relative; overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .info-block:hover { transform: translateY(-2px); }
+    .info-block::before {
+      content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px;
+      background: var(--coral); transform: scaleY(0); transform-origin: top;
+      transition: transform 0.3s;
+    }
+    .info-block:hover::before { transform: scaleY(1); }
+    .info-icon {
+      width: 36px; height: 36px; border: 1px solid rgba(255,56,92,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; margin-bottom: 16px; transform: rotate(45deg);
+    }
+    .info-icon-inner { transform: rotate(-45deg); }
+    .info-title {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--light); margin-bottom: 8px; letter-spacing: 0.05em;
+    }
+    .info-text { font-size: 0.82rem; color: var(--muted); line-height: 1.8; }
+    .info-text a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .info-text a:hover { color: var(--coral); }
+    .info-geo {
+      position: absolute; bottom: 16px; right: 16px; width: 24px; height: 24px;
+      border: 1px solid rgba(255,56,92,0.2); transform: rotate(45deg);
+    }
+
+    /* MAP */
+    .map-block {
+      background: var(--mid); flex: 1; min-height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 12px;
+    }
+    .map-icon { font-size: 2.5rem; }
+    .map-text {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--light); letter-spacing: 0.08em;
+    }
+    .map-sub { font-size: 0.78rem; color: var(--muted); }
+
+    /* GEOMETRIC DIVIDER */
+    .geo-divider {
+      height: 80px; background: var(--carbon);
+      position: relative; overflow: hidden;
+    }
+    .geo-divider::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,56,92,0.08) 40px, rgba(255,56,92,0.08) 41px);
+    }
+    .geo-divider-shape {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(45deg);
+      width: 48px; height: 48px; border: 2px solid var(--coral);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--carbon); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 80px; text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem;
+      color: var(--light); letter-spacing: 0.1em; margin-bottom: 20px; display: block;
+    }
+    .footer-logo span { color: var(--coral); }
+    .footer-info { font-size: 0.82rem; color: var(--muted); line-height: 2; }
+    .footer-info a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-info a:hover { color: var(--coral); }
+    .footer-divider { width: 40px; height: 2px; background: var(--coral); margin: 20px auto; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      nav { padding: 0 24px; }
+      .page-hero-inner { padding: 0 40px; }
+      .section-pad { padding: 72px 40px; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-side { padding: 0 0 48px 0; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 40px 40px; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .page-hero-inner { padding: 0 24px; }
+      .section-pad { padding: 60px 24px; }
+      footer { padding: 36px 24px; }
+      .page-hero-geo-1, .page-hero-geo-2, .page-hero-geo-3 { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">URB<span>A</span>N</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="rooms.html">Стаи</a></li>
+      <li><a href="amenities.html">Удобства</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html" class="active">Резервация</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-hero-geo-1"></div>
+    <div class="page-hero-geo-2"></div>
+    <div class="page-hero-geo-3"></div>
+    <div class="page-hero-inner">
+      <span class="page-hero-label">▸ Свържете се с нас</span>
+      <h1 class="page-hero-title">РЕЗЕРВАЦИЯ</h1>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="contact-section section-pad">
+    <div class="contact-grid">
+
+      <div class="form-side">
+        <span class="form-label">▸ Запитване</span>
+        <h2 class="form-title">Направете Резервация</h2>
+        <form onsubmit="return false;">
+          <div class="form-group">
+            <label for="name">Име и Фамилия</label>
+            <input type="text" id="name" placeholder="Вашето пълно име" required />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="email">Имейл</label>
+              <input type="email" id="email" placeholder="email@example.com" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон</label>
+              <input type="tel" id="phone" placeholder="+359 888 123 456" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkin">Настаняване</label>
+              <input type="date" id="checkin" required />
+            </div>
+            <div class="form-group">
+              <label for="checkout">Напускане</label>
+              <input type="date" id="checkout" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="guests">Брой гости</label>
+              <select id="guests">
+                <option value="1">1 гост</option>
+                <option value="2" selected>2 гости</option>
+                <option value="3">3 гости</option>
+                <option value="4">4 гости</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="room">Тип стая</label>
+              <select id="room">
+                <option value="standard">Стандарт</option>
+                <option value="design">Дизайн Стая</option>
+                <option value="loft">Лофт Суит</option>
+                <option value="penthouse">Пентхаус</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="notes">Бележки</label>
+            <textarea id="notes" placeholder="Допълнителни пожелания, специални заявки..."></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Изпратете Запитване</button>
+        </form>
+      </div>
+
+      <div class="info-side">
+        <div class="info-block">
+          <div class="info-icon"><span class="info-icon-inner">📍</span></div>
+          <div class="info-title">Адрес</div>
+          <p class="info-text">ул. „Граф Игнатиев" 5<br>София 1000, България</p>
+          <div class="info-geo"></div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon"><span class="info-icon-inner">📞</span></div>
+          <div class="info-title">Контакти</div>
+          <p class="info-text">
+            <a href="tel:+35924448800">+359 2 444 8800</a><br>
+            <a href="mailto:hello@urbanhotel.bg">hello@urbanhotel.bg</a><br>
+            <a href="contact.html">@urbanhotelsofia</a>
+          </p>
+          <div class="info-geo"></div>
+        </div>
+        <div class="info-block">
+          <div class="info-icon"><span class="info-icon-inner">◷</span></div>
+          <div class="info-title">Настаняване</div>
+          <p class="info-text">
+            Check-in: от 15:00<br>
+            Check-out: до 12:00<br>
+            Late checkout: при наличност
+          </p>
+          <div class="info-geo"></div>
+        </div>
+        <div class="map-block">
+          <span class="map-icon">🗺️</span>
+          <div class="map-text">София, Център</div>
+          <div class="map-sub">500м от бул. Витоша · до НДК</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GEO DIVIDER -->
+  <div class="geo-divider"><div class="geo-divider-shape"></div></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-logo">URB<span>A</span>N</span>
+    <div class="footer-divider"></div>
+    <div class="footer-info">
+      ул. „Граф Игнатиев" 5, София &nbsp;·&nbsp;
+      <a href="tel:+35924448800">+359 2 444 8800</a> &nbsp;·&nbsp;
+      <a href="mailto:hello@urbanhotel.bg">hello@urbanhotel.bg</a><br>
+      <a href="contact.html">@urbanhotelsofia</a> &nbsp;·&nbsp; © 2024 Урбан Дизайн Хотел
+    </div>
+  </footer>
+
+</body>
+</html>
